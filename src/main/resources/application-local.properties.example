@@ -1,0 +1,3 @@
+spring.datasource.url=jdbc:mysql://cs.furman.edu:3306/USER_NAME
+spring.datasource.username=USER_NAME
+spring.datasource.password=USER_PASSWORD
