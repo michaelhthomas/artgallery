@@ -6,6 +6,7 @@
     ".react-router/types/**/*"
   ],
   "compilerOptions": {
+    "checkJs": true,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["node", "vite/client"],
     "target": "ES2022",
@@ -18,7 +19,7 @@
       "~/*": ["./app/*"]
     },
     "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": true,
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,

@@ -7,7 +7,13 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   server: {
     proxy: {
-      "/api": "http://localhost:8080",
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        headers: {
+          Origin: "http://localhost:8080",
+        },
+      },
     },
   },
 });
