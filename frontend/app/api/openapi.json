@@ -92,6 +92,80 @@
           }
         }
       }
+    },
+    "/api/collectors": {
+      "get": {
+        "tags": [
+          "collector-controller"
+        ],
+        "operationId": "getAllCollectors",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Collector"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/collectors/{id}": {
+      "get": {
+        "tags": [
+          "collector-controller"
+        ],
+        "operationId": "getCollectorById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collector"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -136,6 +210,63 @@
         "required": [
           "token",
           "username"
+        ]
+      },
+      "Collector": {
+        "type": "object",
+        "properties": {
+          "socialSecurityNumber": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "interviewDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "interviewerName": {
+            "type": "string"
+          },
+          "areaCode": {
+            "type": "string"
+          },
+          "telephoneNumber": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "salesLastYear": {
+            "type": "number"
+          },
+          "salesYearToDate": {
+            "type": "number"
+          },
+          "collectionArtistId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "collectionMedium": {
+            "type": "string"
+          },
+          "collectionStyle": {
+            "type": "string"
+          },
+          "collectionType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "socialSecurityNumber"
         ]
       }
     },

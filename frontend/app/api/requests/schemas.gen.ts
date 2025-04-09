@@ -37,3 +37,57 @@ export const $AuthResponse = {
     },
     required: ['token', 'username']
 } as const;
+
+export const $Collector = {
+    type: 'object',
+    properties: {
+        socialSecurityNumber: {
+            type: 'string'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date'
+        },
+        interviewerName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        street: {
+            type: 'string'
+        },
+        zip: {
+            type: 'string'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        collectionArtistId: {
+            type: 'integer',
+            format: 'int32'
+        },
+        collectionMedium: {
+            type: 'string'
+        },
+        collectionStyle: {
+            type: 'string'
+        },
+        collectionType: {
+            type: 'string'
+        }
+    },
+    required: ['firstName', 'lastName', 'socialSecurityNumber']
+} as const;

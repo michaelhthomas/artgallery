@@ -18,9 +18,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { useCollectorControllerServiceGetAllCollectors } from "~/api/queries";
+import { useState } from "react";
+import { Collector, GetAllCollectorsResponse } from "~/api/requests";
+import { keepPreviousData } from "@tanstack/react-query";
 
 export default function CollectorsPage() {
+  const [query, setQuery] = useState("");
+  const { data: collectors } =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
+    useCollectorControllerServiceGetAllCollectors<GetAllCollectorsResponse>(
+      {
+        q: query || undefined,
+      },
+      undefined,
+      {
+        placeholderData: keepPreviousData,
+      }
+    );
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -44,6 +60,10 @@ export default function CollectorsPage() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
               placeholder="Search collectors..."
               className="w-full bg-background pl-8"
             />
@@ -61,68 +81,64 @@ export default function CollectorsPage() {
             </SelectContent>
           </Select>
         </div>
-        <Tabs defaultValue="individual" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="individual">Individual</TabsTrigger>
-            <TabsTrigger value="institutional">Institutional</TabsTrigger>
-          </TabsList>
-          <TabsContent value="individual" className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {individualCollectors.map((collector) => (
-                <CollectorCard key={collector.id} collector={collector} />
-              ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="institutional" className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {institutionalCollectors.map((collector) => (
-                <CollectorCard key={collector.id} collector={collector} />
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {collectors?.map((collector) => (
+            <CollectorCard
+              key={collector.socialSecurityNumber}
+              collector={collector}
+            />
+          ))}
+        </div>
       </main>
     </div>
   );
 }
 
-function CollectorCard({ collector }) {
+function CollectorCard({ collector }: { collector: Collector }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
         <Avatar className="h-12 w-12">
-          <AvatarImage src={collector.avatar} alt={collector.name} />
+          {/* <AvatarImage src={collector.avatar} alt={collector.name} /> */}
           <AvatarFallback>
             <User className="h-6 w-6" />
           </AvatarFallback>
         </Avatar>
         <div>
-          <CardTitle className="text-base">{collector.name}</CardTitle>
-          <div className="text-sm text-muted-foreground">{collector.type}</div>
+          <CardTitle className="text-base">
+            {collector.firstName} {collector.lastName}
+          </CardTitle>
+          <div className="text-sm text-muted-foreground">
+            {collector.collectionStyle}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <Mail className="h-4 w-4 text-muted-foreground" />
           <span>{collector.email}</span>
-        </div>
+        </div> */}
         <div className="flex items-center gap-2">
           <Phone className="h-4 w-4 text-muted-foreground" />
-          <span>{collector.phone}</span>
+          <span>
+            ({collector.areaCode}) {collector.telephoneNumber}
+          </span>
         </div>
         <div className="pt-2">
           <div className="font-medium">Collection</div>
-          <div className="text-muted-foreground">{collector.collection}</div>
-        </div>
-        <div>
-          <div className="font-medium">Last Purchase</div>
-          <div className="text-muted-foreground">{collector.lastPurchase}</div>
-        </div>
-        <div>
-          <div className="font-medium">Notes</div>
-          <div className="text-muted-foreground line-clamp-2">
-            {collector.notes}
+          <div className="text-muted-foreground">
+            {collector.collectionType}
           </div>
+        </div>
+        <div>
+          <div className="font-medium">Sales YTD</div>
+          <div className="text-muted-foreground">
+            {collector.salesYearToDate}
+          </div>
+        </div>
+        <div>
+          <div className="font-medium">Sales Last Year</div>
+          <div className="text-muted-foreground">{collector.salesLastYear}</div>
         </div>
       </CardContent>
       <CardFooter className="flex gap-2">
@@ -136,87 +152,3 @@ function CollectorCard({ collector }) {
     </Card>
   );
 }
-
-const individualCollectors = [
-  {
-    id: 1,
-    name: "Robert Thompson",
-    type: "Individual - VIP",
-    email: "robert.thompson@example.com",
-    phone: "+1 (555) 123-4567",
-    collection: "Contemporary painting, sculpture",
-    lastPurchase: "Mar 15, 2024",
-    notes: "Interested in emerging artists. Prefers private viewings.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 2,
-    name: "Jennifer Wu",
-    type: "Individual - Active",
-    email: "jennifer.wu@example.com",
-    phone: "+1 (555) 987-6543",
-    collection: "Abstract painting, photography",
-    lastPurchase: "Feb 28, 2024",
-    notes: "Looking to expand collection. Budget $50-100K annually.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 3,
-    name: "Michael Blackwood",
-    type: "Individual - VIP",
-    email: "m.blackwood@example.com",
-    phone: "+1 (555) 456-7890",
-    collection: "Mixed media, installation",
-    lastPurchase: "Apr 2, 2024",
-    notes: "Board member at Contemporary Art Museum. Influential collector.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 4,
-    name: "Sarah Johnson",
-    type: "Individual - New",
-    email: "sarah.j@example.com",
-    phone: "+1 (555) 234-5678",
-    collection: "Emerging artists, works on paper",
-    lastPurchase: "Jan 10, 2024",
-    notes:
-      "New collector, tech industry background. Interested in digital art.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-];
-
-const institutionalCollectors = [
-  {
-    id: 5,
-    name: "Metropolitan Museum of Modern Art",
-    type: "Institution - Museum",
-    email: "acquisitions@metmodern.org",
-    phone: "+1 (555) 111-2222",
-    collection: "Comprehensive contemporary collection",
-    lastPurchase: "Mar 30, 2024",
-    notes: "Contact: Dr. Elizabeth Chen, Curator of Contemporary Art",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 6,
-    name: "Westfield Corporate Collection",
-    type: "Institution - Corporate",
-    email: "art@westfield.com",
-    phone: "+1 (555) 333-4444",
-    collection: "Office-suitable contemporary works",
-    lastPurchase: "Feb 15, 2024",
-    notes: "Expanding collection for new headquarters. Budget approved for Q2.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 7,
-    name: "Foundation for the Arts",
-    type: "Institution - Foundation",
-    email: "grants@foundationarts.org",
-    phone: "+1 (555) 555-6666",
-    collection: "Supporting emerging artists",
-    lastPurchase: "Apr 5, 2024",
-    notes: "Also provides grants and residencies. Looking for new talent.",
-    avatar: "/placeholder.svg?height=100&width=100",
-  },
-];

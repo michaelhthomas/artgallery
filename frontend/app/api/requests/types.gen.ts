@@ -25,6 +25,24 @@ export type AuthResponse = {
     username: string;
 };
 
+export type Collector = {
+    socialSecurityNumber: string;
+    firstName: string;
+    lastName: string;
+    interviewDate?: string;
+    interviewerName?: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    street?: string;
+    zip?: string;
+    salesLastYear?: number;
+    salesYearToDate?: number;
+    collectionArtistId?: number;
+    collectionMedium?: string;
+    collectionStyle?: string;
+    collectionType?: string;
+};
+
 export type LoginData = {
     requestBody: AuthRequest;
 };
@@ -40,6 +58,18 @@ export type GetProtectedResourceResponse = {
 export type GetPublicResourceResponse = {
     [key: string]: (string);
 };
+
+export type GetAllCollectorsData = {
+    q?: string;
+};
+
+export type GetAllCollectorsResponse = Array<Collector>;
+
+export type GetCollectorByIdData = {
+    id: number;
+};
+
+export type GetCollectorByIdResponse = Collector;
 
 export type $OpenApiTs = {
     '/api/auth/login': {
@@ -76,6 +106,28 @@ export type $OpenApiTs = {
                 200: {
                     [key: string]: (string);
                 };
+            };
+        };
+    };
+    '/api/collectors': {
+        get: {
+            req: GetAllCollectorsData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<Collector>;
+            };
+        };
+    };
+    '/api/collectors/{id}': {
+        get: {
+            req: GetCollectorByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Collector;
             };
         };
     };

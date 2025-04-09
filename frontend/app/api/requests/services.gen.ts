@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { LoginData, LoginResponse, GetProtectedResourceResponse, GetPublicResourceResponse } from './types.gen';
+import type { LoginData, LoginResponse, GetProtectedResourceResponse, GetPublicResourceResponse, GetAllCollectorsData, GetAllCollectorsResponse, GetCollectorByIdData, GetCollectorByIdResponse } from './types.gen';
 
 export class AuthControllerService {
     /**
@@ -43,6 +43,41 @@ export class ResourceControllerService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/public/resource'
+        });
+    }
+    
+}
+
+export class CollectorControllerService {
+    /**
+     * @param data The data for the request.
+     * @param data.q
+     * @returns Collector OK
+     * @throws ApiError
+     */
+    public static getAllCollectors(data: GetAllCollectorsData = {}): CancelablePromise<GetAllCollectorsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/collectors',
+            query: {
+                q: data.q
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Collector OK
+     * @throws ApiError
+     */
+    public static getCollectorById(data: GetCollectorByIdData): CancelablePromise<GetCollectorByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/collectors/{id}',
+            path: {
+                id: data.id
+            }
         });
     }
     
