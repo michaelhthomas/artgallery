@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Table(name = "Collector")
 data class Collector(
     @Id
-    @Column(name = "socialSecurityNumber", length = 9, nullable = false)
+    @Column(name = "socialSecurityNumber", columnDefinition = "char(9)", nullable = false)
     val socialSecurityNumber: String,
 
     @Column(name = "firstName", length = 15, nullable = false)
@@ -32,7 +32,7 @@ data class Collector(
     @Column(name = "street", length = 50)
     val street: String? = null,
 
-    @Column(name = "zip", length = 5)
+    @Column(name = "zip", columnDefinition = "char(5)")
     val zip: String? = null,
 
     @Column(name = "salesLastYear", precision = 8, scale = 2)
