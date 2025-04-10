@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
     id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
+    id("org.siouan.frontend-jdk21") version "10.0.0"
 }
 
 group = "edu.furman"
@@ -14,6 +15,23 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+frontend {
+    nodeVersion.set("22.14.0")
+    packageJsonDirectory.set(file("${layout.projectDirectory}/frontend"))
+    assembleScript.set("run build")
+    checkScript.set("run check")
+}
+tasks.register<Copy>("copyFrontendAssets") {
+    description = "Copies frontend files to the Spring static resources directory"
+    group = "build"
+
+    from(file("${layout.projectDirectory}/frontend/build/client"))
+    into(file("${layout.buildDirectory.get()}/resources/main/static"))
+}
+tasks.named("processResources") {
+    dependsOn("copyFrontendAssets")
 }
 
 repositories {
