@@ -1,15 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Calendar, Frame, Grid, ImageIcon, Users } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Calendar, Grid, ImageIcon, Users } from "lucide-react";
+import ArtistCard from "~/components/ArtistCard";
+import ArtworkCard from "~/components/ArtworkCard";
+import ExhibitionCard from "~/components/ExhibitionCard";
 
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 export const Route = createFileRoute("/_app/")({
@@ -118,6 +114,8 @@ function Dashboard() {
               dates="Mar 15 - May 10, 2024"
               artists="Group Exhibition"
               location="Main Gallery"
+              curator="John Doe"
+              status="Current"
               image="/placeholder.svg?height=200&width=300"
             />
             <ExhibitionCard
@@ -125,6 +123,8 @@ function Dashboard() {
               dates="Apr 1 - Jun 15, 2024"
               artists="Emerging Artists Showcase"
               location="East Wing"
+              curator="John Doe"
+              status="Current"
               image="/placeholder.svg?height=200&width=300"
             />
             <ExhibitionCard
@@ -132,6 +132,8 @@ function Dashboard() {
               dates="Feb 10 - Apr 30, 2024"
               artists="Claire Fontaine"
               location="West Gallery"
+              curator="John Doe"
+              status="Current"
               image="/placeholder.svg?height=200&width=300"
             />
           </div>
@@ -149,6 +151,7 @@ function Dashboard() {
               specialty="Contemporary Painting"
               represented="Since 2018"
               works="32 artworks in collection"
+              nationality="Chinese"
               image="/placeholder.svg?height=300&width=300"
             />
             <ArtistCard
@@ -156,6 +159,7 @@ function Dashboard() {
               specialty="Mixed Media, Installation"
               represented="Since 2020"
               works="18 artworks in collection"
+              nationality="American"
               image="/placeholder.svg?height=300&width=300"
             />
             <ArtistCard
@@ -163,6 +167,7 @@ function Dashboard() {
               specialty="Abstract Painting"
               represented="Since 2019"
               works="24 artworks in collection"
+              nationality="Indian"
               image="/placeholder.svg?height=300&width=300"
             />
           </div>
@@ -175,105 +180,5 @@ function Dashboard() {
         </TabsContent>
       </Tabs>
     </main>
-  );
-}
-
-function ArtworkCard({ title, artist, medium, dimensions, year, image }) {
-  return (
-    <Card className="overflow-hidden border-zinc-800 hover:border-purple-800 transition-colors">
-      <div className="aspect-[3/4] w-full">
-        <img
-          src={image || "/placeholder.svg"}
-          alt={title}
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{artist}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="text-sm">
-          <p>{medium}</p>
-          <p>{dimensions}</p>
-          <p>{year}</p>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-        >
-          View Details
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function ExhibitionCard({ title, dates, artists, location, image }) {
-  return (
-    <Card className="border-zinc-800 hover:border-purple-800 transition-colors">
-      <div className="aspect-video w-full">
-        <img
-          src={image || "/placeholder.svg"}
-          alt={title}
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{dates}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="text-sm">
-          <p>{artists}</p>
-          <p>{location}</p>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-        >
-          Exhibition Details
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function ArtistCard({ name, specialty, represented, works, image }) {
-  return (
-    <Card className="border-zinc-800 hover:border-purple-800 transition-colors">
-      <div className="aspect-square w-full">
-        <img
-          src={image || "/placeholder.svg"}
-          alt={name}
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>{specialty}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="text-sm">
-          <p>{represented}</p>
-          <p>{works}</p>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-        >
-          Artist Profile
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }
