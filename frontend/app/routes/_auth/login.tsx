@@ -22,9 +22,9 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { useNavigate } from "react-router";
 import { useAuthControllerServiceLogin } from "~/api/queries";
 import { useUserInfo } from "~/stores/user-info";
+import { createFileRoute } from "@tanstack/react-router";
 
 const loginSchema = z.object({
   username: z.string().min(2).max(100),
@@ -32,13 +32,17 @@ const loginSchema = z.object({
   rememberMe: z.boolean().default(false),
 });
 
-export default function LoginPage() {
+export const Route = createFileRoute("/_auth/login")({
+  component: LoginPage,
+});
+
+function LoginPage() {
   const userInfo = useUserInfo();
-  const navigate = useNavigate();
+  const navigate = Route.useNavigate();
   const { mutate, error, isPending } = useAuthControllerServiceLogin({
     onSuccess(data) {
       userInfo.setUserInfo(data, form.getValues().rememberMe === true);
-      void navigate("/");
+      void navigate({ to: "/" });
     },
   });
 

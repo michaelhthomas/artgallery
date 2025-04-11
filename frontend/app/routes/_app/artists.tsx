@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Plus, Search } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
@@ -18,7 +18,11 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-export default function ArtistsPage() {
+export const Route = createFileRoute("/_app/artists")({
+  component: ArtistsPage,
+});
+
+function ArtistsPage() {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

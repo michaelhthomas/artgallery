@@ -27,7 +27,7 @@ tasks.register<Copy>("copyFrontendAssets") {
     description = "Copies frontend files to the Spring static resources directory"
     group = "build"
 
-    from(file("${layout.projectDirectory}/frontend/build/client"))
+    from(file("${layout.projectDirectory}/frontend/dist"))
     into(file("${layout.buildDirectory.get()}/resources/main/static"))
 }
 tasks.named("processResources") {

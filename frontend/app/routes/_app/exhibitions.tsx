@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, Plus } from "lucide-react";
 
 import { Badge } from "~/components/ui/badge";
@@ -12,7 +12,11 @@ import {
 } from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-export default function ExhibitionsPage() {
+export const Route = createFileRoute("/_app/exhibitions")({
+  component: ExhibitionsPage,
+});
+
+function ExhibitionsPage() {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

@@ -1,10 +1,21 @@
-import { reactRouter } from "@react-router/dev/vite";
+import react from "@vitejs/plugin-react-swc";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  plugins: [
+    TanStackRouterVite({
+      target: "react",
+      autoCodeSplitting: true,
+      routesDirectory: "./app/routes",
+      generatedRouteTree: "./app/routeTree.gen.ts",
+    }),
+    react(),
+    tailwindcss(),
+    tsconfigPaths(),
+  ],
   server: {
     proxy: {
       "/api": {
