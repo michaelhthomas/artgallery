@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Filter,
@@ -25,7 +25,11 @@ import {
 } from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
 
-export default function ArtworksPage() {
+export const Route = createFileRoute("/_app/artworks")({
+  component: ArtworksPage,
+});
+
+function ArtworksPage() {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

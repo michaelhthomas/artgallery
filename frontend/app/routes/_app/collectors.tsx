@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Mail, Phone, Plus, Search, User } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -23,7 +23,11 @@ import { useState } from "react";
 import { Collector, GetAllCollectorsResponse } from "~/api/requests";
 import { keepPreviousData } from "@tanstack/react-query";
 
-export default function CollectorsPage() {
+export const Route = createFileRoute("/_app/collectors")({
+  component: CollectorsPage,
+});
+
+function CollectorsPage() {
   const [query, setQuery] = useState("");
   const { data: collectors } =
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments

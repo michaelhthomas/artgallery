@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Calendar,
@@ -23,7 +23,11 @@ import {
 import { Separator } from "~/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-export default function ArtworkDetailPage() {
+export const Route = createFileRoute("/_app/artwork/$id")({
+  component: ArtworkDetailPage,
+});
+
+function ArtworkDetailPage() {
   // In a real app, you would fetch the artwork by ID from a database
   const artwork = {
     id: 1,
@@ -92,7 +96,7 @@ export default function ArtworkDetailPage() {
                 <img
                   key={i}
                   src={img || "/placeholder.svg"}
-                  alt={`${artwork.title} detail ${i + 1}`}
+                  alt={`${artwork.title} detail ${String(i + 1)}`}
                   className="aspect-square h-24 rounded-md border object-cover"
                 />
               ))}
