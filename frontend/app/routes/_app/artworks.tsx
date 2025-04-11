@@ -32,33 +32,15 @@ export const Route = createFileRoute("/_app/artworks")({
 function ArtworksPage() {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        <Link to="/" className="flex items-center gap-2 font-semibold">
-          <ArrowLeft className="h-5 w-5" />
-          <span>Back to Furman Art Gallery</span>
-        </Link>
-        <div className="ml-auto flex items-center gap-2">
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Artworks</h1>
           <Button size="sm">
             <Plus className="mr-2 h-4 w-4" />
             Add Artwork
           </Button>
         </div>
-      </header>
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Artworks</h1>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              <Filter className="mr-2 h-4 w-4" />
-              Filter
-            </Button>
-            <Button variant="outline" size="sm">
-              <SlidersHorizontal className="mr-2 h-4 w-4" />
-              Sort
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-stretch gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -67,18 +49,14 @@ function ArtworksPage() {
               className="w-full bg-background pl-8"
             />
           </div>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Artworks</SelectItem>
-              <SelectItem value="available">Available</SelectItem>
-              <SelectItem value="on-loan">On Loan</SelectItem>
-              <SelectItem value="sold">Sold</SelectItem>
-              <SelectItem value="exhibition">In Exhibition</SelectItem>
-            </SelectContent>
-          </Select>
+          <Button variant="outline" size="sm" className="h-auto">
+            <Filter className="mr-2 h-4 w-4" />
+            Filter
+          </Button>
+          <Button variant="outline" size="sm" className="h-auto">
+            <SlidersHorizontal className="mr-2 h-4 w-4" />
+            Sort
+          </Button>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {artworks.map((artwork) => (
