@@ -1,29 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowLeft,
-  Filter,
-  Plus,
-  Search,
-  SlidersHorizontal,
-} from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Filter, Plus, Search, SlidersHorizontal } from "lucide-react";
+import ArtworkCard from "~/components/ArtworkCard";
 
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
-import { Separator } from "~/components/ui/separator";
 
 export const Route = createFileRoute("/_app/artworks")({
   component: ArtworksPage,
@@ -60,7 +40,7 @@ function ArtworksPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {artworks.map((artwork) => (
-            <ArtworkCard key={artwork.id} artwork={artwork} />
+            <ArtworkCard key={artwork.id} {...artwork} />
           ))}
         </div>
         <div className="flex items-center justify-center">
@@ -70,50 +50,6 @@ function ArtworksPage() {
         </div>
       </main>
     </div>
-  );
-}
-
-function ArtworkCard({ artwork }) {
-  return (
-    <Card className="overflow-hidden">
-      <div className="aspect-[3/4] w-full">
-        <img
-          src={artwork.image || "/placeholder.svg"}
-          alt={artwork.title}
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle className="line-clamp-1">{artwork.title}</CardTitle>
-        <div className="text-sm text-muted-foreground">{artwork.artist}</div>
-      </CardHeader>
-      <CardContent className="text-sm">
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <div className="font-medium">Medium</div>
-            <div className="text-muted-foreground">{artwork.medium}</div>
-          </div>
-          <div>
-            <div className="font-medium">Year</div>
-            <div className="text-muted-foreground">{artwork.year}</div>
-          </div>
-          <div>
-            <div className="font-medium">Dimensions</div>
-            <div className="text-muted-foreground">{artwork.dimensions}</div>
-          </div>
-          <div>
-            <div className="font-medium">Status</div>
-            <div className="text-muted-foreground">{artwork.status}</div>
-          </div>
-        </div>
-      </CardContent>
-      <Separator />
-      <CardFooter className="p-2">
-        <Button variant="ghost" size="sm" className="w-full">
-          View Details
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }
 

@@ -1,15 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Plus, Search, User } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import {
   Select,
@@ -20,8 +12,9 @@ import {
 } from "~/components/ui/select";
 import { useCollectorControllerServiceGetAllCollectors } from "~/api/queries";
 import { useState } from "react";
-import { Collector, GetAllCollectorsResponse } from "~/api/requests";
+import { GetAllCollectorsResponse } from "~/api/requests";
 import { keepPreviousData } from "@tanstack/react-query";
+import CollectorCard from "~/components/CollectorCard";
 
 export const Route = createFileRoute("/_app/collectors")({
   component: CollectorsPage,
@@ -87,64 +80,5 @@ function CollectorsPage() {
         </div>
       </main>
     </div>
-  );
-}
-
-function CollectorCard({ collector }: { collector: Collector }) {
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <Avatar className="h-12 w-12">
-          {/* <AvatarImage src={collector.avatar} alt={collector.name} /> */}
-          <AvatarFallback>
-            <User className="h-6 w-6" />
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <CardTitle className="text-base">
-            {collector.firstName} {collector.lastName}
-          </CardTitle>
-          <div className="text-sm text-muted-foreground">
-            {collector.collectionStyle}
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-2 text-sm">
-        {/* <div className="flex items-center gap-2">
-          <Mail className="h-4 w-4 text-muted-foreground" />
-          <span>{collector.email}</span>
-        </div> */}
-        <div className="flex items-center gap-2">
-          <Phone className="h-4 w-4 text-muted-foreground" />
-          <span>
-            ({collector.areaCode}) {collector.telephoneNumber}
-          </span>
-        </div>
-        <div className="pt-2">
-          <div className="font-medium">Collection</div>
-          <div className="text-muted-foreground">
-            {collector.collectionType}
-          </div>
-        </div>
-        <div>
-          <div className="font-medium">Sales YTD</div>
-          <div className="text-muted-foreground">
-            {collector.salesYearToDate}
-          </div>
-        </div>
-        <div>
-          <div className="font-medium">Sales Last Year</div>
-          <div className="text-muted-foreground">{collector.salesLastYear}</div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex gap-2">
-        <Button variant="outline" size="sm" className="flex-1">
-          Profile
-        </Button>
-        <Button size="sm" className="flex-1">
-          Contact
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }
