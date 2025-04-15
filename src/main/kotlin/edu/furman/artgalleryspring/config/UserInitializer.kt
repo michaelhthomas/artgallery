@@ -24,6 +24,9 @@ class UserInitializer {
                 // Create admin user
                 val adminUser = User(
                     username = "admin",
+                    email = "admin@furman.edu",
+                    firstName = "Admin",
+                    lastName = "Admin",
                     password = passwordEncoder.encode("admin123"),
                 )
                 userRepository.save(adminUser)
@@ -32,6 +35,9 @@ class UserInitializer {
                 // Create regular user
                 val regularUser = User(
                     username = "user",
+                    email = "user@furman.edu",
+                    firstName = "John",
+                    lastName = "Doe",
                     password = passwordEncoder.encode("user123"),
                 )
                 userRepository.save(regularUser)

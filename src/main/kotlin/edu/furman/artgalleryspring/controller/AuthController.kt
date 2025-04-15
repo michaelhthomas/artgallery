@@ -37,7 +37,7 @@ class AuthController(
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password")
         }
 
-        val userDetails = userRepository.findByUsername(authRequest.username)
+        val userDetails = userRepository.findByUsernameOrEmail(authRequest.username, authRequest.username)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
 
         val token = jwtTokenUtil.generateToken(userDetails)
@@ -45,7 +45,10 @@ class AuthController(
         return ResponseEntity.ok(
             AuthResponse(
                 token = token,
-                username = userDetails.username
+                username = userDetails.username,
+                email = userDetails.email,
+                firstName = userDetails.firstName,
+                lastName = userDetails.lastName
             )
         )
     }

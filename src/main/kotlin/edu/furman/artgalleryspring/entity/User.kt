@@ -15,6 +15,13 @@ class User(
     private val username: String,
 
     private val password: String,
+
+    @Column(unique = true)
+    val email: String,
+
+    val firstName: String,
+    
+    val lastName: String,
 ) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> = emptyList()

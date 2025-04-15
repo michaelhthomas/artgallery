@@ -23,6 +23,18 @@ export type AuthResponse = {
      * Username
      */
     username: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
 };
 
 export type Collector = {

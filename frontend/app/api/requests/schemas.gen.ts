@@ -33,9 +33,24 @@ export const $AuthResponse = {
             type: 'string',
             description: 'Username',
             example: 'admin'
+        },
+        email: {
+            type: 'string',
+            description: 'Email address',
+            example: 'admin@furman.edu'
+        },
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'John'
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Doe'
         }
     },
-    required: ['token', 'username']
+    required: ['email', 'firstName', 'lastName', 'token', 'username']
 } as const;
 
 export const $Collector = {
