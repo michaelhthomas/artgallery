@@ -14,6 +14,7 @@ import { useUserInfo } from "~/stores/user-info";
 
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
+  notFoundComponent: PageNotFound,
 });
 
 function AppLayout() {

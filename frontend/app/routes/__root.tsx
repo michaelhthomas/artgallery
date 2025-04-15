@@ -4,10 +4,11 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import "../app.css";
 import { useUserInfo } from "~/stores/user-info";
 import { useEffect } from "react";
+import PageNotFound from "~/components/error/PageNotFound";
 
 export const Route = createRootRoute({
   component: RootLayout,
-  // errorComponent: ErrorBoundary,
+  notFoundComponent: PageNotFound,
 });
 
 function RootLayout() {

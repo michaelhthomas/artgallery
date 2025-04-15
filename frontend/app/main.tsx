@@ -9,7 +9,9 @@ import { useUserInfo } from "./stores/user-info";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+});
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -46,6 +48,6 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
-    </StrictMode>
+    </StrictMode>,
   );
 }
