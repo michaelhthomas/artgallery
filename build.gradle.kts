@@ -1,3 +1,5 @@
+import org.siouan.frontendgradleplugin.infrastructure.gradle.RunPnpmTaskType
+
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
@@ -78,8 +80,13 @@ openApi {
     customBootRun {
         args.set(listOf("--spring.profiles.active=local"))
     }
-
 }
 
 tasks["compileJava"].finalizedBy("generateOpenApiDocs")
 tasks["compileKotlin"].finalizedBy("generateOpenApiDocs")
+
+
+tasks.register<RunPnpmTaskType>("generateApiClient") {
+    args.set("run codegen")
+}
+tasks["generateOpenApiDocs"].finalizedBy("generateApiClient")
