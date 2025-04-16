@@ -9,7 +9,7 @@ If using IntelliJ IDEA, the "Local Development" run configuration is already set
 1. Open the project in IntelliJ IDEA.
 1. Copy the `src/main/resources/application.local.properties.example` file to `src/main/resources/application.local.properties`
     ```
-    cp src/main/resources/application.local.properties.example src/main/resources/application.local.properties
+    cp src/main/resources/application-local.properties.example src/main/resources/application-local.properties
     ```
 
 1. Edit the `src/main/resources/application.local.properties` file
