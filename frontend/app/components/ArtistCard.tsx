@@ -1,3 +1,4 @@
+import { Artist } from "~/api/requests";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -7,44 +8,37 @@ import {
   CardFooter,
 } from "./ui/card";
 
-export type ArtistCardProps = {
-  name: string;
-  image: string | null;
-  specialty: string;
-  represented: string;
-  works: string;
-  nationality: string;
-};
-
-export default function ArtistCard(artist: ArtistCardProps) {
+export default function ArtistCard(artist: Artist) {
   return (
     <Card>
       <div className="aspect-square w-full">
-        <img
+        {/* <img
           src={artist.image ?? "/placeholder.svg"}
           alt={artist.name}
           className="h-full w-full object-cover"
-        />
+        /> */}
       </div>
       <CardHeader>
-        <CardTitle>{artist.name}</CardTitle>
+        <CardTitle>
+          {artist.firstName} {artist.lastName}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
         <div>
-          <div className="font-medium">Specialty</div>
-          <div className="text-muted-foreground">{artist.specialty}</div>
+          <div className="font-medium">Medium</div>
+          <div className="text-muted-foreground">{artist.usualMedium}</div>
         </div>
         <div>
-          <div className="font-medium">Representation</div>
-          <div className="text-muted-foreground">{artist.represented}</div>
+          <div className="font-medium">Style</div>
+          <div className="text-muted-foreground">{artist.usualStyle}</div>
         </div>
         <div>
-          <div className="font-medium">Works in Collection</div>
-          <div className="text-muted-foreground">{artist.works}</div>
+          <div className="font-medium">Type</div>
+          <div className="text-muted-foreground">{artist.usualType}</div>
         </div>
         <div>
-          <div className="font-medium">Nationality</div>
-          <div className="text-muted-foreground">{artist.nationality}</div>
+          <div className="font-medium">Sales YTD</div>
+          <div className="text-muted-foreground">{artist.salesYearToDate}</div>
         </div>
       </CardContent>
       <CardFooter className="flex gap-2">

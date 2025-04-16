@@ -53,6 +53,76 @@ export const $AuthResponse = {
     required: ['email', 'firstName', 'lastName', 'token', 'username']
 } as const;
 
+export const $Artist = {
+    type: 'object',
+    properties: {
+        artistId: {
+            type: 'integer',
+            format: 'int32'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date'
+        },
+        interviewerName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        street: {
+            type: 'string'
+        },
+        zip: {
+            '$ref': '#/components/schemas/Zip'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        socialSecurityNumber: {
+            type: 'string'
+        },
+        usualMedium: {
+            type: 'string'
+        },
+        usualStyle: {
+            type: 'string'
+        },
+        usualType: {
+            type: 'string'
+        }
+    },
+    required: ['artistId', 'firstName', 'lastName']
+} as const;
+
+export const $Zip = {
+    type: 'object',
+    properties: {
+        zip: {
+            type: 'string'
+        },
+        city: {
+            type: 'string'
+        },
+        state: {
+            type: 'string'
+        }
+    },
+    required: ['city', 'state', 'zip']
+} as const;
+
 export const $Collector = {
     type: 'object',
     properties: {

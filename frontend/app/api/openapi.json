@@ -42,6 +42,77 @@
         }
       }
     },
+    "/api/artist": {
+      "get": {
+        "tags": [
+          "artist-controller"
+        ],
+        "operationId": "getAllArtists",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Artist"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "artist-controller"
+        ],
+        "operationId": "createArtist",
+        "parameters": [
+          {
+            "name": "artist",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Artist"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Artist"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/resource": {
       "get": {
         "tags": [
@@ -228,6 +299,82 @@
           "lastName",
           "token",
           "username"
+        ]
+      },
+      "Artist": {
+        "type": "object",
+        "properties": {
+          "artistId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "interviewDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "interviewerName": {
+            "type": "string"
+          },
+          "areaCode": {
+            "type": "string"
+          },
+          "telephoneNumber": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/Zip"
+          },
+          "salesLastYear": {
+            "type": "number"
+          },
+          "salesYearToDate": {
+            "type": "number"
+          },
+          "socialSecurityNumber": {
+            "type": "string"
+          },
+          "usualMedium": {
+            "type": "string"
+          },
+          "usualStyle": {
+            "type": "string"
+          },
+          "usualType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "artistId",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "Zip": {
+        "type": "object",
+        "properties": {
+          "zip": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "city",
+          "state",
+          "zip"
         ]
       },
       "Collector": {

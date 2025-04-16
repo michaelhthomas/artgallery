@@ -37,6 +37,30 @@ export type AuthResponse = {
     lastName: string;
 };
 
+export type Artist = {
+    artistId: number;
+    firstName: string;
+    lastName: string;
+    interviewDate?: string;
+    interviewerName?: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    street?: string;
+    zip?: Zip;
+    salesLastYear?: number;
+    salesYearToDate?: number;
+    socialSecurityNumber?: string;
+    usualMedium?: string;
+    usualStyle?: string;
+    usualType?: string;
+};
+
+export type Zip = {
+    zip: string;
+    city: string;
+    state: string;
+};
+
 export type Collector = {
     socialSecurityNumber: string;
     firstName: string;
@@ -60,6 +84,18 @@ export type LoginData = {
 };
 
 export type LoginResponse = AuthResponse;
+
+export type GetAllArtistsData = {
+    q?: string;
+};
+
+export type GetAllArtistsResponse = Array<Artist>;
+
+export type CreateArtistData = {
+    artist: Artist;
+};
+
+export type CreateArtistResponse = Artist;
 
 export type GetProtectedResourceResponse = {
     [key: string]: {
@@ -92,6 +128,26 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: AuthResponse;
+            };
+        };
+    };
+    '/api/artist': {
+        get: {
+            req: GetAllArtistsData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<Artist>;
+            };
+        };
+        post: {
+            req: CreateArtistData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Artist;
             };
         };
     };

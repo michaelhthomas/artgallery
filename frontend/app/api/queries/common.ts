@@ -1,7 +1,13 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { AuthControllerService, CollectorControllerService, ResourceControllerService } from "../requests/services.gen";
+import { ArtistControllerService, AuthControllerService, CollectorControllerService, ResourceControllerService } from "../requests/services.gen";
+export type ArtistControllerServiceGetAllArtistsDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getAllArtists>>;
+export type ArtistControllerServiceGetAllArtistsQueryResult<TData = ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtistControllerServiceGetAllArtistsKey = "ArtistControllerServiceGetAllArtists";
+export const UseArtistControllerServiceGetAllArtistsKeyFn = ({ q }: {
+  q?: string;
+} = {}, queryKey?: Array<unknown>) => [useArtistControllerServiceGetAllArtistsKey, ...(queryKey ?? [{ q }])];
 export type ResourceControllerServiceGetProtectedResourceDefaultResponse = Awaited<ReturnType<typeof ResourceControllerService.getProtectedResource>>;
 export type ResourceControllerServiceGetProtectedResourceQueryResult<TData = ResourceControllerServiceGetProtectedResourceDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useResourceControllerServiceGetProtectedResourceKey = "ResourceControllerServiceGetProtectedResource";
@@ -23,3 +29,4 @@ export const UseCollectorControllerServiceGetCollectorByIdKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorByIdKey, ...(queryKey ?? [{ id }])];
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
+export type ArtistControllerServiceCreateArtistMutationResult = Awaited<ReturnType<typeof ArtistControllerService.createArtist>>;
