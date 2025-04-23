@@ -11,13 +11,6 @@ import {
 export default function ArtistCard(artist: Artist) {
   return (
     <Card>
-      <div className="aspect-square w-full">
-        {/* <img
-          src={artist.image ?? "/placeholder.svg"}
-          alt={artist.name}
-          className="h-full w-full object-cover"
-        /> */}
-      </div>
       <CardHeader>
         <CardTitle>
           {artist.firstName} {artist.lastName}
@@ -41,6 +34,9 @@ export default function ArtistCard(artist: Artist) {
           <div className="text-muted-foreground">{artist.salesYearToDate}</div>
         </div>
       </CardContent>
+
+      <div className="flex flex-grow" />
+
       <CardFooter className="flex gap-2">
         <Button variant="outline" size="sm" className="flex-1">
           Profile
