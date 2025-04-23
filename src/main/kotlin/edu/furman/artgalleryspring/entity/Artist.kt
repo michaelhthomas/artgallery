@@ -8,8 +8,9 @@ import jakarta.persistence.*
 @Table(name = "Artist")
 data class Artist(
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ArtistId")
-    val artistId: Int,
+    var artistId: Int? = null,
 
     @Column(name = "firstName", nullable = false, length = 15)
     val firstName: String,
@@ -32,7 +33,7 @@ data class Artist(
     @Column(name = "street", length = 50)
     val street: String? = null,
 
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL])
     val zip: Zip? = null,
 
     @Column(name = "salesLastYear", precision = 8, scale = 2)

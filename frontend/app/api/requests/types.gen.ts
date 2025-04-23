@@ -37,8 +37,70 @@ export type AuthResponse = {
     lastName: string;
 };
 
+/**
+ * Artist Creation Request
+ */
+export type ArtistCreateRequest = {
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Date of interview
+     */
+    interviewDate?: string;
+    /**
+     * Interviewer name
+     */
+    interviewerName?: string;
+    /**
+     * Area code
+     */
+    areaCode?: string;
+    /**
+     * Telephone number
+     */
+    telephoneNumber?: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * City
+     */
+    city?: string;
+    /**
+     * State
+     */
+    state?: string;
+    /**
+     * Zip code
+     */
+    zipCode?: string;
+    /**
+     * Social security number
+     */
+    socialSecurityNumber?: string;
+    /**
+     * Usual medium
+     */
+    usualMedium?: string;
+    /**
+     * Usual style
+     */
+    usualStyle?: string;
+    /**
+     * Usual type
+     */
+    usualType?: string;
+};
+
 export type Artist = {
-    artistId: number;
+    artistId?: number;
     firstName: string;
     lastName: string;
     interviewDate?: string;
@@ -92,7 +154,7 @@ export type GetAllArtistsData = {
 export type GetAllArtistsResponse = Array<Artist>;
 
 export type CreateArtistData = {
-    artist: Artist;
+    requestBody: ArtistCreateRequest;
 };
 
 export type CreateArtistResponse = Artist;

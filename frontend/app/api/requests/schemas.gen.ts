@@ -53,6 +53,87 @@ export const $AuthResponse = {
     required: ['email', 'firstName', 'lastName', 'token', 'username']
 } as const;
 
+export const $ArtistCreateRequest = {
+    type: 'object',
+    description: 'Artist Creation Request',
+    properties: {
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Bob',
+            minLength: 1
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Smith',
+            minLength: 1
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date',
+            description: 'Date of interview',
+            example: '2023-01-01'
+        },
+        interviewerName: {
+            type: 'string',
+            description: 'Interviewer name',
+            example: 'Kevin Treu'
+        },
+        areaCode: {
+            type: 'string',
+            description: 'Area code',
+            example: 123
+        },
+        telephoneNumber: {
+            type: 'string',
+            description: 'Telephone number',
+            example: 1234567
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 123
+        },
+        city: {
+            type: 'string',
+            description: 'City',
+            example: 'Anytown'
+        },
+        state: {
+            type: 'string',
+            description: 'State',
+            example: 'CA'
+        },
+        zipCode: {
+            type: 'string',
+            description: 'Zip code',
+            example: 12345
+        },
+        socialSecurityNumber: {
+            type: 'string',
+            description: 'Social security number',
+            example: '123-45-6789'
+        },
+        usualMedium: {
+            type: 'string',
+            description: 'Usual medium',
+            example: 'Oil'
+        },
+        usualStyle: {
+            type: 'string',
+            description: 'Usual style',
+            example: 'Abstract'
+        },
+        usualType: {
+            type: 'string',
+            description: 'Usual type',
+            example: 'Painting'
+        }
+    },
+    required: ['firstName', 'lastName']
+} as const;
+
 export const $Artist = {
     type: 'object',
     properties: {
@@ -104,7 +185,7 @@ export const $Artist = {
             type: 'string'
         }
     },
-    required: ['artistId', 'firstName', 'lastName']
+    required: ['firstName', 'lastName']
 } as const;
 
 export const $Zip = {

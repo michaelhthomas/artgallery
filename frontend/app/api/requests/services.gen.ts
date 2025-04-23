@@ -42,7 +42,7 @@ export class ArtistControllerService {
     
     /**
      * @param data The data for the request.
-     * @param data.artist
+     * @param data.requestBody
      * @returns Artist OK
      * @throws ApiError
      */
@@ -50,9 +50,8 @@ export class ArtistControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/artist',
-            query: {
-                artist: data.artist
-            }
+            body: data.requestBody,
+            mediaType: 'application/json'
         });
     }
     

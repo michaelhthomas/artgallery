@@ -2,7 +2,7 @@
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { ArtistControllerService, AuthControllerService, CollectorControllerService, ResourceControllerService } from "../requests/services.gen";
-import { Artist, AuthRequest } from "../requests/types.gen";
+import { ArtistCreateRequest, AuthRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const useArtistControllerServiceGetAllArtists = <TData = Common.ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
@@ -21,7 +21,7 @@ export const useAuthControllerServiceLogin = <TData = Common.AuthControllerServi
   requestBody: AuthRequest;
 }, TContext>({ mutationFn: ({ requestBody }) => AuthControllerService.login({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useArtistControllerServiceCreateArtist = <TData = Common.ArtistControllerServiceCreateArtistMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
-  artist: Artist;
+  requestBody: ArtistCreateRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
-  artist: Artist;
-}, TContext>({ mutationFn: ({ artist }) => ArtistControllerService.createArtist({ artist }) as unknown as Promise<TData>, ...options });
+  requestBody: ArtistCreateRequest;
+}, TContext>({ mutationFn: ({ requestBody }) => ArtistControllerService.createArtist({ requestBody }) as unknown as Promise<TData>, ...options });
