@@ -36,6 +36,13 @@ OpenAPI.interceptors.request.use((req) => {
   return req;
 });
 
+OpenAPI.interceptors.response.use((res) => {
+  if (res.status === 401) {
+    useUserInfo.getState().clearUserInfo();
+  }
+  return res;
+});
+
 const queryClient = new QueryClient();
 
 // Render the app
