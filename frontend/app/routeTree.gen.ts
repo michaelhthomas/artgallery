@@ -17,7 +17,7 @@ import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as AppExhibitionsImport } from './routes/_app/exhibitions'
 import { Route as AppCollectorsImport } from './routes/_app/collectors'
 import { Route as AppArtworksImport } from './routes/_app/artworks'
-import { Route as AppArtistsImport } from './routes/_app/artists'
+import { Route as AppArtistsIndexImport } from './routes/_app/artists/index'
 import { Route as AppArtworkIdImport } from './routes/_app/artwork/$id'
 
 // Create/Update Routes
@@ -57,9 +57,9 @@ const AppArtworksRoute = AppArtworksImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppArtistsRoute = AppArtistsImport.update({
-  id: '/artists',
-  path: '/artists',
+const AppArtistsIndexRoute = AppArtistsIndexImport.update({
+  id: '/artists/',
+  path: '/artists/',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -79,13 +79,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
-    }
-    '/_app/artists': {
-      id: '/_app/artists'
-      path: '/artists'
-      fullPath: '/artists'
-      preLoaderRoute: typeof AppArtistsImport
-      parentRoute: typeof AppImport
     }
     '/_app/artworks': {
       id: '/_app/artworks'
@@ -129,94 +122,101 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppArtworkIdImport
       parentRoute: typeof AppImport
     }
+    '/_app/artists/': {
+      id: '/_app/artists/'
+      path: '/artists'
+      fullPath: '/artists'
+      preLoaderRoute: typeof AppArtistsIndexImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AppRouteChildren {
-  AppArtistsRoute: typeof AppArtistsRoute
   AppArtworksRoute: typeof AppArtworksRoute
   AppCollectorsRoute: typeof AppCollectorsRoute
   AppExhibitionsRoute: typeof AppExhibitionsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppArtworkIdRoute: typeof AppArtworkIdRoute
+  AppArtistsIndexRoute: typeof AppArtistsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppArtistsRoute: AppArtistsRoute,
   AppArtworksRoute: AppArtworksRoute,
   AppCollectorsRoute: AppCollectorsRoute,
   AppExhibitionsRoute: AppExhibitionsRoute,
   AppIndexRoute: AppIndexRoute,
   AppArtworkIdRoute: AppArtworkIdRoute,
+  AppArtistsIndexRoute: AppArtistsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof AppRouteWithChildren
-  '/artists': typeof AppArtistsRoute
   '/artworks': typeof AppArtworksRoute
   '/collectors': typeof AppCollectorsRoute
   '/exhibitions': typeof AppExhibitionsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
+  '/artists': typeof AppArtistsIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/artists': typeof AppArtistsRoute
   '/artworks': typeof AppArtworksRoute
   '/collectors': typeof AppCollectorsRoute
   '/exhibitions': typeof AppExhibitionsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
+  '/artists': typeof AppArtistsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_app': typeof AppRouteWithChildren
-  '/_app/artists': typeof AppArtistsRoute
   '/_app/artworks': typeof AppArtworksRoute
   '/_app/collectors': typeof AppCollectorsRoute
   '/_app/exhibitions': typeof AppExhibitionsRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
   '/_app/artwork/$id': typeof AppArtworkIdRoute
+  '/_app/artists/': typeof AppArtistsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/artists'
     | '/artworks'
     | '/collectors'
     | '/exhibitions'
     | '/login'
     | '/'
     | '/artwork/$id'
+    | '/artists'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/artists'
     | '/artworks'
     | '/collectors'
     | '/exhibitions'
     | '/login'
     | '/'
     | '/artwork/$id'
+    | '/artists'
   id:
     | '__root__'
     | '/_app'
-    | '/_app/artists'
     | '/_app/artworks'
     | '/_app/collectors'
     | '/_app/exhibitions'
     | '/_auth/login'
     | '/_app/'
     | '/_app/artwork/$id'
+    | '/_app/artists/'
   fileRoutesById: FileRoutesById
 }
 
@@ -247,17 +247,13 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/artists",
         "/_app/artworks",
         "/_app/collectors",
         "/_app/exhibitions",
         "/_app/",
-        "/_app/artwork/$id"
+        "/_app/artwork/$id",
+        "/_app/artists/"
       ]
-    },
-    "/_app/artists": {
-      "filePath": "_app/artists.tsx",
-      "parent": "/_app"
     },
     "/_app/artworks": {
       "filePath": "_app/artworks.tsx",
@@ -280,6 +276,10 @@ export const routeTree = rootRoute
     },
     "/_app/artwork/$id": {
       "filePath": "_app/artwork/$id.tsx",
+      "parent": "/_app"
+    },
+    "/_app/artists/": {
+      "filePath": "_app/artists/index.tsx",
       "parent": "/_app"
     }
   }

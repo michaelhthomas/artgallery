@@ -5,6 +5,7 @@ import "../app.css";
 import { useUserInfo } from "~/stores/user-info";
 import { useEffect } from "react";
 import PageNotFound from "~/components/error/PageNotFound";
+import { Toaster } from "~/components/ui/sonner";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -25,6 +26,7 @@ function RootLayout() {
   return (
     <>
       <Outlet />
+      <Toaster position="top-right" />
       <TanStackRouterDevtools />
     </>
   );
