@@ -24,6 +24,10 @@ class ArtistController(
             else -> repository.findAll()
         }
 
+    @GetMapping("/{id}")
+    fun getArtist(@PathVariable id: Long): Artist? =
+        repository.findById(id).orElse(null)
+
     @PostMapping
     fun createArtist(@RequestBody artist: ArtistCreateRequest): Artist {
         val zip = if (!artist.zipCode.isNullOrEmpty()) {

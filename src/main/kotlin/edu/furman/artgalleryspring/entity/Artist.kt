@@ -3,6 +3,7 @@ package edu.furman.artgalleryspring.entity
 import java.math.BigDecimal
 import java.time.LocalDate
 import jakarta.persistence.*
+import org.hibernate.annotations.Formula
 
 @Entity
 @Table(name = "Artist")
@@ -36,10 +37,10 @@ data class Artist(
     @OneToOne(cascade = [CascadeType.ALL])
     val zip: Zip? = null,
 
-    @Column(name = "salesLastYear", precision = 8, scale = 2)
+    @Formula("($SUM_ARTIST_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()) - 1)")
     val salesLastYear: BigDecimal? = null,
 
-    @Column(name = "salesYearToDate", precision = 8, scale = 2)
+    @Formula("($SUM_ARTIST_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()))")
     val salesYearToDate: BigDecimal? = null,
 
     @Column(name = "socialSecurityNumber", columnDefinition = "char(9)")
@@ -53,4 +54,10 @@ data class Artist(
 
     @Column(name = "usualType", length = 20)
     val usualType: String? = null
-)
+) {
+    companion object {
+        const val SUM_ARTIST_SALES =
+            "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +
+            "WHERE s.artworkId = w.artworkId AND w.artistId = artistId"
+    }
+}
