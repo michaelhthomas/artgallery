@@ -439,6 +439,147 @@ export const $AuthResponse = {
     required: ['email', 'firstName', 'lastName', 'token', 'username']
 } as const;
 
+export const $ArtworkCreateRequest = {
+    type: 'object',
+    description: 'Artwork Creation Request',
+    properties: {
+        artistId: {
+            type: 'integer',
+            format: 'int32',
+            description: 'Artist ID',
+            example: 1
+        },
+        workTitle: {
+            type: 'string',
+            description: 'Title of the artwork',
+            example: 'Starry Night',
+            maxLength: 50,
+            minLength: 2
+        },
+        workYearCompleted: {
+            type: 'string',
+            description: 'Year completed',
+            example: 1889,
+            maxLength: 4,
+            minLength: 4
+        },
+        workMedium: {
+            type: 'string',
+            description: 'Medium',
+            example: 'Oil',
+            maxLength: 15,
+            minLength: 2
+        },
+        workStyle: {
+            type: 'string',
+            description: 'Style',
+            example: 'Abstract',
+            maxLength: 15,
+            minLength: 2
+        },
+        workType: {
+            type: 'string',
+            description: 'Type',
+            example: 'Painting',
+            maxLength: 20,
+            minLength: 2
+        },
+        workSize: {
+            type: 'string',
+            description: 'Size',
+            example: '24x36',
+            maxLength: 15,
+            minLength: 2
+        },
+        collectorSocialSecurityNumber: {
+            type: 'string',
+            description: "Collector's social security number",
+            example: 123456789,
+            maxLength: 9,
+            minLength: 9
+        },
+        dateListed: {
+            type: 'string',
+            format: 'date',
+            description: 'Date listed',
+            example: '2023-01-01'
+        },
+        askingPrice: {
+            type: 'string',
+            description: 'Asking price in USD',
+            example: 5000
+        }
+    },
+    required: ['artistId', 'workMedium', 'workSize', 'workStyle', 'workTitle', 'workType', 'workYearCompleted']
+} as const;
+
+export const $Artwork = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artist: {
+            '$ref': '#/components/schemas/Artist'
+        },
+        workTitle: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        askingPrice: {
+            type: 'number'
+        },
+        dateListed: {
+            type: 'string',
+            format: 'date'
+        },
+        dateReturned: {
+            type: 'string',
+            format: 'date'
+        },
+        dateShown: {
+            type: 'string',
+            format: 'date'
+        },
+        status: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workMedium: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workSize: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workStyle: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workType: {
+            type: 'string',
+            maxLength: 20,
+            minLength: 0
+        },
+        workYearCompleted: {
+            type: 'string',
+            maxLength: 4,
+            minLength: 0
+        },
+        collector: {
+            '$ref': '#/components/schemas/Collector'
+        }
+    },
+    required: ['artist', 'workTitle']
+} as const;
+
 export const $ArtistCreateRequest = {
     type: 'object',
     description: 'Artist Creation Request',
@@ -518,4 +659,47 @@ export const $ArtistCreateRequest = {
         }
     },
     required: ['firstName', 'lastName']
+} as const;
+
+export const $ArtworkResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artistId: {
+            type: 'integer',
+            format: 'int32'
+        },
+        workTitle: {
+            type: 'string'
+        },
+        workYearCompleted: {
+            type: 'string'
+        },
+        workMedium: {
+            type: 'string'
+        },
+        workStyle: {
+            type: 'string'
+        },
+        workType: {
+            type: 'string'
+        },
+        workSize: {
+            type: 'string'
+        },
+        collectorId: {
+            type: 'string'
+        },
+        dateListed: {
+            type: 'string',
+            format: 'date'
+        },
+        askingPrice: {
+            type: 'number'
+        }
+    },
+    required: ['artistId', 'id']
 } as const;

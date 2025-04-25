@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, SignupForMailingListData, SignupForMailingListResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
+import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, SignupForMailingListData, SignupForMailingListResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
 
 export class ProfileControllerService {
     /**
@@ -135,6 +135,60 @@ export class AuthControllerService {
             url: '/api/auth/login',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
+
+export class ArtworkControllerService {
+    /**
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static getAllArtworks(): CancelablePromise<GetAllArtworksResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/artworks',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns Artwork OK
+     * @throws ApiError
+     */
+    public static createArtwork(data: CreateArtworkData): CancelablePromise<CreateArtworkResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/artworks',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static getArtworkById(data: GetArtworkByIdData): CancelablePromise<GetArtworkByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/artworks/{id}',
+            path: {
+                id: data.id
+            },
             errors: {
                 422: 'Unprocessable Entity'
             }

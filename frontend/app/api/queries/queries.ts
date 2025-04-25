@@ -1,16 +1,20 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { ArtistControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
-import { ArtistCreateRequest, AuthRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest } from "../requests/types.gen";
+import { ArtistControllerService, ArtworkControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistCreateRequest, ArtworkCreateRequest, AuthRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const useProfileControllerServiceGetProfile = <TData = Common.ProfileControllerServiceGetProfileDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(queryKey), queryFn: () => ProfileControllerService.getProfile() as TData, ...options });
 export const useCollectorControllerServiceGetAllCollectors = <TData = Common.CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetAllCollectorsKeyFn({ q }, queryKey), queryFn: () => CollectorControllerService.getAllCollectors({ q }) as TData, ...options });
 export const useCollectorControllerServiceGetCollectorById = <TData = Common.CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
-  id: number;
+  id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorByIdKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollectorById({ id }) as TData, ...options });
+export const useArtworkControllerServiceGetAllArtworks = <TData = Common.ArtworkControllerServiceGetAllArtworksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(queryKey), queryFn: () => ArtworkControllerService.getAllArtworks() as TData, ...options });
+export const useArtworkControllerServiceGetArtworkById = <TData = Common.ArtworkControllerServiceGetArtworkByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }, queryKey), queryFn: () => ArtworkControllerService.getArtworkById({ id }) as TData, ...options });
 export const useArtistControllerServiceGetAllArtists = <TData = Common.ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }, queryKey), queryFn: () => ArtistControllerService.getAllArtists({ q }) as TData, ...options });
@@ -37,6 +41,11 @@ export const useAuthControllerServiceLogin = <TData = Common.AuthControllerServi
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: AuthRequest;
 }, TContext>({ mutationFn: ({ requestBody }) => AuthControllerService.login({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useArtworkControllerServiceCreateArtwork = <TData = Common.ArtworkControllerServiceCreateArtworkMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: ArtworkCreateRequest;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: ArtworkCreateRequest;
+}, TContext>({ mutationFn: ({ requestBody }) => ArtworkControllerService.createArtwork({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useArtistControllerServiceCreateArtist = <TData = Common.ArtistControllerServiceCreateArtistMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: ArtistCreateRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

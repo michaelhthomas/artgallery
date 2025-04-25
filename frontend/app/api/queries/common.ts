@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
 export type ProfileControllerServiceGetProfileDefaultResponse = Awaited<ReturnType<typeof ProfileControllerService.getProfile>>;
 export type ProfileControllerServiceGetProfileQueryResult<TData = ProfileControllerServiceGetProfileDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useProfileControllerServiceGetProfileKey = "ProfileControllerServiceGetProfile";
@@ -16,8 +16,18 @@ export type CollectorControllerServiceGetCollectorByIdDefaultResponse = Awaited<
 export type CollectorControllerServiceGetCollectorByIdQueryResult<TData = CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCollectorControllerServiceGetCollectorByIdKey = "CollectorControllerServiceGetCollectorById";
 export const UseCollectorControllerServiceGetCollectorByIdKeyFn = ({ id }: {
-  id: number;
+  id: string;
 }, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorByIdKey, ...(queryKey ?? [{ id }])];
+export type ArtworkControllerServiceGetAllArtworksDefaultResponse = Awaited<ReturnType<typeof ArtworkControllerService.getAllArtworks>>;
+export type ArtworkControllerServiceGetAllArtworksQueryResult<TData = ArtworkControllerServiceGetAllArtworksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtworkControllerServiceGetAllArtworksKey = "ArtworkControllerServiceGetAllArtworks";
+export const UseArtworkControllerServiceGetAllArtworksKeyFn = (queryKey?: Array<unknown>) => [useArtworkControllerServiceGetAllArtworksKey, ...(queryKey ?? [])];
+export type ArtworkControllerServiceGetArtworkByIdDefaultResponse = Awaited<ReturnType<typeof ArtworkControllerService.getArtworkById>>;
+export type ArtworkControllerServiceGetArtworkByIdQueryResult<TData = ArtworkControllerServiceGetArtworkByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtworkControllerServiceGetArtworkByIdKey = "ArtworkControllerServiceGetArtworkById";
+export const UseArtworkControllerServiceGetArtworkByIdKeyFn = ({ id }: {
+  id: number;
+}, queryKey?: Array<unknown>) => [useArtworkControllerServiceGetArtworkByIdKey, ...(queryKey ?? [{ id }])];
 export type ArtistControllerServiceGetAllArtistsDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getAllArtists>>;
 export type ArtistControllerServiceGetAllArtistsQueryResult<TData = ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtistControllerServiceGetAllArtistsKey = "ArtistControllerServiceGetAllArtists";
@@ -34,4 +44,5 @@ export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<Return
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
+export type ArtworkControllerServiceCreateArtworkMutationResult = Awaited<ReturnType<typeof ArtworkControllerService.createArtwork>>;
 export type ArtistControllerServiceCreateArtistMutationResult = Awaited<ReturnType<typeof ArtistControllerService.createArtist>>;

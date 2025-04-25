@@ -24,7 +24,7 @@ class CollectorController(
         }
 
     @GetMapping("/{id}")
-    fun getCollectorById(@PathVariable id: Long): Collector? {
+    fun getCollectorById(@PathVariable id: String): Collector? {
         return collectorRepository.findById(id).getOrNull()
     }
 

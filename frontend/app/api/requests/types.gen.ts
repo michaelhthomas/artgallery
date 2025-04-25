@@ -261,6 +261,69 @@ export type AuthResponse = {
 };
 
 /**
+ * Artwork Creation Request
+ */
+export type ArtworkCreateRequest = {
+    /**
+     * Artist ID
+     */
+    artistId: number;
+    /**
+     * Title of the artwork
+     */
+    workTitle: string;
+    /**
+     * Year completed
+     */
+    workYearCompleted: string;
+    /**
+     * Medium
+     */
+    workMedium: string;
+    /**
+     * Style
+     */
+    workStyle: string;
+    /**
+     * Type
+     */
+    workType: string;
+    /**
+     * Size
+     */
+    workSize: string;
+    /**
+     * Collector's social security number
+     */
+    collectorSocialSecurityNumber?: string;
+    /**
+     * Date listed
+     */
+    dateListed?: string;
+    /**
+     * Asking price in USD
+     */
+    askingPrice?: string;
+};
+
+export type Artwork = {
+    id?: number;
+    artist: Artist;
+    workTitle: string;
+    askingPrice?: number;
+    dateListed?: string;
+    dateReturned?: string;
+    dateShown?: string;
+    status?: string;
+    workMedium?: string;
+    workSize?: string;
+    workStyle?: string;
+    workType?: string;
+    workYearCompleted?: string;
+    collector?: Collector;
+};
+
+/**
  * Artist Creation Request
  */
 export type ArtistCreateRequest = {
@@ -322,6 +385,20 @@ export type ArtistCreateRequest = {
     usualType?: string;
 };
 
+export type ArtworkResponse = {
+    id: number;
+    artistId: number;
+    workTitle?: string;
+    workYearCompleted?: string;
+    workMedium?: string;
+    workStyle?: string;
+    workType?: string;
+    workSize?: string;
+    collectorId?: string;
+    dateListed?: string;
+    askingPrice?: number;
+};
+
 export type GetProfileResponse = ProfileResponse;
 
 export type UpdateProfileData = {
@@ -349,7 +426,7 @@ export type CreateCollectorData = {
 export type CreateCollectorResponse = Collector;
 
 export type GetCollectorByIdData = {
-    id: number;
+    id: string;
 };
 
 export type GetCollectorByIdResponse = Collector;
@@ -359,6 +436,20 @@ export type LoginData = {
 };
 
 export type LoginResponse = AuthResponse;
+
+export type GetAllArtworksResponse = Array<ArtworkResponse>;
+
+export type CreateArtworkData = {
+    requestBody: ArtworkCreateRequest;
+};
+
+export type CreateArtworkResponse = Artwork;
+
+export type GetArtworkByIdData = {
+    id: number;
+};
+
+export type GetArtworkByIdResponse = ArtworkResponse;
 
 export type GetAllArtistsData = {
     q?: string;
@@ -472,6 +563,48 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: AuthResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/artworks': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ArtworkResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+        post: {
+            req: CreateArtworkData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Artwork;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/artworks/{id}': {
+        get: {
+            req: GetArtworkByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: ArtworkResponse;
                 /**
                  * Unprocessable Entity
                  */

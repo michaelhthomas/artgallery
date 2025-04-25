@@ -16,12 +16,12 @@ data class Artwork (
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "artistId", nullable = false)
-	var artist: Artist? = null,
+	var artist: Artist,
 
     @Size(max = 50)
     @NotNull
     @Column(name = "workTitle", nullable = false, length = 50)
-	var workTitle: String? = null,
+	var workTitle: String,
 
     @Column(name = "askingPrice", precision = 8, scale = 2)
 	var askingPrice: BigDecimal? = null,
@@ -61,5 +61,5 @@ data class Artwork (
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectorSocialSecurityNumber")
-	var collectorSocialSecurityNumber: Collector? = null
+	var collector: Collector? = null
 )

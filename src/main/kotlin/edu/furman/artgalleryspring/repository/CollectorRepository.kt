@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CollectorRepository : JpaRepository<Collector, Long> {
+interface CollectorRepository : JpaRepository<Collector, String> {
     @Query("SELECT u FROM #{#entityName} u WHERE CONCAT(u.firstName, ' ', u.lastName) LIKE %?1%")
     fun findByNameLike(name: String): List<Collector>
 }
