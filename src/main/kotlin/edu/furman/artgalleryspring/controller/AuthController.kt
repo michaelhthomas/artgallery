@@ -2,8 +2,6 @@ package edu.furman.artgalleryspring.controller
 
 import edu.furman.artgalleryspring.dto.AuthRequest
 import edu.furman.artgalleryspring.dto.AuthResponse
-//import edu.furman.artgalleryspring.dto.SignupRequest
-import edu.furman.artgalleryspring.entity.User
 import edu.furman.artgalleryspring.repository.UserRepository
 import edu.furman.artgalleryspring.security.JwtTokenUtil
 import jakarta.validation.Valid
@@ -11,8 +9,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

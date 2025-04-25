@@ -3,6 +3,7 @@ import org.siouan.frontendgradleplugin.infrastructure.gradle.RunPnpmTaskType
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.noarg") version "2.1.20"
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
@@ -17,6 +18,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+noArg {
+    annotation("edu.furman.artgalleryspring.annotations.NoArg")
 }
 
 frontend {
@@ -50,6 +55,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("org.modelmapper:modelmapper:3.1.1")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client:2.2.0")

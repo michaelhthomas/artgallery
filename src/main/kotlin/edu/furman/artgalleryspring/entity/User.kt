@@ -14,19 +14,24 @@ class User(
     @Column(unique = true)
     private val username: String,
 
-    private val password: String,
+    private var password: String,
 
     @Column(unique = true)
-    val email: String,
+    var email: String,
 
-    val firstName: String,
+    var firstName: String,
     
-    val lastName: String,
+    var lastName: String,
+
+    @Column(columnDefinition = "LONGTEXT")
+    var avatarUrl: String = "",
 ) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> = emptyList()
 
     override fun getPassword(): String = password
+
+    fun setPassword(newPassword: String) { password = newPassword }
 
     override fun getUsername(): String = username
 

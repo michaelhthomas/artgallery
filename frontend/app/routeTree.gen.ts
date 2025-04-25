@@ -18,6 +18,7 @@ import { Route as AppExhibitionsImport } from './routes/_app/exhibitions'
 import { Route as AppCollectorsImport } from './routes/_app/collectors'
 import { Route as AppArtworksImport } from './routes/_app/artworks'
 import { Route as AppArtistsIndexImport } from './routes/_app/artists/index'
+import { Route as AppSettingsProfileImport } from './routes/_app/settings/profile'
 import { Route as AppArtworkIdImport } from './routes/_app/artwork/$id'
 
 // Create/Update Routes
@@ -60,6 +61,12 @@ const AppArtworksRoute = AppArtworksImport.update({
 const AppArtistsIndexRoute = AppArtistsIndexImport.update({
   id: '/artists/',
   path: '/artists/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppSettingsProfileRoute = AppSettingsProfileImport.update({
+  id: '/settings/profile',
+  path: '/settings/profile',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -122,6 +129,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppArtworkIdImport
       parentRoute: typeof AppImport
     }
+    '/_app/settings/profile': {
+      id: '/_app/settings/profile'
+      path: '/settings/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof AppSettingsProfileImport
+      parentRoute: typeof AppImport
+    }
     '/_app/artists/': {
       id: '/_app/artists/'
       path: '/artists'
@@ -140,6 +154,7 @@ interface AppRouteChildren {
   AppExhibitionsRoute: typeof AppExhibitionsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppArtworkIdRoute: typeof AppArtworkIdRoute
+  AppSettingsProfileRoute: typeof AppSettingsProfileRoute
   AppArtistsIndexRoute: typeof AppArtistsIndexRoute
 }
 
@@ -149,6 +164,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExhibitionsRoute: AppExhibitionsRoute,
   AppIndexRoute: AppIndexRoute,
   AppArtworkIdRoute: AppArtworkIdRoute,
+  AppSettingsProfileRoute: AppSettingsProfileRoute,
   AppArtistsIndexRoute: AppArtistsIndexRoute,
 }
 
@@ -162,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
+  '/settings/profile': typeof AppSettingsProfileRoute
   '/artists': typeof AppArtistsIndexRoute
 }
 
@@ -172,6 +189,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
+  '/settings/profile': typeof AppSettingsProfileRoute
   '/artists': typeof AppArtistsIndexRoute
 }
 
@@ -184,6 +202,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
   '/_app/artwork/$id': typeof AppArtworkIdRoute
+  '/_app/settings/profile': typeof AppSettingsProfileRoute
   '/_app/artists/': typeof AppArtistsIndexRoute
 }
 
@@ -197,6 +216,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/'
     | '/artwork/$id'
+    | '/settings/profile'
     | '/artists'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -206,6 +226,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/'
     | '/artwork/$id'
+    | '/settings/profile'
     | '/artists'
   id:
     | '__root__'
@@ -216,6 +237,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_app/'
     | '/_app/artwork/$id'
+    | '/_app/settings/profile'
     | '/_app/artists/'
   fileRoutesById: FileRoutesById
 }
@@ -252,6 +274,7 @@ export const routeTree = rootRoute
         "/_app/exhibitions",
         "/_app/",
         "/_app/artwork/$id",
+        "/_app/settings/profile",
         "/_app/artists/"
       ]
     },
@@ -276,6 +299,10 @@ export const routeTree = rootRoute
     },
     "/_app/artwork/$id": {
       "filePath": "_app/artwork/$id.tsx",
+      "parent": "/_app"
+    },
+    "/_app/settings/profile": {
+      "filePath": "_app/settings/profile.tsx",
       "parent": "/_app"
     },
     "/_app/artists/": {

@@ -12,6 +12,84 @@
     }
   ],
   "paths": {
+    "/api/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "getProfile",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "updateProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/auth/login": {
       "post": {
         "tags": [
@@ -29,6 +107,16 @@
           "required": true
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -59,6 +147,16 @@
           }
         ],
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -95,6 +193,16 @@
           "required": true
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -120,6 +228,16 @@
         ],
         "operationId": "getProtectedResource",
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -148,6 +266,16 @@
         ],
         "operationId": "getPublicResource",
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -181,6 +309,16 @@
           }
         ],
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -220,6 +358,16 @@
           }
         ],
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -237,10 +385,149 @@
           }
         ]
       }
+    },
+    "/api/artist/{id}": {
+      "get": {
+        "tags": [
+          "artist-controller"
+        ],
+        "operationId": "getArtist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Artist"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
+      "ValidationErrorResponse": {
+        "type": "object",
+        "description": "Structured response returned when validation fails",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Human-readable error summary message",
+            "example": "Validation failed with 2 errors"
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "Map of field names to lists of error messages",
+            "example": {
+              "email": [
+                "Invalid format",
+                "Email already in use"
+              ],
+              "password": [
+                "Too weak"
+              ]
+            }
+          }
+        },
+        "required": [
+          "errors",
+          "message"
+        ]
+      },
+      "ProfileUpdateRequest": {
+        "type": "object",
+        "description": "User profile information update",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user.",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user.",
+            "example": "Smith"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the user.",
+            "example": "john.smith@gmail.com"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "URL to an avatar image for the user.",
+            "example": "https://example.com"
+          },
+          "currentPassword": {
+            "type": "string",
+            "description": "User\u0027s current password",
+            "example": "password123"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password for the user",
+            "example": "password123"
+          }
+        }
+      },
+      "ProfileResponse": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "avatarUrl",
+          "email",
+          "firstName",
+          "lastName"
+        ]
+      },
       "AuthRequest": {
         "type": "object",
         "description": "API Login and Authorization Request",
@@ -488,7 +775,7 @@
             "type": "string"
           },
           "zip": {
-            "type": "string"
+            "$ref": "#/components/schemas/Zip"
           },
           "salesLastYear": {
             "type": "number"
@@ -497,8 +784,7 @@
             "type": "number"
           },
           "collectionArtistId": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Artist"
           },
           "collectionMedium": {
             "type": "string"

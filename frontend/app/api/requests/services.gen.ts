@@ -3,7 +3,42 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetProtectedResourceResponse, GetPublicResourceResponse, GetAllCollectorsData, GetAllCollectorsResponse, GetCollectorByIdData, GetCollectorByIdResponse } from './types.gen';
+import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetProtectedResourceResponse, GetPublicResourceResponse, GetAllCollectorsData, GetAllCollectorsResponse, GetCollectorByIdData, GetCollectorByIdResponse } from './types.gen';
+
+export class ProfileControllerService {
+    /**
+     * @returns ProfileResponse OK
+     * @throws ApiError
+     */
+    public static getProfile(): CancelablePromise<GetProfileResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/profile',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ProfileResponse OK
+     * @throws ApiError
+     */
+    public static updateProfile(data: UpdateProfileData): CancelablePromise<UpdateProfileResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/profile',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
 
 export class AuthControllerService {
     /**
@@ -17,7 +52,10 @@ export class AuthControllerService {
             method: 'POST',
             url: '/api/auth/login',
             body: data.requestBody,
-            mediaType: 'application/json'
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
         });
     }
     
@@ -36,6 +74,9 @@ export class ArtistControllerService {
             url: '/api/artist',
             query: {
                 q: data.q
+            },
+            errors: {
+                422: 'Unprocessable Entity'
             }
         });
     }
@@ -51,7 +92,29 @@ export class ArtistControllerService {
             method: 'POST',
             url: '/api/artist',
             body: data.requestBody,
-            mediaType: 'application/json'
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Artist OK
+     * @throws ApiError
+     */
+    public static getArtist(data: GetArtistData): CancelablePromise<GetArtistResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/artist/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
         });
     }
     
@@ -65,7 +128,10 @@ export class ResourceControllerService {
     public static getProtectedResource(): CancelablePromise<GetProtectedResourceResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/resource'
+            url: '/api/resource',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
         });
     }
     
@@ -76,7 +142,10 @@ export class ResourceControllerService {
     public static getPublicResource(): CancelablePromise<GetPublicResourceResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/public/resource'
+            url: '/api/public/resource',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
         });
     }
     
@@ -95,6 +164,9 @@ export class CollectorControllerService {
             url: '/api/collectors',
             query: {
                 q: data.q
+            },
+            errors: {
+                422: 'Unprocessable Entity'
             }
         });
     }
@@ -111,6 +183,9 @@ export class CollectorControllerService {
             url: '/api/collectors/{id}',
             path: {
                 id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
             }
         });
     }
