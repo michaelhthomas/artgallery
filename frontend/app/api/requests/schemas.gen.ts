@@ -83,6 +83,95 @@ export const $ProfileResponse = {
     required: ['avatarUrl', 'email', 'firstName', 'lastName']
 } as const;
 
+export const $MailingListSignupRequest = {
+    type: 'object',
+    description: 'Mailing List Signup Request',
+    properties: {
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Jane',
+            maxLength: 15,
+            minLength: 0
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Doe',
+            maxLength: 20,
+            minLength: 0
+        },
+        areaCode: {
+            type: 'string',
+            description: 'Area code',
+            example: 864,
+            maxLength: 3,
+            minLength: 0
+        },
+        telephoneNumber: {
+            type: 'string',
+            description: 'Telephone number',
+            example: 5551234,
+            maxLength: 7,
+            minLength: 0
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 123,
+            maxLength: 50,
+            minLength: 0
+        },
+        city: {
+            type: 'string',
+            description: 'City',
+            example: 'Greenville'
+        },
+        state: {
+            type: 'string',
+            description: 'State',
+            example: 'SC'
+        },
+        zipCode: {
+            type: 'string',
+            description: 'Zip code',
+            example: 29601
+        },
+        preferredArtistFirstName: {
+            type: 'string',
+            description: 'Preferred artist first name',
+            example: 'Pablo'
+        },
+        preferredArtistLastName: {
+            type: 'string',
+            description: 'Preferred artist last name',
+            example: 'Picasso'
+        },
+        preferredMedium: {
+            type: 'string',
+            description: 'Preferred medium',
+            example: 'Watercolor',
+            maxLength: 15,
+            minLength: 0
+        },
+        preferredStyle: {
+            type: 'string',
+            description: 'Preferred style',
+            example: 'Impressionist',
+            maxLength: 15,
+            minLength: 0
+        },
+        preferredType: {
+            type: 'string',
+            description: 'Preferred type',
+            example: 'Landscape',
+            maxLength: 20,
+            minLength: 0
+        }
+    },
+    required: ['firstName', 'lastName']
+} as const;
+
 export const $CollectorCreateRequest = {
     type: 'object',
     description: 'Collector Creation Request',

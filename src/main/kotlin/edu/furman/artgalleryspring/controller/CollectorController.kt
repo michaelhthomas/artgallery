@@ -49,7 +49,7 @@ class CollectorController(
             artistRepository.findByFirstNameAndLastName(
                 collector.preferredArtistFirstName,
                 collector.preferredArtistLastName
-            )
+            ).orElse(null)
         else null
 
         // Convert to collector

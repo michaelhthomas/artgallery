@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, AuthControllerService, CollectorControllerService, ProfileControllerService, ResourceControllerService } from "../requests/services.gen";
+import { ArtistControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
 export type ProfileControllerServiceGetProfileDefaultResponse = Awaited<ReturnType<typeof ProfileControllerService.getProfile>>;
 export type ProfileControllerServiceGetProfileQueryResult<TData = ProfileControllerServiceGetProfileDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useProfileControllerServiceGetProfileKey = "ProfileControllerServiceGetProfile";
@@ -30,15 +30,8 @@ export const useArtistControllerServiceGetArtistKey = "ArtistControllerServiceGe
 export const UseArtistControllerServiceGetArtistKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistKey, ...(queryKey ?? [{ id }])];
-export type ResourceControllerServiceGetProtectedResourceDefaultResponse = Awaited<ReturnType<typeof ResourceControllerService.getProtectedResource>>;
-export type ResourceControllerServiceGetProtectedResourceQueryResult<TData = ResourceControllerServiceGetProtectedResourceDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useResourceControllerServiceGetProtectedResourceKey = "ResourceControllerServiceGetProtectedResource";
-export const UseResourceControllerServiceGetProtectedResourceKeyFn = (queryKey?: Array<unknown>) => [useResourceControllerServiceGetProtectedResourceKey, ...(queryKey ?? [])];
-export type ResourceControllerServiceGetPublicResourceDefaultResponse = Awaited<ReturnType<typeof ResourceControllerService.getPublicResource>>;
-export type ResourceControllerServiceGetPublicResourceQueryResult<TData = ResourceControllerServiceGetPublicResourceDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useResourceControllerServiceGetPublicResourceKey = "ResourceControllerServiceGetPublicResource";
-export const UseResourceControllerServiceGetPublicResourceKeyFn = (queryKey?: Array<unknown>) => [useResourceControllerServiceGetPublicResourceKey, ...(queryKey ?? [])];
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;
+export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
 export type ArtistControllerServiceCreateArtistMutationResult = Awaited<ReturnType<typeof ArtistControllerService.createArtist>>;

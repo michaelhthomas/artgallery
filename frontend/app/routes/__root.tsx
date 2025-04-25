@@ -1,9 +1,7 @@
-import { createRootRoute, Outlet, useLocation } from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import "../app.css";
-import { useUserInfo } from "~/stores/user-info";
-import { useEffect } from "react";
 import PageNotFound from "~/components/error/PageNotFound";
 import { Toaster } from "~/components/ui/sonner";
 
@@ -13,16 +11,6 @@ export const Route = createRootRoute({
 });
 
 function RootLayout() {
-  const location = useLocation();
-  const navigate = Route.useNavigate();
-  const userInfo = useUserInfo();
-
-  useEffect(() => {
-    if (userInfo.user == null && !location.pathname.startsWith("/login")) {
-      void navigate({ to: "/login" });
-    }
-  }, [userInfo, navigate, location]);
-
   return (
     <>
       <Outlet />

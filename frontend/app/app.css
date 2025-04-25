@@ -9,6 +9,11 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
 html,
 body {
   @apply bg-white dark:bg-neutral-950;
@@ -19,11 +24,15 @@ body {
 }
 
 html {
-  @apply h-full;
+  @apply h-full scroll-smooth;
 }
 
 body {
   @apply min-h-full grid;
+}
+
+#app {
+  @apply min-w-0;
 }
 
 @theme inline {

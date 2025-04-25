@@ -25,7 +25,7 @@ class ArtistController(
         }
 
     @GetMapping("/{id}")
-    fun getArtist(@PathVariable id: Long): Artist? =
+    fun getArtist(@PathVariable id: Int): Artist? =
         repository.findById(id).orElse(null)
 
     @PostMapping

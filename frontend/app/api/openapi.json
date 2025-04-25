@@ -11,6 +11,12 @@
       "description": "Generated server url"
     }
   ],
+  "tags": [
+    {
+      "name": "Mailing List",
+      "description": "Mailing list signup API"
+    }
+  ],
   "paths": {
     "/api/profile": {
       "get": {
@@ -78,6 +84,53 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/mailing-list/signup": {
+      "post": {
+        "tags": [
+          "Mailing List"
+        ],
+        "summary": "Sign up for mailing list",
+        "description": "Add a new potential customer to the mailing list",
+        "operationId": "signupForMailingList",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailingListSignupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -312,77 +365,6 @@
         ]
       }
     },
-    "/api/resource": {
-      "get": {
-        "tags": [
-          "resource-controller"
-        ],
-        "operationId": "getProtectedResource",
-        "responses": {
-          "422": {
-            "description": "Unprocessable Entity",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/public/resource": {
-      "get": {
-        "tags": [
-          "resource-controller"
-        ],
-        "operationId": "getPublicResource",
-        "responses": {
-          "422": {
-            "description": "Unprocessable Entity",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/collectors/{id}": {
       "get": {
         "tags": [
@@ -442,7 +424,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64"
+              "format": "int32"
             }
           }
         ],
@@ -567,6 +549,97 @@
         "required": [
           "avatarUrl",
           "email",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "MailingListSignupRequest": {
+        "type": "object",
+        "description": "Mailing List Signup Request",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "example": "Jane",
+            "maxLength": 15,
+            "minLength": 0
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "example": "Doe",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "areaCode": {
+            "type": "string",
+            "description": "Area code",
+            "example": 864,
+            "maxLength": 3,
+            "minLength": 0
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "description": "Telephone number",
+            "example": 5551234,
+            "maxLength": 7,
+            "minLength": 0
+          },
+          "street": {
+            "type": "string",
+            "description": "Street address",
+            "example": 123,
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Greenville"
+          },
+          "state": {
+            "type": "string",
+            "description": "State",
+            "example": "SC"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Zip code",
+            "example": 29601
+          },
+          "preferredArtistFirstName": {
+            "type": "string",
+            "description": "Preferred artist first name",
+            "example": "Pablo"
+          },
+          "preferredArtistLastName": {
+            "type": "string",
+            "description": "Preferred artist last name",
+            "example": "Picasso"
+          },
+          "preferredMedium": {
+            "type": "string",
+            "description": "Preferred medium",
+            "example": "Watercolor",
+            "maxLength": 15,
+            "minLength": 0
+          },
+          "preferredStyle": {
+            "type": "string",
+            "description": "Preferred style",
+            "example": "Impressionist",
+            "maxLength": 15,
+            "minLength": 0
+          },
+          "preferredType": {
+            "type": "string",
+            "description": "Preferred type",
+            "example": "Landscape",
+            "maxLength": 20,
+            "minLength": 0
+          }
+        },
+        "required": [
           "firstName",
           "lastName"
         ]

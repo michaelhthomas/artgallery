@@ -54,6 +54,64 @@ export type ProfileResponse = {
 };
 
 /**
+ * Mailing List Signup Request
+ */
+export type MailingListSignupRequest = {
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Area code
+     */
+    areaCode?: string;
+    /**
+     * Telephone number
+     */
+    telephoneNumber?: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * City
+     */
+    city?: string;
+    /**
+     * State
+     */
+    state?: string;
+    /**
+     * Zip code
+     */
+    zipCode?: string;
+    /**
+     * Preferred artist first name
+     */
+    preferredArtistFirstName?: string;
+    /**
+     * Preferred artist last name
+     */
+    preferredArtistLastName?: string;
+    /**
+     * Preferred medium
+     */
+    preferredMedium?: string;
+    /**
+     * Preferred style
+     */
+    preferredStyle?: string;
+    /**
+     * Preferred type
+     */
+    preferredType?: string;
+};
+
+/**
  * Collector Creation Request
  */
 export type CollectorCreateRequest = {
@@ -272,6 +330,12 @@ export type UpdateProfileData = {
 
 export type UpdateProfileResponse = ProfileResponse;
 
+export type SignupForMailingListData = {
+    requestBody: MailingListSignupRequest;
+};
+
+export type SignupForMailingListResponse = string;
+
 export type GetAllCollectorsData = {
     q?: string;
 };
@@ -314,16 +378,6 @@ export type GetArtistData = {
 
 export type GetArtistResponse = Artist;
 
-export type GetProtectedResourceResponse = {
-    [key: string]: {
-        [key: string]: unknown;
-    };
-};
-
-export type GetPublicResourceResponse = {
-    [key: string]: (string);
-};
-
 export type $OpenApiTs = {
     '/api/profile': {
         get: {
@@ -345,6 +399,21 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ProfileResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/mailing-list/signup': {
+        post: {
+            req: SignupForMailingListData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: string;
                 /**
                  * Unprocessable Entity
                  */
@@ -446,40 +515,6 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: Artist;
-                /**
-                 * Unprocessable Entity
-                 */
-                422: ValidationErrorResponse;
-            };
-        };
-    };
-    '/api/resource': {
-        get: {
-            res: {
-                /**
-                 * OK
-                 */
-                200: {
-                    [key: string]: {
-                        [key: string]: unknown;
-                    };
-                };
-                /**
-                 * Unprocessable Entity
-                 */
-                422: ValidationErrorResponse;
-            };
-        };
-    };
-    '/api/public/resource': {
-        get: {
-            res: {
-                /**
-                 * OK
-                 */
-                200: {
-                    [key: string]: (string);
-                };
                 /**
                  * Unprocessable Entity
                  */

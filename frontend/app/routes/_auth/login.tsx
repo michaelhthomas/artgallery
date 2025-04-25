@@ -42,7 +42,7 @@ function LoginPage() {
   const { mutate, error, isPending } = useAuthControllerServiceLogin({
     onSuccess(data) {
       userInfo.setUserInfo(data, form.getValues().rememberMe === true);
-      void navigate({ to: "/" });
+      void navigate({ to: "/dashboard" });
     },
   });
 

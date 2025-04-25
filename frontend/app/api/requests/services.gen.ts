@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetProtectedResourceResponse, GetPublicResourceResponse } from './types.gen';
+import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, SignupForMailingListData, SignupForMailingListResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
 
 export class ProfileControllerService {
     /**
@@ -30,6 +30,29 @@ export class ProfileControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/profile',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
+
+export class MailingListService {
+    /**
+     * Sign up for mailing list
+     * Add a new potential customer to the mailing list
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static signupForMailingList(data: SignupForMailingListData): CancelablePromise<SignupForMailingListResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/mailing-list/signup',
             body: data.requestBody,
             mediaType: 'application/json',
             errors: {
@@ -171,37 +194,6 @@ export class ArtistControllerService {
             path: {
                 id: data.id
             },
-            errors: {
-                422: 'Unprocessable Entity'
-            }
-        });
-    }
-    
-}
-
-export class ResourceControllerService {
-    /**
-     * @returns unknown OK
-     * @throws ApiError
-     */
-    public static getProtectedResource(): CancelablePromise<GetProtectedResourceResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/resource',
-            errors: {
-                422: 'Unprocessable Entity'
-            }
-        });
-    }
-    
-    /**
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static getPublicResource(): CancelablePromise<GetPublicResourceResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/public/resource',
             errors: {
                 422: 'Unprocessable Entity'
             }
