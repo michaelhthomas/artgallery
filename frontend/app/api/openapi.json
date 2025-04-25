@@ -791,7 +791,9 @@
         },
         "required": [
           "firstName",
-          "lastName"
+          "lastName",
+          "salesLastYear",
+          "salesYearToDate"
         ]
       },
       "Collector": {
@@ -847,6 +849,8 @@
         "required": [
           "firstName",
           "lastName",
+          "salesLastYear",
+          "salesYearToDate",
           "socialSecurityNumber"
         ]
       },

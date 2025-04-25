@@ -14,7 +14,7 @@ import { useCollectorControllerServiceGetAllCollectors } from "~/api/queries";
 import { useState } from "react";
 import { GetAllCollectorsResponse } from "~/api/requests";
 import { keepPreviousData } from "@tanstack/react-query";
-import CollectorCard from "~/components/CollectorCard";
+import { CollectorCard } from "~/components/CollectorCard";
 import { CreateCollectorModal } from "~/components/collector/CreateCollectorModal";
 import NiceModal from "@ebay/nice-modal-react";
 
@@ -77,11 +77,11 @@ function CollectorsPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {collectors?.map((collector) => (
             <CollectorCard
               key={collector.socialSecurityNumber}
-              collector={collector}
+              {...collector}
             />
           ))}
         </div>

@@ -314,7 +314,7 @@ export const $Artist = {
             type: 'string'
         }
     },
-    required: ['firstName', 'lastName']
+    required: ['firstName', 'lastName', 'salesLastYear', 'salesYearToDate']
 } as const;
 
 export const $Collector = {
@@ -367,7 +367,7 @@ export const $Collector = {
             type: 'string'
         }
     },
-    required: ['firstName', 'lastName', 'socialSecurityNumber']
+    required: ['firstName', 'lastName', 'salesLastYear', 'salesYearToDate', 'socialSecurityNumber']
 } as const;
 
 export const $Zip = {

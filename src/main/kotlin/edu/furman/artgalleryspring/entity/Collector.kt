@@ -1,6 +1,7 @@
 package edu.furman.artgalleryspring.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Formula
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -36,11 +37,11 @@ data class Collector(
     @OneToOne(cascade = [CascadeType.ALL])
     val zip: Zip? = null,
 
-    @Column(name = "salesLastYear", precision = 8, scale = 2)
-    val salesLastYear: BigDecimal? = null,
+    @Formula("($SUM_COLLECTOR_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()) - 1)")
+    val salesLastYear: BigDecimal = BigDecimal.ZERO,
 
-    @Column(name = "salesYearToDate", precision = 8, scale = 2)
-    val salesYearToDate: BigDecimal? = null,
+    @Formula("($SUM_COLLECTOR_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()))")
+    val salesYearToDate: BigDecimal = BigDecimal.ZERO,
 
     @JoinColumn(name = "collectionArtistId")
     @OneToOne(cascade = [CascadeType.ALL])
@@ -54,4 +55,11 @@ data class Collector(
 
     @Column(name = "collectionType", length = 20)
     val collectionType: String? = null
-)
+) {
+    companion object {
+        const val SUM_COLLECTOR_SALES =
+            "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +
+            "WHERE s.artworkId = w.artworkId " +
+            "AND w.collectorSocialSecurityNumber = socialSecurityNumber"
+    }
+}

@@ -191,8 +191,8 @@ export type Artist = {
     telephoneNumber?: string;
     street?: string;
     zip?: Zip;
-    salesLastYear?: number;
-    salesYearToDate?: number;
+    salesLastYear: number;
+    salesYearToDate: number;
     socialSecurityNumber?: string;
     usualMedium?: string;
     usualStyle?: string;
@@ -209,8 +209,8 @@ export type Collector = {
     telephoneNumber?: string;
     street?: string;
     zip?: Zip;
-    salesLastYear?: number;
-    salesYearToDate?: number;
+    salesLastYear: number;
+    salesYearToDate: number;
     collectionArtistId?: Artist;
     collectionMedium?: string;
     collectionStyle?: string;

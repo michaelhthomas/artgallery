@@ -1,5 +1,3 @@
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
-import { User, Phone } from "lucide-react";
 import { Collector } from "~/api/requests";
 import { Button } from "./ui/button";
 import {
@@ -9,60 +7,74 @@ import {
   CardContent,
   CardFooter,
 } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { formatCurrency, formatPhoneNumber } from "~/lib/format";
 
-export default function CollectorCard({ collector }: { collector: Collector }) {
+export function CollectorCard(collector: Collector) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <Avatar className="h-12 w-12">
-          {/* <AvatarImage src={collector.avatar} alt={collector.name} /> */}
-          <AvatarFallback>
-            <User className="h-6 w-6" />
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <CardTitle className="text-base">
-            {collector.firstName} {collector.lastName}
-          </CardTitle>
-          <div className="text-sm text-muted-foreground">
-            {collector.collectionStyle}
-          </div>
-        </div>
+      <CardHeader>
+        <CardTitle>
+          {collector.firstName} {collector.lastName}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
-        {/* <div className="flex items-center gap-2">
-          <Mail className="h-4 w-4 text-muted-foreground" />
-          <span>{collector.email}</span>
-        </div> */}
-        <div className="flex items-center gap-2">
-          <Phone className="h-4 w-4 text-muted-foreground" />
-          <span>
-            ({collector.areaCode}) {collector.telephoneNumber}
-          </span>
-        </div>
-        <div className="pt-2">
-          <div className="font-medium">Collection</div>
-          <div className="text-muted-foreground">
-            {collector.collectionType}
+        {collector.street && collector.zip && (
+          <div>
+            <div className="font-medium">Address</div>
+            <div className="text-muted-foreground">
+              {collector.street}, {collector.zip.city}, {collector.zip.state}{" "}
+              {collector.zip.zip}
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="font-medium">Sales YTD</div>
-          <div className="text-muted-foreground">
-            {collector.salesYearToDate}
+        )}
+
+        <div className="grid grid-cols-2 gap-2">
+          {collector.areaCode && collector.telephoneNumber && (
+            <div className="space-y-1">
+              <div className="font-medium">Phone Number</div>
+              <div className="text-muted-foreground">
+                {formatPhoneNumber(
+                  collector.areaCode,
+                  collector.telephoneNumber,
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-1">
+            <div className="font-medium">Medium</div>
+            <Badge variant="outline">{collector.collectionMedium}</Badge>
+          </div>
+          <div className="space-y-1">
+            <div className="font-medium">Style</div>
+            <Badge variant="outline">{collector.collectionStyle}</Badge>
+          </div>
+          <div className="space-y-1">
+            <div className="font-medium">Type</div>
+            <Badge variant="outline">{collector.collectionType}</Badge>
           </div>
         </div>
         <div>
           <div className="font-medium">Sales Last Year</div>
-          <div className="text-muted-foreground">{collector.salesLastYear}</div>
+          <div className="text-muted-foreground">
+            {formatCurrency(collector.salesLastYear)}
+          </div>
+        </div>
+        <div>
+          <div className="font-medium">Sales Year-To-Date</div>
+          <div className="text-muted-foreground">
+            {formatCurrency(collector.salesYearToDate)}
+          </div>
         </div>
       </CardContent>
-      <CardFooter className="flex gap-2">
+
+      <CardFooter className="flex gap-2 mt-auto">
         <Button variant="outline" size="sm" className="flex-1">
           Profile
         </Button>
         <Button size="sm" className="flex-1">
-          Contact
+          Artworks
         </Button>
       </CardFooter>
     </Card>

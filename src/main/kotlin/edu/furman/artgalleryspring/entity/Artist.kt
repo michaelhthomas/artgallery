@@ -39,10 +39,10 @@ data class Artist(
     val zip: Zip? = null,
 
     @Formula("($SUM_ARTIST_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()) - 1)")
-    val salesLastYear: BigDecimal? = null,
+    val salesLastYear: BigDecimal = BigDecimal.ZERO,
 
     @Formula("($SUM_ARTIST_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()))")
-    val salesYearToDate: BigDecimal? = null,
+    val salesYearToDate: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "socialSecurityNumber", columnDefinition = "char(9)")
     val socialSecurityNumber: String? = null,
@@ -59,6 +59,8 @@ data class Artist(
     companion object {
         const val SUM_ARTIST_SALES =
             "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +
-            "WHERE s.artworkId = w.artworkId AND w.artistId = artistId"
+            "WHERE s.artworkId = w.artworkId AND w.artistId = artistId " +
+            // TODO: should these be excluded?
+            "AND w.collectorSocialSecurityNumber is null"
     }
 }
