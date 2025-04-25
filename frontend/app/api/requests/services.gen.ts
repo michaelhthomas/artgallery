@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetProtectedResourceResponse, GetPublicResourceResponse, GetAllCollectorsData, GetAllCollectorsResponse, GetCollectorByIdData, GetCollectorByIdResponse } from './types.gen';
+import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetProtectedResourceResponse, GetPublicResourceResponse } from './types.gen';
 
 export class ProfileControllerService {
     /**
@@ -32,6 +32,65 @@ export class ProfileControllerService {
             url: '/api/profile',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
+
+export class CollectorControllerService {
+    /**
+     * @param data The data for the request.
+     * @param data.q
+     * @returns Collector OK
+     * @throws ApiError
+     */
+    public static getAllCollectors(data: GetAllCollectorsData = {}): CancelablePromise<GetAllCollectorsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/collectors',
+            query: {
+                q: data.q
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns Collector OK
+     * @throws ApiError
+     */
+    public static createCollector(data: CreateCollectorData): CancelablePromise<CreateCollectorResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/collectors',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Collector OK
+     * @throws ApiError
+     */
+    public static getCollectorById(data: GetCollectorByIdData): CancelablePromise<GetCollectorByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/collectors/{id}',
+            path: {
+                id: data.id
+            },
             errors: {
                 422: 'Unprocessable Entity'
             }
@@ -143,47 +202,6 @@ export class ResourceControllerService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/public/resource',
-            errors: {
-                422: 'Unprocessable Entity'
-            }
-        });
-    }
-    
-}
-
-export class CollectorControllerService {
-    /**
-     * @param data The data for the request.
-     * @param data.q
-     * @returns Collector OK
-     * @throws ApiError
-     */
-    public static getAllCollectors(data: GetAllCollectorsData = {}): CancelablePromise<GetAllCollectorsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/collectors',
-            query: {
-                q: data.q
-            },
-            errors: {
-                422: 'Unprocessable Entity'
-            }
-        });
-    }
-    
-    /**
-     * @param data The data for the request.
-     * @param data.id
-     * @returns Collector OK
-     * @throws ApiError
-     */
-    public static getCollectorById(data: GetCollectorByIdData): CancelablePromise<GetCollectorByIdResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/collectors/{id}',
-            path: {
-                id: data.id
-            },
             errors: {
                 422: 'Unprocessable Entity'
             }

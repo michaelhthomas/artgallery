@@ -83,6 +83,220 @@ export const $ProfileResponse = {
     required: ['avatarUrl', 'email', 'firstName', 'lastName']
 } as const;
 
+export const $CollectorCreateRequest = {
+    type: 'object',
+    description: 'Collector Creation Request',
+    properties: {
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Bob',
+            minLength: 1
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Smith',
+            minLength: 1
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date',
+            description: 'Date of interview',
+            example: '2023-01-01'
+        },
+        interviewerName: {
+            type: 'string',
+            description: 'Interviewer name',
+            example: 'Kevin Treu'
+        },
+        areaCode: {
+            type: 'string',
+            description: 'Area code',
+            example: 123
+        },
+        telephoneNumber: {
+            type: 'string',
+            description: 'Telephone number',
+            example: 1234567
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 123
+        },
+        city: {
+            type: 'string',
+            description: 'City',
+            example: 'Anytown'
+        },
+        state: {
+            type: 'string',
+            description: 'State',
+            example: 'CA'
+        },
+        zipCode: {
+            type: 'string',
+            description: 'Zip code',
+            example: 12345
+        },
+        socialSecurityNumber: {
+            type: 'string',
+            description: 'Social security number',
+            example: '123-45-6789'
+        },
+        preferredArtistFirstName: {
+            type: 'string',
+            description: 'Preferred artist first name',
+            example: 'Pablo'
+        },
+        preferredArtistLastName: {
+            type: 'string',
+            description: 'Preferred artist last name',
+            example: 'Picasso'
+        },
+        collectionMedium: {
+            type: 'string',
+            description: 'Collection medium',
+            example: 'Oil'
+        },
+        collectionStyle: {
+            type: 'string',
+            description: 'Collection style',
+            example: 'Abstract'
+        },
+        collectionType: {
+            type: 'string',
+            description: 'Collection type',
+            example: 'Painting'
+        }
+    },
+    required: ['firstName', 'lastName', 'socialSecurityNumber']
+} as const;
+
+export const $Artist = {
+    type: 'object',
+    properties: {
+        artistId: {
+            type: 'integer',
+            format: 'int32'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date'
+        },
+        interviewerName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        street: {
+            type: 'string'
+        },
+        zip: {
+            '$ref': '#/components/schemas/Zip'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        socialSecurityNumber: {
+            type: 'string'
+        },
+        usualMedium: {
+            type: 'string'
+        },
+        usualStyle: {
+            type: 'string'
+        },
+        usualType: {
+            type: 'string'
+        }
+    },
+    required: ['firstName', 'lastName']
+} as const;
+
+export const $Collector = {
+    type: 'object',
+    properties: {
+        socialSecurityNumber: {
+            type: 'string'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        interviewDate: {
+            type: 'string',
+            format: 'date'
+        },
+        interviewerName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        street: {
+            type: 'string'
+        },
+        zip: {
+            '$ref': '#/components/schemas/Zip'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        collectionArtistId: {
+            '$ref': '#/components/schemas/Artist'
+        },
+        collectionMedium: {
+            type: 'string'
+        },
+        collectionStyle: {
+            type: 'string'
+        },
+        collectionType: {
+            type: 'string'
+        }
+    },
+    required: ['firstName', 'lastName', 'socialSecurityNumber']
+} as const;
+
+export const $Zip = {
+    type: 'object',
+    properties: {
+        zip: {
+            type: 'string'
+        },
+        city: {
+            type: 'string'
+        },
+        state: {
+            type: 'string'
+        }
+    },
+    required: ['city', 'state', 'zip']
+} as const;
+
 export const $AuthRequest = {
     type: 'object',
     description: 'API Login and Authorization Request',
@@ -215,127 +429,4 @@ export const $ArtistCreateRequest = {
         }
     },
     required: ['firstName', 'lastName']
-} as const;
-
-export const $Artist = {
-    type: 'object',
-    properties: {
-        artistId: {
-            type: 'integer',
-            format: 'int32'
-        },
-        firstName: {
-            type: 'string'
-        },
-        lastName: {
-            type: 'string'
-        },
-        interviewDate: {
-            type: 'string',
-            format: 'date'
-        },
-        interviewerName: {
-            type: 'string'
-        },
-        areaCode: {
-            type: 'string'
-        },
-        telephoneNumber: {
-            type: 'string'
-        },
-        street: {
-            type: 'string'
-        },
-        zip: {
-            '$ref': '#/components/schemas/Zip'
-        },
-        salesLastYear: {
-            type: 'number'
-        },
-        salesYearToDate: {
-            type: 'number'
-        },
-        socialSecurityNumber: {
-            type: 'string'
-        },
-        usualMedium: {
-            type: 'string'
-        },
-        usualStyle: {
-            type: 'string'
-        },
-        usualType: {
-            type: 'string'
-        }
-    },
-    required: ['firstName', 'lastName']
-} as const;
-
-export const $Zip = {
-    type: 'object',
-    properties: {
-        zip: {
-            type: 'string'
-        },
-        city: {
-            type: 'string'
-        },
-        state: {
-            type: 'string'
-        }
-    },
-    required: ['city', 'state', 'zip']
-} as const;
-
-export const $Collector = {
-    type: 'object',
-    properties: {
-        socialSecurityNumber: {
-            type: 'string'
-        },
-        firstName: {
-            type: 'string'
-        },
-        lastName: {
-            type: 'string'
-        },
-        interviewDate: {
-            type: 'string',
-            format: 'date'
-        },
-        interviewerName: {
-            type: 'string'
-        },
-        areaCode: {
-            type: 'string'
-        },
-        telephoneNumber: {
-            type: 'string'
-        },
-        street: {
-            type: 'string'
-        },
-        zip: {
-            '$ref': '#/components/schemas/Zip'
-        },
-        salesLastYear: {
-            type: 'number'
-        },
-        salesYearToDate: {
-            type: 'number'
-        },
-        collectionArtistId: {
-            '$ref': '#/components/schemas/Artist'
-        },
-        collectionMedium: {
-            type: 'string'
-        },
-        collectionStyle: {
-            type: 'string'
-        },
-        collectionType: {
-            type: 'string'
-        }
-    },
-    required: ['firstName', 'lastName', 'socialSecurityNumber']
 } as const;

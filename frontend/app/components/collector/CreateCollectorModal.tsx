@@ -20,9 +20,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useArtistControllerServiceCreateArtist } from "~/api/queries";
+import { useCollectorControllerServiceCreateCollector } from "~/api/queries";
 import StateInput from "../form/StateInput";
-import { ArtistCreateRequest } from "~/api/requests";
+import { CollectorCreateRequest } from "~/api/requests";
 import { StatusButton } from "../ui/status-button";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -34,7 +34,7 @@ const maskedNumeric = z
   .transform((value) => value?.replace(/\D/g, ""))
   .transform((value) => (value === "" ? undefined : value));
 
-const createArtistSchema = z.object({
+const createCollectorSchema = z.object({
   interviewDate: z.string().optional(),
   interviewerName: z.string().optional(),
   firstName: z.string().min(2, "First name is required").max(100),
@@ -45,26 +45,28 @@ const createArtistSchema = z.object({
   city: z.string().optional(),
   state: z.string().optional(),
   zipCode: maskedNumeric.pipe(z.string().length(5).optional()),
-  socialSecurityNumber: maskedNumeric.pipe(z.string().length(9).optional()),
-  usualMedium: z.string().optional(),
-  usualType: z.string().optional(),
-  usualStyle: z.string().optional(),
+  socialSecurityNumber: maskedNumeric.pipe(z.string().length(9)),
+  preferredArtistFirstName: z.string().optional(),
+  preferredArtistLastName: z.string().optional(),
+  collectionMedium: z.string().optional(),
+  collectionType: z.string().optional(),
+  collectionStyle: z.string().optional(),
 });
 
-export const CreateArtistModal = NiceModal.create(() => {
+export const CreateCollectorModal = NiceModal.create(() => {
   const modal = useModal();
-  // const queryClient = useQueryClient();
-  const { mutate, status } = useArtistControllerServiceCreateArtist({
+  const { mutate, status } = useCollectorControllerServiceCreateCollector({
     onSuccess: () => {
-      toast.success("Artist created successfully");
-      // void queryClient.invalidateQueries({
-      //   queryKey: [useArtistControllerServiceGetAllArtistsKey],
-      // });
+      toast.success("Collector created successfully");
       void modal.hide();
     },
   });
-  const form = useForm<ArtistCreateRequest>({
-    resolver: zodResolver(createArtistSchema),
+  const form = useForm<
+    z.input<typeof createCollectorSchema>,
+    unknown,
+    CollectorCreateRequest
+  >({
+    resolver: zodResolver(createCollectorSchema),
     defaultValues: {
       interviewDate: new Date().toISOString().split("T")[0],
       interviewerName: "",
@@ -77,9 +79,11 @@ export const CreateArtistModal = NiceModal.create(() => {
       state: "",
       zipCode: "",
       socialSecurityNumber: "",
-      usualMedium: "",
-      usualType: "",
-      usualStyle: "",
+      preferredArtistFirstName: "",
+      preferredArtistLastName: "",
+      collectionMedium: "",
+      collectionType: "",
+      collectionStyle: "",
     },
   });
 
@@ -93,18 +97,18 @@ export const CreateArtistModal = NiceModal.create(() => {
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle className="text-2xl">
-            Artist Information Form
+            Collector Information Form
           </DialogTitle>
           <DialogDescription>
-            Record contact information and data about the artist&apos;s usual
-            works
+            Record contact information and data about the collector&apos;s
+            collection
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((artist) => {
-              mutate({ requestBody: artist });
+            onSubmit={form.handleSubmit((data) => {
+              mutate({ requestBody: data });
             })}
             className="space-y-6"
           >
@@ -144,7 +148,7 @@ export const CreateArtistModal = NiceModal.create(() => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="gap-0.5">
-                      Artist First Name
+                      Collector First Name
                       <span className="text-destructive font-bold">*</span>
                     </FormLabel>
                     <FormControl>
@@ -160,7 +164,7 @@ export const CreateArtistModal = NiceModal.create(() => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="gap-0.5">
-                      Artist Last Name
+                      Collector Last Name
                       <span className="text-destructive font-bold">*</span>
                     </FormLabel>
                     <FormControl>
@@ -262,7 +266,10 @@ export const CreateArtistModal = NiceModal.create(() => {
               name="socialSecurityNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Social Security Number</FormLabel>
+                  <FormLabel className="gap-0.5">
+                    Social Security Number
+                    <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormControl ref={withMask("999-99-9999")}>
                     <Input {...field} />
                   </FormControl>
@@ -271,13 +278,42 @@ export const CreateArtistModal = NiceModal.create(() => {
               )}
             />
 
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="preferredArtistFirstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Preferred Artist First Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="e.g. Vincent" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="preferredArtistLastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Preferred Artist Last Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="e.g. Van Gogh" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <div className="grid grid-cols-3 gap-4">
               <FormField
                 control={form.control}
-                name="usualType"
+                name="collectionType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Usual Type</FormLabel>
+                    <FormLabel>Collection Type</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -290,10 +326,10 @@ export const CreateArtistModal = NiceModal.create(() => {
               />
               <FormField
                 control={form.control}
-                name="usualMedium"
+                name="collectionMedium"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Usual Medium</FormLabel>
+                    <FormLabel>Collection Medium</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="e.g. Oil, Watercolor" />
                     </FormControl>
@@ -303,10 +339,10 @@ export const CreateArtistModal = NiceModal.create(() => {
               />
               <FormField
                 control={form.control}
-                name="usualStyle"
+                name="collectionStyle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Usual Style</FormLabel>
+                    <FormLabel>Collection Style</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="e.g. Abstract, Realism" />
                     </FormControl>

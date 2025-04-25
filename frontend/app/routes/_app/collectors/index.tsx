@@ -15,14 +15,16 @@ import { useState } from "react";
 import { GetAllCollectorsResponse } from "~/api/requests";
 import { keepPreviousData } from "@tanstack/react-query";
 import CollectorCard from "~/components/CollectorCard";
+import { CreateCollectorModal } from "~/components/collector/CreateCollectorModal";
+import NiceModal from "@ebay/nice-modal-react";
 
-export const Route = createFileRoute("/_app/collectors")({
+export const Route = createFileRoute("/_app/collectors/")({
   component: CollectorsPage,
 });
 
 function CollectorsPage() {
   const [query, setQuery] = useState("");
-  const { data: collectors } =
+  const { data: collectors, refetch } =
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
     useCollectorControllerServiceGetAllCollectors<GetAllCollectorsResponse>(
       {
@@ -31,7 +33,7 @@ function CollectorsPage() {
       undefined,
       {
         placeholderData: keepPreviousData,
-      }
+      },
     );
 
   return (
@@ -39,7 +41,12 @@ function CollectorsPage() {
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Collectors</h1>
-          <Button size="sm">
+          <Button
+            size="sm"
+            onClick={() =>
+              NiceModal.show(CreateCollectorModal).then(() => refetch())
+            }
+          >
             <Plus className="mr-2 h-4 w-4" />
             Add Collector
           </Button>

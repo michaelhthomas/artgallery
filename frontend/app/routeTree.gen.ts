@@ -15,8 +15,8 @@ import { Route as AppImport } from './routes/_app'
 import { Route as AppIndexImport } from './routes/_app/index'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as AppExhibitionsImport } from './routes/_app/exhibitions'
-import { Route as AppCollectorsImport } from './routes/_app/collectors'
 import { Route as AppArtworksImport } from './routes/_app/artworks'
+import { Route as AppCollectorsIndexImport } from './routes/_app/collectors/index'
 import { Route as AppArtistsIndexImport } from './routes/_app/artists/index'
 import { Route as AppSettingsProfileImport } from './routes/_app/settings/profile'
 import { Route as AppArtworkIdImport } from './routes/_app/artwork/$id'
@@ -46,15 +46,15 @@ const AppExhibitionsRoute = AppExhibitionsImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppCollectorsRoute = AppCollectorsImport.update({
-  id: '/collectors',
-  path: '/collectors',
-  getParentRoute: () => AppRoute,
-} as any)
-
 const AppArtworksRoute = AppArtworksImport.update({
   id: '/artworks',
   path: '/artworks',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppCollectorsIndexRoute = AppCollectorsIndexImport.update({
+  id: '/collectors/',
+  path: '/collectors/',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -92,13 +92,6 @@ declare module '@tanstack/react-router' {
       path: '/artworks'
       fullPath: '/artworks'
       preLoaderRoute: typeof AppArtworksImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/collectors': {
-      id: '/_app/collectors'
-      path: '/collectors'
-      fullPath: '/collectors'
-      preLoaderRoute: typeof AppCollectorsImport
       parentRoute: typeof AppImport
     }
     '/_app/exhibitions': {
@@ -143,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppArtistsIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/collectors/': {
+      id: '/_app/collectors/'
+      path: '/collectors'
+      fullPath: '/collectors'
+      preLoaderRoute: typeof AppCollectorsIndexImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
@@ -150,22 +150,22 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppArtworksRoute: typeof AppArtworksRoute
-  AppCollectorsRoute: typeof AppCollectorsRoute
   AppExhibitionsRoute: typeof AppExhibitionsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppArtworkIdRoute: typeof AppArtworkIdRoute
   AppSettingsProfileRoute: typeof AppSettingsProfileRoute
   AppArtistsIndexRoute: typeof AppArtistsIndexRoute
+  AppCollectorsIndexRoute: typeof AppCollectorsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppArtworksRoute: AppArtworksRoute,
-  AppCollectorsRoute: AppCollectorsRoute,
   AppExhibitionsRoute: AppExhibitionsRoute,
   AppIndexRoute: AppIndexRoute,
   AppArtworkIdRoute: AppArtworkIdRoute,
   AppSettingsProfileRoute: AppSettingsProfileRoute,
   AppArtistsIndexRoute: AppArtistsIndexRoute,
+  AppCollectorsIndexRoute: AppCollectorsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -173,37 +173,37 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 export interface FileRoutesByFullPath {
   '': typeof AppRouteWithChildren
   '/artworks': typeof AppArtworksRoute
-  '/collectors': typeof AppCollectorsRoute
   '/exhibitions': typeof AppExhibitionsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
   '/settings/profile': typeof AppSettingsProfileRoute
   '/artists': typeof AppArtistsIndexRoute
+  '/collectors': typeof AppCollectorsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/artworks': typeof AppArtworksRoute
-  '/collectors': typeof AppCollectorsRoute
   '/exhibitions': typeof AppExhibitionsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
   '/artwork/$id': typeof AppArtworkIdRoute
   '/settings/profile': typeof AppSettingsProfileRoute
   '/artists': typeof AppArtistsIndexRoute
+  '/collectors': typeof AppCollectorsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/artworks': typeof AppArtworksRoute
-  '/_app/collectors': typeof AppCollectorsRoute
   '/_app/exhibitions': typeof AppExhibitionsRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
   '/_app/artwork/$id': typeof AppArtworkIdRoute
   '/_app/settings/profile': typeof AppSettingsProfileRoute
   '/_app/artists/': typeof AppArtistsIndexRoute
+  '/_app/collectors/': typeof AppCollectorsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -211,34 +211,34 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/artworks'
-    | '/collectors'
     | '/exhibitions'
     | '/login'
     | '/'
     | '/artwork/$id'
     | '/settings/profile'
     | '/artists'
+    | '/collectors'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/artworks'
-    | '/collectors'
     | '/exhibitions'
     | '/login'
     | '/'
     | '/artwork/$id'
     | '/settings/profile'
     | '/artists'
+    | '/collectors'
   id:
     | '__root__'
     | '/_app'
     | '/_app/artworks'
-    | '/_app/collectors'
     | '/_app/exhibitions'
     | '/_auth/login'
     | '/_app/'
     | '/_app/artwork/$id'
     | '/_app/settings/profile'
     | '/_app/artists/'
+    | '/_app/collectors/'
   fileRoutesById: FileRoutesById
 }
 
@@ -270,20 +270,16 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/artworks",
-        "/_app/collectors",
         "/_app/exhibitions",
         "/_app/",
         "/_app/artwork/$id",
         "/_app/settings/profile",
-        "/_app/artists/"
+        "/_app/artists/",
+        "/_app/collectors/"
       ]
     },
     "/_app/artworks": {
       "filePath": "_app/artworks.tsx",
-      "parent": "/_app"
-    },
-    "/_app/collectors": {
-      "filePath": "_app/collectors.tsx",
       "parent": "/_app"
     },
     "/_app/exhibitions": {
@@ -307,6 +303,10 @@ export const routeTree = rootRoute
     },
     "/_app/artists/": {
       "filePath": "_app/artists/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/collectors/": {
+      "filePath": "_app/collectors/index.tsx",
       "parent": "/_app"
     }
   }

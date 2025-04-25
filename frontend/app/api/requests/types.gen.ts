@@ -54,6 +54,118 @@ export type ProfileResponse = {
 };
 
 /**
+ * Collector Creation Request
+ */
+export type CollectorCreateRequest = {
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Date of interview
+     */
+    interviewDate?: string;
+    /**
+     * Interviewer name
+     */
+    interviewerName?: string;
+    /**
+     * Area code
+     */
+    areaCode?: string;
+    /**
+     * Telephone number
+     */
+    telephoneNumber?: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * City
+     */
+    city?: string;
+    /**
+     * State
+     */
+    state?: string;
+    /**
+     * Zip code
+     */
+    zipCode?: string;
+    /**
+     * Social security number
+     */
+    socialSecurityNumber: string;
+    /**
+     * Preferred artist first name
+     */
+    preferredArtistFirstName?: string;
+    /**
+     * Preferred artist last name
+     */
+    preferredArtistLastName?: string;
+    /**
+     * Collection medium
+     */
+    collectionMedium?: string;
+    /**
+     * Collection style
+     */
+    collectionStyle?: string;
+    /**
+     * Collection type
+     */
+    collectionType?: string;
+};
+
+export type Artist = {
+    artistId?: number;
+    firstName: string;
+    lastName: string;
+    interviewDate?: string;
+    interviewerName?: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    street?: string;
+    zip?: Zip;
+    salesLastYear?: number;
+    salesYearToDate?: number;
+    socialSecurityNumber?: string;
+    usualMedium?: string;
+    usualStyle?: string;
+    usualType?: string;
+};
+
+export type Collector = {
+    socialSecurityNumber: string;
+    firstName: string;
+    lastName: string;
+    interviewDate?: string;
+    interviewerName?: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    street?: string;
+    zip?: Zip;
+    salesLastYear?: number;
+    salesYearToDate?: number;
+    collectionArtistId?: Artist;
+    collectionMedium?: string;
+    collectionStyle?: string;
+    collectionType?: string;
+};
+
+export type Zip = {
+    zip: string;
+    city: string;
+    state: string;
+};
+
+/**
  * API Login and Authorization Request
  */
 export type AuthRequest = {
@@ -152,48 +264,6 @@ export type ArtistCreateRequest = {
     usualType?: string;
 };
 
-export type Artist = {
-    artistId?: number;
-    firstName: string;
-    lastName: string;
-    interviewDate?: string;
-    interviewerName?: string;
-    areaCode?: string;
-    telephoneNumber?: string;
-    street?: string;
-    zip?: Zip;
-    salesLastYear?: number;
-    salesYearToDate?: number;
-    socialSecurityNumber?: string;
-    usualMedium?: string;
-    usualStyle?: string;
-    usualType?: string;
-};
-
-export type Zip = {
-    zip: string;
-    city: string;
-    state: string;
-};
-
-export type Collector = {
-    socialSecurityNumber: string;
-    firstName: string;
-    lastName: string;
-    interviewDate?: string;
-    interviewerName?: string;
-    areaCode?: string;
-    telephoneNumber?: string;
-    street?: string;
-    zip?: Zip;
-    salesLastYear?: number;
-    salesYearToDate?: number;
-    collectionArtistId?: Artist;
-    collectionMedium?: string;
-    collectionStyle?: string;
-    collectionType?: string;
-};
-
 export type GetProfileResponse = ProfileResponse;
 
 export type UpdateProfileData = {
@@ -201,6 +271,24 @@ export type UpdateProfileData = {
 };
 
 export type UpdateProfileResponse = ProfileResponse;
+
+export type GetAllCollectorsData = {
+    q?: string;
+};
+
+export type GetAllCollectorsResponse = Array<Collector>;
+
+export type CreateCollectorData = {
+    requestBody: CollectorCreateRequest;
+};
+
+export type CreateCollectorResponse = Collector;
+
+export type GetCollectorByIdData = {
+    id: number;
+};
+
+export type GetCollectorByIdResponse = Collector;
 
 export type LoginData = {
     requestBody: AuthRequest;
@@ -236,18 +324,6 @@ export type GetPublicResourceResponse = {
     [key: string]: (string);
 };
 
-export type GetAllCollectorsData = {
-    q?: string;
-};
-
-export type GetAllCollectorsResponse = Array<Collector>;
-
-export type GetCollectorByIdData = {
-    id: number;
-};
-
-export type GetCollectorByIdResponse = Collector;
-
 export type $OpenApiTs = {
     '/api/profile': {
         get: {
@@ -269,6 +345,49 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ProfileResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/collectors': {
+        get: {
+            req: GetAllCollectorsData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<Collector>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+        post: {
+            req: CreateCollectorData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Collector;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/collectors/{id}': {
+        get: {
+            req: GetCollectorByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Collector;
                 /**
                  * Unprocessable Entity
                  */
@@ -361,36 +480,6 @@ export type $OpenApiTs = {
                 200: {
                     [key: string]: (string);
                 };
-                /**
-                 * Unprocessable Entity
-                 */
-                422: ValidationErrorResponse;
-            };
-        };
-    };
-    '/api/collectors': {
-        get: {
-            req: GetAllCollectorsData;
-            res: {
-                /**
-                 * OK
-                 */
-                200: Array<Collector>;
-                /**
-                 * Unprocessable Entity
-                 */
-                422: ValidationErrorResponse;
-            };
-        };
-    };
-    '/api/collectors/{id}': {
-        get: {
-            req: GetCollectorByIdData;
-            res: {
-                /**
-                 * OK
-                 */
-                200: Collector;
                 /**
                  * Unprocessable Entity
                  */

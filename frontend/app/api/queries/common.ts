@@ -6,6 +6,18 @@ export type ProfileControllerServiceGetProfileDefaultResponse = Awaited<ReturnTy
 export type ProfileControllerServiceGetProfileQueryResult<TData = ProfileControllerServiceGetProfileDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useProfileControllerServiceGetProfileKey = "ProfileControllerServiceGetProfile";
 export const UseProfileControllerServiceGetProfileKeyFn = (queryKey?: Array<unknown>) => [useProfileControllerServiceGetProfileKey, ...(queryKey ?? [])];
+export type CollectorControllerServiceGetAllCollectorsDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getAllCollectors>>;
+export type CollectorControllerServiceGetAllCollectorsQueryResult<TData = CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCollectorControllerServiceGetAllCollectorsKey = "CollectorControllerServiceGetAllCollectors";
+export const UseCollectorControllerServiceGetAllCollectorsKeyFn = ({ q }: {
+  q?: string;
+} = {}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetAllCollectorsKey, ...(queryKey ?? [{ q }])];
+export type CollectorControllerServiceGetCollectorByIdDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getCollectorById>>;
+export type CollectorControllerServiceGetCollectorByIdQueryResult<TData = CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCollectorControllerServiceGetCollectorByIdKey = "CollectorControllerServiceGetCollectorById";
+export const UseCollectorControllerServiceGetCollectorByIdKeyFn = ({ id }: {
+  id: number;
+}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorByIdKey, ...(queryKey ?? [{ id }])];
 export type ArtistControllerServiceGetAllArtistsDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getAllArtists>>;
 export type ArtistControllerServiceGetAllArtistsQueryResult<TData = ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtistControllerServiceGetAllArtistsKey = "ArtistControllerServiceGetAllArtists";
@@ -26,18 +38,7 @@ export type ResourceControllerServiceGetPublicResourceDefaultResponse = Awaited<
 export type ResourceControllerServiceGetPublicResourceQueryResult<TData = ResourceControllerServiceGetPublicResourceDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useResourceControllerServiceGetPublicResourceKey = "ResourceControllerServiceGetPublicResource";
 export const UseResourceControllerServiceGetPublicResourceKeyFn = (queryKey?: Array<unknown>) => [useResourceControllerServiceGetPublicResourceKey, ...(queryKey ?? [])];
-export type CollectorControllerServiceGetAllCollectorsDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getAllCollectors>>;
-export type CollectorControllerServiceGetAllCollectorsQueryResult<TData = CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useCollectorControllerServiceGetAllCollectorsKey = "CollectorControllerServiceGetAllCollectors";
-export const UseCollectorControllerServiceGetAllCollectorsKeyFn = ({ q }: {
-  q?: string;
-} = {}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetAllCollectorsKey, ...(queryKey ?? [{ q }])];
-export type CollectorControllerServiceGetCollectorByIdDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getCollectorById>>;
-export type CollectorControllerServiceGetCollectorByIdQueryResult<TData = CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useCollectorControllerServiceGetCollectorByIdKey = "CollectorControllerServiceGetCollectorById";
-export const UseCollectorControllerServiceGetCollectorByIdKeyFn = ({ id }: {
-  id: number;
-}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorByIdKey, ...(queryKey ?? [{ id }])];
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;
+export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
 export type ArtistControllerServiceCreateArtistMutationResult = Awaited<ReturnType<typeof ArtistControllerService.createArtist>>;
