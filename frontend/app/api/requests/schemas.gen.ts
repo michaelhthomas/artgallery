@@ -513,71 +513,47 @@ export const $ArtworkCreateRequest = {
     required: ['artistId', 'workMedium', 'workSize', 'workStyle', 'workTitle', 'workType', 'workYearCompleted']
 } as const;
 
-export const $Artwork = {
+export const $ArtworkResponse = {
     type: 'object',
     properties: {
         id: {
             type: 'integer',
             format: 'int32'
         },
-        artist: {
-            '$ref': '#/components/schemas/Artist'
+        artistId: {
+            type: 'integer',
+            format: 'int32'
         },
         workTitle: {
-            type: 'string',
-            maxLength: 50,
-            minLength: 0
+            type: 'string'
         },
-        askingPrice: {
-            type: 'number'
+        workYearCompleted: {
+            type: 'string'
+        },
+        workMedium: {
+            type: 'string'
+        },
+        workStyle: {
+            type: 'string'
+        },
+        workType: {
+            type: 'string'
+        },
+        workSize: {
+            type: 'string'
+        },
+        collectorId: {
+            type: 'string'
         },
         dateListed: {
             type: 'string',
             format: 'date'
         },
-        dateReturned: {
-            type: 'string',
-            format: 'date'
-        },
-        dateShown: {
-            type: 'string',
-            format: 'date'
-        },
-        status: {
-            type: 'string',
-            maxLength: 15,
-            minLength: 0
-        },
-        workMedium: {
-            type: 'string',
-            maxLength: 15,
-            minLength: 0
-        },
-        workSize: {
-            type: 'string',
-            maxLength: 15,
-            minLength: 0
-        },
-        workStyle: {
-            type: 'string',
-            maxLength: 15,
-            minLength: 0
-        },
-        workType: {
-            type: 'string',
-            maxLength: 20,
-            minLength: 0
-        },
-        workYearCompleted: {
-            type: 'string',
-            maxLength: 4,
-            minLength: 0
-        },
-        collector: {
-            '$ref': '#/components/schemas/Collector'
+        askingPrice: {
+            type: 'number'
         }
     },
-    required: ['artist', 'workTitle']
+    required: ['artistId', 'id']
 } as const;
 
 export const $ArtistCreateRequest = {
@@ -659,47 +635,4 @@ export const $ArtistCreateRequest = {
         }
     },
     required: ['firstName', 'lastName']
-} as const;
-
-export const $ArtworkResponse = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'integer',
-            format: 'int32'
-        },
-        artistId: {
-            type: 'integer',
-            format: 'int32'
-        },
-        workTitle: {
-            type: 'string'
-        },
-        workYearCompleted: {
-            type: 'string'
-        },
-        workMedium: {
-            type: 'string'
-        },
-        workStyle: {
-            type: 'string'
-        },
-        workType: {
-            type: 'string'
-        },
-        workSize: {
-            type: 'string'
-        },
-        collectorId: {
-            type: 'string'
-        },
-        dateListed: {
-            type: 'string',
-            format: 'date'
-        },
-        askingPrice: {
-            type: 'number'
-        }
-    },
-    required: ['artistId', 'id']
 } as const;

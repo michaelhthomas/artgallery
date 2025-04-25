@@ -161,7 +161,7 @@ export class ArtworkControllerService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns Artwork OK
+     * @returns ArtworkResponse OK
      * @throws ApiError
      */
     public static createArtwork(data: CreateArtworkData): CancelablePromise<CreateArtworkResponse> {

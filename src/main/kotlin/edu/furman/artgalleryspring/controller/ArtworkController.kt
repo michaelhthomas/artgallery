@@ -6,11 +6,8 @@ import edu.furman.artgalleryspring.entity.Artwork
 import edu.furman.artgalleryspring.repository.ArtworkRepository
 import edu.furman.artgalleryspring.repository.ArtistRepository
 import edu.furman.artgalleryspring.repository.CollectorRepository
-import org.springframework.beans.propertyeditors.StringTrimmerEditor
-import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
-import kotlin.jvm.optionals.getOrNull
 
 @RestController
 @RequestMapping("/api/artworks")
@@ -37,13 +34,6 @@ class ArtworkController(
         }
     }
 
-    @InitBinder
-    fun initBinder(binder: WebDataBinder) {
-        // Automatically trims all incoming Strings
-        // If a String is empty after trimming, converts it to null
-        binder.registerCustomEditor(String::class.java, StringTrimmerEditor(true))
-    }
-
     @GetMapping
     fun getAllArtworks(): List<ArtworkResponse> =
         artworkRepository.findAll().map { artwork ->
@@ -56,7 +46,6 @@ class ArtworkController(
 
         return artworkToArtworkResponse(artwork)
     }
-
 
     @PostMapping
     fun createArtwork(@RequestBody artworkRequest: ArtworkCreateRequest): ArtworkResponse {

@@ -10,10 +10,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.annotation.security.PermitAll
 import jakarta.validation.Valid
-import org.springframework.beans.propertyeditors.StringTrimmerEditor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
@@ -26,11 +24,6 @@ class MailingListController(
     private val zipRepository: ZipRepository,
     private val artistRepository: ArtistRepository,
 ) {
-
-    @InitBinder
-    fun initBinder(binder: WebDataBinder) {
-        binder.registerCustomEditor(String::class.java, StringTrimmerEditor(true))
-    }
 
     @PermitAll
     @Operation(summary = "Sign up for mailing list", description = "Add a new potential customer to the mailing list")

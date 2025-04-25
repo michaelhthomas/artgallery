@@ -306,21 +306,18 @@ export type ArtworkCreateRequest = {
     askingPrice?: string;
 };
 
-export type Artwork = {
-    id?: number;
-    artist: Artist;
-    workTitle: string;
-    askingPrice?: number;
-    dateListed?: string;
-    dateReturned?: string;
-    dateShown?: string;
-    status?: string;
+export type ArtworkResponse = {
+    id: number;
+    artistId: number;
+    workTitle?: string;
+    workYearCompleted?: string;
     workMedium?: string;
-    workSize?: string;
     workStyle?: string;
     workType?: string;
-    workYearCompleted?: string;
-    collector?: Collector;
+    workSize?: string;
+    collectorId?: string;
+    dateListed?: string;
+    askingPrice?: number;
 };
 
 /**
@@ -385,20 +382,6 @@ export type ArtistCreateRequest = {
     usualType?: string;
 };
 
-export type ArtworkResponse = {
-    id: number;
-    artistId: number;
-    workTitle?: string;
-    workYearCompleted?: string;
-    workMedium?: string;
-    workStyle?: string;
-    workType?: string;
-    workSize?: string;
-    collectorId?: string;
-    dateListed?: string;
-    askingPrice?: number;
-};
-
 export type GetProfileResponse = ProfileResponse;
 
 export type UpdateProfileData = {
@@ -443,7 +426,7 @@ export type CreateArtworkData = {
     requestBody: ArtworkCreateRequest;
 };
 
-export type CreateArtworkResponse = Artwork;
+export type CreateArtworkResponse = ArtworkResponse;
 
 export type GetArtworkByIdData = {
     id: number;
@@ -589,7 +572,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Artwork;
+                200: ArtworkResponse;
                 /**
                  * Unprocessable Entity
                  */
