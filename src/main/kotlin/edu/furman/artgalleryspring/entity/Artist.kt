@@ -34,6 +34,7 @@ data class Artist(
     @Column(name = "street", length = 50)
     val street: String? = null,
 
+    @JoinColumn(name = "zip")
     @OneToOne(cascade = [CascadeType.ALL])
     val zip: Zip? = null,
 

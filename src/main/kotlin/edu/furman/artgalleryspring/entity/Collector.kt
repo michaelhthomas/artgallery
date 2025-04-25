@@ -32,8 +32,9 @@ data class Collector(
     @Column(name = "street", length = 50)
     val street: String? = null,
 
-    @Column(name = "zip", columnDefinition = "char(5)")
-    val zip: String? = null,
+    @JoinColumn(name = "zip")
+    @OneToOne(cascade = [CascadeType.ALL])
+    val zip: Zip? = null,
 
     @Column(name = "salesLastYear", precision = 8, scale = 2)
     val salesLastYear: BigDecimal? = null,
@@ -41,8 +42,9 @@ data class Collector(
     @Column(name = "salesYearToDate", precision = 8, scale = 2)
     val salesYearToDate: BigDecimal? = null,
 
-    @Column(name = "collectionArtistId")
-    val collectionArtistId: Int? = null,
+    @JoinColumn(name = "collectionArtistId")
+    @OneToOne(cascade = [CascadeType.ALL])
+    val collectionArtistId: Artist? = null,
 
     @Column(name = "collectionMedium", length = 15)
     val collectionMedium: String? = null,

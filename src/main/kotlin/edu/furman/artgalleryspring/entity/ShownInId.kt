@@ -18,7 +18,6 @@ class ShownInId : Serializable {
 
     @Size(max = 50)
     @NotNull
-    @ColumnDefault("''")
     @Column(name = "showTitle", nullable = false, length = 50)
     var showTitle: String? = null
     override fun hashCode(): Int = Objects.hash(artworkId, showTitle)

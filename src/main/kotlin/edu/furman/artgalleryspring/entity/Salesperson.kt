@@ -9,20 +9,24 @@ import org.hibernate.annotations.ColumnDefault
 data class Salesperson (
     @Id
     @Size(max = 9)
-    @ColumnDefault("''")
-    @Column(name = "socialSecurityNumber", nullable = false, length = 9) var socialSecurityNumber: String? = null,
+    @Column(name = "socialSecurityNumber", nullable = false, columnDefinition = "char(9)")
+	var socialSecurityNumber: String? = null,
 
     @Size(max = 15)
     @NotNull
-    @Column(name = "firstName", nullable = false, length = 15) var firstName: String? = null,
+    @Column(name = "firstName", nullable = false, length = 15)
+	var firstName: String? = null,
 
     @Size(max = 20)
     @NotNull
-    @Column(name = "lastName", nullable = false, length = 20) var lastName: String? = null,
+    @Column(name = "lastName", nullable = false, length = 20)
+	var lastName: String? = null,
 
     @Size(max = 50)
-    @Column(name = "street", length = 50) var street: String? = null,
+    @Column(name = "street", length = 50)
+	var street: String? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "zip") var zip: Zip? = null
+    @JoinColumn(name = "zip")
+	var zip: Zip? = null
 )

@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Table(name = "Zips")
 data class Zip(
     @Id
-    @Column(name = "zip", nullable = false, length = 5)
+    @Column(name = "zip", nullable = false, columnDefinition = "char(5)")
     val zip: String,
 
     @Column(name = "city", nullable = false, length = 15)
