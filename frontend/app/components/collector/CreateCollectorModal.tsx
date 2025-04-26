@@ -58,6 +58,7 @@ export const CreateCollectorModal = NiceModal.create(() => {
   const { mutate, status } = useCollectorControllerServiceCreateCollector({
     onSuccess: () => {
       toast.success("Collector created successfully");
+      modal.resolve();
       void modal.hide();
     },
   });

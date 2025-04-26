@@ -1,18 +1,44 @@
 package edu.furman.artgalleryspring.dto.artwork
 
+import edu.furman.artgalleryspring.entity.Artwork
 import java.math.BigDecimal
 import java.time.LocalDate
 
 data class ArtworkResponse(
     val id: Int,
     val artistId: Int,
+    val artistName: String,
+    val ownerName: String,
+    val status: String?,
     val workTitle: String?,
     val workYearCompleted: String?,
     val workMedium: String?,
     val workStyle: String?,
     val workType: String?,
     val workSize: String?,
-    val collectorId: String?,
     val dateListed: LocalDate?,
+    val dateShown: LocalDate?,
     val askingPrice: BigDecimal?
-)
+) {
+    companion object {
+        fun from(artwork: Artwork) =
+            ArtworkResponse(
+                id = artwork.id!!,
+                artistId = artwork.artist.artistId!!,
+                artistName = "${artwork.artist.firstName} ${artwork.artist.lastName}",
+                ownerName = if(artwork.collector != null)
+                    "${artwork.collector!!.firstName} ${artwork.collector!!.lastName}"
+                    else "${artwork.artist.firstName} ${artwork.artist.lastName}",
+                status = artwork.status,
+                workTitle = artwork.workTitle,
+                workYearCompleted = artwork.workYearCompleted,
+                workMedium = artwork.workMedium,
+                workStyle = artwork.workStyle,
+                workType = artwork.workType,
+                workSize = artwork.workSize,
+                dateListed = artwork.dateListed,
+                dateShown = artwork.dateShown,
+                askingPrice = artwork.askingPrice
+            )
+    }
+}

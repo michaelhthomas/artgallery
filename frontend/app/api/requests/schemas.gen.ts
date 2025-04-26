@@ -524,6 +524,15 @@ export const $ArtworkResponse = {
             type: 'integer',
             format: 'int32'
         },
+        artistName: {
+            type: 'string'
+        },
+        ownerName: {
+            type: 'string'
+        },
+        status: {
+            type: 'string'
+        },
         workTitle: {
             type: 'string'
         },
@@ -542,10 +551,11 @@ export const $ArtworkResponse = {
         workSize: {
             type: 'string'
         },
-        collectorId: {
-            type: 'string'
-        },
         dateListed: {
+            type: 'string',
+            format: 'date'
+        },
+        dateShown: {
             type: 'string',
             format: 'date'
         },
@@ -553,7 +563,7 @@ export const $ArtworkResponse = {
             type: 'number'
         }
     },
-    required: ['artistId', 'id']
+    required: ['artistId', 'artistName', 'id', 'ownerName']
 } as const;
 
 export const $ArtistCreateRequest = {

@@ -1151,6 +1151,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "artistName": {
+            "type": "string"
+          },
+          "ownerName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
           "workTitle": {
             "type": "string"
           },
@@ -1169,10 +1178,11 @@
           "workSize": {
             "type": "string"
           },
-          "collectorId": {
-            "type": "string"
-          },
           "dateListed": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateShown": {
             "type": "string",
             "format": "date"
           },
@@ -1182,7 +1192,9 @@
         },
         "required": [
           "artistId",
-          "id"
+          "artistName",
+          "id",
+          "ownerName"
         ]
       },
       "ArtistCreateRequest": {

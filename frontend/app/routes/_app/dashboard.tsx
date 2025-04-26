@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Calendar, Grid, ImageIcon, Users } from "lucide-react";
 import ArtistCard from "~/components/ArtistCard";
-import ArtworkCard from "~/components/ArtworkCard";
+import { ArtworkCard } from "~/components/ArtworkCard";
 import ExhibitionCard from "~/components/ExhibitionCard";
 
 import { Button } from "~/components/ui/button";

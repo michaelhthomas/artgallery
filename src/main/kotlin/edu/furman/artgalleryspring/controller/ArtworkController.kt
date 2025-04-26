@@ -16,35 +16,17 @@ class ArtworkController(
     private val artistRepository: ArtistRepository,
     private val collectorRepository: CollectorRepository
 ) {
-    companion object {
-        fun artworkToArtworkResponse(artwork: Artwork): ArtworkResponse {
-            return ArtworkResponse(
-                id = artwork.id!!,
-                artistId = artwork.artist.artistId!!,                  // only the ID
-                workTitle = artwork.workTitle,
-                workYearCompleted = artwork.workYearCompleted,
-                workMedium = artwork.workMedium,
-                workStyle = artwork.workStyle,
-                workType = artwork.workType,
-                workSize = artwork.workSize,
-                collectorId = artwork.collector?.socialSecurityNumber,            // collector can be null
-                dateListed = artwork.dateListed,
-                askingPrice = artwork.askingPrice
-            )
-        }
-    }
-
     @GetMapping
     fun getAllArtworks(): List<ArtworkResponse> =
         artworkRepository.findAll().map { artwork ->
-            artworkToArtworkResponse(artwork)
+            ArtworkResponse.from(artwork)
         }
 
     @GetMapping("/{id}")
     fun getArtworkById(@PathVariable id: Int): ArtworkResponse? {
         val artwork = artworkRepository.findById(id).orElse(null) ?: return null
 
-        return artworkToArtworkResponse(artwork)
+        return ArtworkResponse.from(artwork)
     }
 
     @PostMapping
@@ -73,6 +55,6 @@ class ArtworkController(
         )
 
         artworkRepository.save(artwork)
-        return artworkToArtworkResponse(artwork)
+        return ArtworkResponse.from(artwork)
     }
 }

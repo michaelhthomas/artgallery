@@ -309,14 +309,17 @@ export type ArtworkCreateRequest = {
 export type ArtworkResponse = {
     id: number;
     artistId: number;
+    artistName: string;
+    ownerName: string;
+    status?: string;
     workTitle?: string;
     workYearCompleted?: string;
     workMedium?: string;
     workStyle?: string;
     workType?: string;
     workSize?: string;
-    collectorId?: string;
     dateListed?: string;
+    dateShown?: string;
     askingPrice?: number;
 };
 

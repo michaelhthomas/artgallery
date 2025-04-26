@@ -53,13 +53,10 @@ const createArtistSchema = z.object({
 
 export const CreateArtistModal = NiceModal.create(() => {
   const modal = useModal();
-  // const queryClient = useQueryClient();
   const { mutate, status } = useArtistControllerServiceCreateArtist({
     onSuccess: () => {
       toast.success("Artist created successfully");
-      // void queryClient.invalidateQueries({
-      //   queryKey: [useArtistControllerServiceGetAllArtistsKey],
-      // });
+      modal.resolve();
       void modal.hide();
     },
   });

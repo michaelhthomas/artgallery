@@ -47,10 +47,11 @@ const useFormField = () => {
   const formState = useFormState({ name: fieldContext.name });
   const fieldState = getFieldState(fieldContext.name, formState);
 
-  const { id } = itemContext;
+  const { id, ...context } = itemContext;
 
   return {
     id,
+    ...context,
     name: fieldContext.name,
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
@@ -61,20 +62,24 @@ const useFormField = () => {
 
 type FormItemContextValue = {
   id: string;
+  required: boolean;
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 );
 
-function FormItem({ className, ...props }: React.ComponentProps<"div">) {
+function FormItem({
+  className,
+  ...props
+}: React.ComponentProps<"div"> & { required?: boolean }) {
   const id = React.useId();
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={{ id, required: props.required ?? false }}>
       <div
         data-slot="form-item"
-        className={cn("grid gap-2", className)}
+        className={cn("grid gap-2 content-start", className)}
         {...props}
       />
     </FormItemContext.Provider>
@@ -83,9 +88,10 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 
 function FormLabel({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  const { error, formItemId } = useFormField();
+  const { error, formItemId, required } = useFormField();
 
   return (
     <Label
@@ -94,7 +100,16 @@ function FormLabel({
       className={cn("data-[error=true]:text-destructive", className)}
       htmlFor={formItemId}
       {...props}
-    />
+    >
+      {required ? (
+        <span>
+          {children}
+          <span className="text-sm ml-0.5 text-destructive">*</span>
+        </span>
+      ) : (
+        children
+      )}
+    </Label>
   );
 }
 
