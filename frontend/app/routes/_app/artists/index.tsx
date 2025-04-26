@@ -1,7 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { keepPreviousData } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus, Search } from "lucide-react";
+import { Loader2, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { useArtistControllerServiceGetAllArtists } from "~/api/queries";
 import { GetAllArtistsResponse } from "~/api/requests";
@@ -58,11 +58,15 @@ function ArtistsPage() {
             />
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {artists?.map((artist) => (
-            <ArtistCard key={artist.artistId} {...artist} />
-          ))}
-        </div>
+        {artists ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {artists.map((artist) => (
+              <ArtistCard key={artist.artistId} {...artist} />
+            ))}
+          </div>
+        ) : (
+          <Loader2 className="size-10 animate-spin mx-auto" />
+        )}
       </main>
     </div>
   );

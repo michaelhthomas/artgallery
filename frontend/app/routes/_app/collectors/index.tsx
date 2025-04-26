@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus, Search } from "lucide-react";
+import { Loader2, Plus, Search } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -77,14 +77,18 @@ function CollectorsPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {collectors?.map((collector) => (
-            <CollectorCard
-              key={collector.socialSecurityNumber}
-              {...collector}
-            />
-          ))}
-        </div>
+        {collectors ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {collectors.map((collector) => (
+              <CollectorCard
+                key={collector.socialSecurityNumber}
+                {...collector}
+              />
+            ))}
+          </div>
+        ) : (
+          <Loader2 className="size-10 animate-spin mx-auto" />
+        )}
       </main>
     </div>
   );
