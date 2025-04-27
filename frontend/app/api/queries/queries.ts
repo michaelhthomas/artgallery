@@ -24,6 +24,9 @@ export const useArtistControllerServiceGetAllArtists = <TData = Common.ArtistCon
 export const useArtistControllerServiceGetArtist = <TData = Common.ArtistControllerServiceGetArtistDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtist({ id }) as TData, ...options });
+export const useArtistControllerServiceGetWorks = <TData = Common.ArtistControllerServiceGetWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getWorks({ id }) as TData, ...options });
 export const useMailingListServiceSignupForMailingList = <TData = Common.MailingListServiceSignupForMailingListMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: MailingListSignupRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

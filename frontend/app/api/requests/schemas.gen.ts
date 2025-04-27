@@ -263,6 +263,41 @@ export const $CollectorCreateRequest = {
     required: ['firstName', 'lastName', 'socialSecurityNumber']
 } as const;
 
+export const $ArtShow = {
+    type: 'object',
+    properties: {
+        showTitle: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        showFeaturedArtist: {
+            '$ref': '#/components/schemas/Artist'
+        },
+        showTheme: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        showOpeningDate: {
+            type: 'string',
+            format: 'date'
+        },
+        showClosingDate: {
+            type: 'string',
+            format: 'date'
+        },
+        artworks: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Artwork'
+            },
+            uniqueItems: true
+        }
+    },
+    required: ['artworks', 'showTitle']
+} as const;
+
 export const $Artist = {
     type: 'object',
     properties: {
@@ -312,9 +347,168 @@ export const $Artist = {
         },
         usualType: {
             type: 'string'
+        },
+        artworks: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Artwork'
+            }
         }
     },
-    required: ['firstName', 'lastName', 'salesLastYear', 'salesYearToDate']
+    required: ['artworks', 'firstName', 'lastName', 'salesLastYear', 'salesYearToDate']
+} as const;
+
+export const $Artwork = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artist: {
+            '$ref': '#/components/schemas/Artist'
+        },
+        workImage: {
+            '$ref': '#/components/schemas/Asset'
+        },
+        workTitle: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        askingPrice: {
+            type: 'number'
+        },
+        dateListed: {
+            type: 'string',
+            format: 'date'
+        },
+        dateReturned: {
+            type: 'string',
+            format: 'date'
+        },
+        dateShown: {
+            type: 'string',
+            format: 'date'
+        },
+        status: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workMedium: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workSize: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workStyle: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        workType: {
+            type: 'string',
+            maxLength: 20,
+            minLength: 0
+        },
+        workYearCompleted: {
+            type: 'string',
+            maxLength: 4,
+            minLength: 0
+        },
+        collector: {
+            '$ref': '#/components/schemas/Collector'
+        },
+        sale: {
+            '$ref': '#/components/schemas/Sale'
+        },
+        shownIn: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ArtShow'
+            },
+            uniqueItems: true
+        }
+    },
+    required: ['artist', 'shownIn', 'workTitle']
+} as const;
+
+export const $Asset = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        filename: {
+            type: 'string'
+        },
+        contentType: {
+            type: 'string'
+        },
+        size: {
+            type: 'integer',
+            format: 'int64'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        downloadUri: {
+            type: 'string'
+        }
+    },
+    required: ['contentType', 'createdAt', 'downloadUri', 'filename', 'id', 'size']
+} as const;
+
+export const $Buyer = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        firstName: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        lastName: {
+            type: 'string',
+            maxLength: 20,
+            minLength: 0
+        },
+        street: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        zip: {
+            '$ref': '#/components/schemas/Zip'
+        },
+        areaCode: {
+            type: 'string',
+            maxLength: 3,
+            minLength: 0
+        },
+        telephoneNumber: {
+            type: 'string',
+            maxLength: 7,
+            minLength: 0
+        },
+        purchasesLastYear: {
+            type: 'number'
+        },
+        purchasesYearToDate: {
+            type: 'number'
+        }
+    },
+    required: ['firstName', 'lastName']
 } as const;
 
 export const $Collector = {
@@ -368,6 +562,69 @@ export const $Collector = {
         }
     },
     required: ['firstName', 'lastName', 'salesLastYear', 'salesYearToDate', 'socialSecurityNumber']
+} as const;
+
+export const $Sale = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artwork: {
+            '$ref': '#/components/schemas/Artwork'
+        },
+        amountRemittedToOwner: {
+            type: 'number'
+        },
+        saleDate: {
+            type: 'string',
+            format: 'date'
+        },
+        salePrice: {
+            type: 'number'
+        },
+        saleTax: {
+            type: 'number'
+        },
+        buyer: {
+            '$ref': '#/components/schemas/Buyer'
+        },
+        salesperson: {
+            '$ref': '#/components/schemas/Salesperson'
+        }
+    },
+    required: ['artwork', 'buyer', 'salesperson']
+} as const;
+
+export const $Salesperson = {
+    type: 'object',
+    properties: {
+        socialSecurityNumber: {
+            type: 'string',
+            maxLength: 9,
+            minLength: 0
+        },
+        firstName: {
+            type: 'string',
+            maxLength: 15,
+            minLength: 0
+        },
+        lastName: {
+            type: 'string',
+            maxLength: 20,
+            minLength: 0
+        },
+        street: {
+            type: 'string',
+            maxLength: 50,
+            minLength: 0
+        },
+        zip: {
+            '$ref': '#/components/schemas/Zip'
+        }
+    },
+    required: ['firstName', 'lastName']
 } as const;
 
 export const $Zip = {
@@ -596,7 +853,14 @@ export const $ArtworkResponse = {
             type: 'string',
             format: 'date'
         },
+        dateSold: {
+            type: 'string',
+            format: 'date'
+        },
         askingPrice: {
+            type: 'number'
+        },
+        salePrice: {
             type: 'number'
         }
     },
@@ -682,6 +946,47 @@ export const $ArtistCreateRequest = {
         }
     },
     required: ['firstName', 'lastName']
+} as const;
+
+export const $ArtistResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        address: {
+            type: 'string'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        usualMedium: {
+            type: 'string'
+        },
+        usualStyle: {
+            type: 'string'
+        },
+        usualType: {
+            type: 'string'
+        }
+    },
+    required: ['firstName', 'id', 'lastName', 'salesLastYear', 'salesYearToDate']
 } as const;
 
 export const $ArtworkListingResponse = {

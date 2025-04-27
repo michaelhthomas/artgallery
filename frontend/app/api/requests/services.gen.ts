@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
+import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetWorksData, GetWorksResponse } from './types.gen';
 
 export class MailingListService {
     /**
@@ -260,7 +260,7 @@ export class ArtistControllerService {
     /**
      * @param data The data for the request.
      * @param data.q
-     * @returns Artist OK
+     * @returns ArtistResponse OK
      * @throws ApiError
      */
     public static getAllArtists(data: GetAllArtistsData = {}): CancelablePromise<GetAllArtistsResponse> {
@@ -279,7 +279,7 @@ export class ArtistControllerService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns Artist OK
+     * @returns ArtistResponse OK
      * @throws ApiError
      */
     public static createArtist(data: CreateArtistData): CancelablePromise<CreateArtistResponse> {
@@ -297,13 +297,32 @@ export class ArtistControllerService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns Artist OK
+     * @returns ArtistResponse OK
      * @throws ApiError
      */
     public static getArtist(data: GetArtistData): CancelablePromise<GetArtistResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/artist/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static getWorks(data: GetWorksData): CancelablePromise<GetWorksResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/artist/{id}/works',
             path: {
                 id: data.id
             },

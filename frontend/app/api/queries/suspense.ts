@@ -23,3 +23,6 @@ export const useArtistControllerServiceGetAllArtistsSuspense = <TData = Common.A
 export const useArtistControllerServiceGetArtistSuspense = <TData = Common.ArtistControllerServiceGetArtistDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtist({ id }) as TData, ...options });
+export const useArtistControllerServiceGetWorksSuspense = <TData = Common.ArtistControllerServiceGetWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getWorks({ id }) as TData, ...options });

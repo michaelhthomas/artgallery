@@ -181,6 +181,15 @@ export type CollectorCreateRequest = {
     collectionType?: string;
 };
 
+export type ArtShow = {
+    showTitle: string;
+    showFeaturedArtist?: Artist;
+    showTheme?: string;
+    showOpeningDate?: string;
+    showClosingDate?: string;
+    artworks: Array<Artwork>;
+};
+
 export type Artist = {
     artistId?: number;
     firstName: string;
@@ -197,6 +206,48 @@ export type Artist = {
     usualMedium?: string;
     usualStyle?: string;
     usualType?: string;
+    artworks: Array<Artwork>;
+};
+
+export type Artwork = {
+    id?: number;
+    artist: Artist;
+    workImage?: Asset;
+    workTitle: string;
+    askingPrice?: number;
+    dateListed?: string;
+    dateReturned?: string;
+    dateShown?: string;
+    status?: string;
+    workMedium?: string;
+    workSize?: string;
+    workStyle?: string;
+    workType?: string;
+    workYearCompleted?: string;
+    collector?: Collector;
+    sale?: Sale;
+    shownIn: Array<ArtShow>;
+};
+
+export type Asset = {
+    id: string;
+    filename: string;
+    contentType: string;
+    size: number;
+    createdAt: string;
+    downloadUri: string;
+};
+
+export type Buyer = {
+    id?: number;
+    firstName: string;
+    lastName: string;
+    street?: string;
+    zip?: Zip;
+    areaCode?: string;
+    telephoneNumber?: string;
+    purchasesLastYear?: number;
+    purchasesYearToDate?: number;
 };
 
 export type Collector = {
@@ -215,6 +266,25 @@ export type Collector = {
     collectionMedium?: string;
     collectionStyle?: string;
     collectionType?: string;
+};
+
+export type Sale = {
+    id?: number;
+    artwork: Artwork;
+    amountRemittedToOwner?: number;
+    saleDate?: string;
+    salePrice?: number;
+    saleTax?: number;
+    buyer: Buyer;
+    salesperson: Salesperson;
+};
+
+export type Salesperson = {
+    socialSecurityNumber?: string;
+    firstName: string;
+    lastName: string;
+    street?: string;
+    zip?: Zip;
 };
 
 export type Zip = {
@@ -334,7 +404,9 @@ export type ArtworkResponse = {
     workSize?: string;
     dateListed?: string;
     dateShown?: string;
+    dateSold?: string;
     askingPrice?: number;
+    salePrice?: number;
 };
 
 /**
@@ -396,6 +468,20 @@ export type ArtistCreateRequest = {
     /**
      * Usual type
      */
+    usualType?: string;
+};
+
+export type ArtistResponse = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    address?: string;
+    salesLastYear: number;
+    salesYearToDate: number;
+    usualMedium?: string;
+    usualStyle?: string;
     usualType?: string;
 };
 
@@ -499,19 +585,25 @@ export type GetAllArtistsData = {
     q?: string;
 };
 
-export type GetAllArtistsResponse = Array<Artist>;
+export type GetAllArtistsResponse = Array<ArtistResponse>;
 
 export type CreateArtistData = {
     requestBody: ArtistCreateRequest;
 };
 
-export type CreateArtistResponse = Artist;
+export type CreateArtistResponse = ArtistResponse;
 
 export type GetArtistData = {
     id: number;
 };
 
-export type GetArtistResponse = Artist;
+export type GetArtistResponse = ArtistResponse;
+
+export type GetWorksData = {
+    id: number;
+};
+
+export type GetWorksResponse = Array<ArtworkResponse>;
 
 export type $OpenApiTs = {
     '/api/public/mailing-list/signup': {
@@ -708,7 +800,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Array<Artist>;
+                200: Array<ArtistResponse>;
                 /**
                  * Unprocessable Entity
                  */
@@ -721,7 +813,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Artist;
+                200: ArtistResponse;
                 /**
                  * Unprocessable Entity
                  */
@@ -736,7 +828,22 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Artist;
+                200: ArtistResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/artist/{id}/works': {
+        get: {
+            req: GetWorksData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ArtworkResponse>;
                 /**
                  * Unprocessable Entity
                  */

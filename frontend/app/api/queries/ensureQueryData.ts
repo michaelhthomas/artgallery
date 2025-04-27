@@ -23,3 +23,6 @@ export const ensureUseArtistControllerServiceGetAllArtistsData = (queryClient: Q
 export const ensureUseArtistControllerServiceGetArtistData = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }), queryFn: () => ArtistControllerService.getArtist({ id }) });
+export const ensureUseArtistControllerServiceGetWorksData = (queryClient: QueryClient, { id }: {
+  id: number;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getWorks({ id }) });

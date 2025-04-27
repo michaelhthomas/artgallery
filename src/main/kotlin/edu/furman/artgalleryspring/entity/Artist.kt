@@ -54,8 +54,11 @@ data class Artist(
     val usualStyle: String? = null,
 
     @Column(name = "usualType", length = 20)
-    val usualType: String? = null
+    val usualType: String? = null,
 ) {
+    @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val artworks: MutableList<Artwork> = mutableListOf()
+
     companion object {
         const val SUM_ARTIST_SALES =
             "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +

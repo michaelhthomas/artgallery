@@ -46,6 +46,12 @@ export const useArtistControllerServiceGetArtistKey = "ArtistControllerServiceGe
 export const UseArtistControllerServiceGetArtistKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistKey, ...(queryKey ?? [{ id }])];
+export type ArtistControllerServiceGetWorksDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getWorks>>;
+export type ArtistControllerServiceGetWorksQueryResult<TData = ArtistControllerServiceGetWorksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtistControllerServiceGetWorksKey = "ArtistControllerServiceGetWorks";
+export const UseArtistControllerServiceGetWorksKeyFn = ({ id }: {
+  id: number;
+}, queryKey?: Array<unknown>) => [useArtistControllerServiceGetWorksKey, ...(queryKey ?? [{ id }])];
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;
 export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;

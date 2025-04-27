@@ -53,7 +53,7 @@ export function ArtistSelectInput({
             {artists && value
               ? (() => {
                   const selectedArtist = artists.find(
-                    (artist) => artist.artistId === value,
+                    (artist) => artist.id === value,
                   );
                   return selectedArtist
                     ? `${selectedArtist.firstName} ${selectedArtist.lastName}`
@@ -72,23 +72,17 @@ export function ArtistSelectInput({
                 <CommandGroup>
                   {artists.map((artist) => (
                     <CommandItem
-                      key={artist.artistId}
+                      key={artist.id}
                       value={`${artist.firstName} ${artist.lastName}`}
                       onSelect={() => {
-                        onChange(
-                          artist.artistId === value
-                            ? undefined
-                            : artist.artistId,
-                        );
+                        onChange(artist.id === value ? undefined : artist.id);
                         setOpen(false);
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === artist.artistId
-                            ? "opacity-100"
-                            : "opacity-0",
+                          value === artist.id ? "opacity-100" : "opacity-0",
                         )}
                       />
                       {artist.firstName + " " + artist.lastName}

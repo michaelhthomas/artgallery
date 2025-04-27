@@ -21,7 +21,9 @@ data class ArtworkResponse(
     val workSize: String?,
     val dateListed: LocalDate?,
     val dateShown: LocalDate?,
+    val dateSold: LocalDate?,
     val askingPrice: BigDecimal?,
+    val salePrice: BigDecimal?,
 ) {
     companion object {
         fun from(artwork: Artwork) =
@@ -42,7 +44,9 @@ data class ArtworkResponse(
                 workSize = artwork.workSize,
                 dateListed = artwork.dateListed,
                 dateShown = artwork.dateShown,
+                dateSold = artwork.sale?.saleDate,
                 askingPrice = artwork.askingPrice,
+                salePrice = artwork.sale?.salePrice,
             )
     }
 }

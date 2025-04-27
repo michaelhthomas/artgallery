@@ -66,6 +66,9 @@ data class Artwork (
     @JoinColumn(name = "collectorSocialSecurityNumber")
 	var collector: Collector? = null,
 
+    @OneToOne(mappedBy = "artwork", cascade = [CascadeType.ALL])
+    var sale: Sale? = null,
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "ShownIn",

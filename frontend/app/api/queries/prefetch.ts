@@ -23,3 +23,6 @@ export const prefetchUseArtistControllerServiceGetAllArtists = (queryClient: Que
 export const prefetchUseArtistControllerServiceGetArtist = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }), queryFn: () => ArtistControllerService.getArtist({ id }) });
+export const prefetchUseArtistControllerServiceGetWorks = (queryClient: QueryClient, { id }: {
+  id: number;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getWorks({ id }) });

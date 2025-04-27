@@ -1,4 +1,4 @@
-import { Artist } from "~/api/requests";
+import { ArtistResponse } from "~/api/requests";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -10,7 +10,7 @@ import {
 import { formatCurrency, formatPhoneNumber } from "~/lib/format";
 import { Badge } from "./ui/badge";
 
-export default function ArtistCard(artist: Artist) {
+export default function ArtistCard(artist: ArtistResponse) {
   return (
     <Card>
       <CardHeader>
@@ -19,13 +19,10 @@ export default function ArtistCard(artist: Artist) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
-        {artist.street && artist.zip && (
+        {artist.address && (
           <div>
             <div className="font-medium">Address</div>
-            <div className="text-muted-foreground">
-              {artist.street}, {artist.zip.city}, {artist.zip.state}{" "}
-              {artist.zip.zip}
-            </div>
+            <div className="text-muted-foreground">{artist.address}</div>
           </div>
         )}
 
