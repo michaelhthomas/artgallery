@@ -17,43 +17,6 @@ export type ValidationErrorResponse = {
 };
 
 /**
- * User profile information update
- */
-export type ProfileUpdateRequest = {
-    /**
-     * First name of the user.
-     */
-    firstName?: string;
-    /**
-     * Last name of the user.
-     */
-    lastName?: string;
-    /**
-     * Email of the user.
-     */
-    email?: string;
-    /**
-     * URL to an avatar image for the user.
-     */
-    avatarUrl?: string;
-    /**
-     * User's current password
-     */
-    currentPassword?: string;
-    /**
-     * New password for the user
-     */
-    newPassword?: string;
-};
-
-export type ProfileResponse = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    avatarUrl: string;
-};
-
-/**
  * Mailing List Signup Request
  */
 export type MailingListSignupRequest = {
@@ -109,6 +72,43 @@ export type MailingListSignupRequest = {
      * Preferred type
      */
     preferredType?: string;
+};
+
+/**
+ * User profile information update
+ */
+export type ProfileUpdateRequest = {
+    /**
+     * First name of the user.
+     */
+    firstName?: string;
+    /**
+     * Last name of the user.
+     */
+    lastName?: string;
+    /**
+     * Email of the user.
+     */
+    email?: string;
+    /**
+     * URL to an avatar image for the user.
+     */
+    avatarUrl?: string;
+    /**
+     * User's current password
+     */
+    currentPassword?: string;
+    /**
+     * New password for the user
+     */
+    newPassword?: string;
+};
+
+export type ProfileResponse = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatarUrl: string;
 };
 
 /**
@@ -260,6 +260,15 @@ export type AuthResponse = {
     lastName: string;
 };
 
+export type AssetResponse = {
+    id: string;
+    filename: string;
+    contentType: string;
+    size: number;
+    downloadUrl: string;
+    createdAt: string;
+};
+
 /**
  * Artwork Creation Request
  */
@@ -268,6 +277,10 @@ export type ArtworkCreateRequest = {
      * Artist ID
      */
     artistId: number;
+    /**
+     * Asset ID for the image associated with the work
+     */
+    workImage?: string;
     /**
      * Title of the artwork
      */
@@ -312,6 +325,7 @@ export type ArtworkResponse = {
     artistName: string;
     ownerName: string;
     status?: string;
+    workImage?: string;
     workTitle?: string;
     workYearCompleted?: string;
     workMedium?: string;
@@ -385,6 +399,36 @@ export type ArtistCreateRequest = {
     usualType?: string;
 };
 
+export type ArtworkListingResponse = {
+    work: ArtworkResponse;
+    sale?: SaleResponse;
+    shownIn: Array<ShowResponse>;
+};
+
+export type SaleResponse = {
+    invoiceNumber: number;
+    date?: string;
+    amountRemittedToOwner?: number;
+    price?: number;
+    tax?: number;
+    salespersonName: string;
+    buyerName: string;
+};
+
+export type ShowResponse = {
+    title: string;
+    featuredArtistName?: string;
+    theme?: string;
+    openingDate?: string;
+    closingDate?: string;
+};
+
+export type SignupForMailingListData = {
+    requestBody: MailingListSignupRequest;
+};
+
+export type SignupForMailingListResponse = string;
+
 export type GetProfileResponse = ProfileResponse;
 
 export type UpdateProfileData = {
@@ -392,12 +436,6 @@ export type UpdateProfileData = {
 };
 
 export type UpdateProfileResponse = ProfileResponse;
-
-export type SignupForMailingListData = {
-    requestBody: MailingListSignupRequest;
-};
-
-export type SignupForMailingListResponse = string;
 
 export type GetAllCollectorsData = {
     q?: string;
@@ -423,6 +461,26 @@ export type LoginData = {
 
 export type LoginResponse = AuthResponse;
 
+export type UploadAssetData = {
+    formData?: {
+        file: (Blob | File);
+    };
+};
+
+export type UploadAssetResponse = AssetResponse;
+
+export type DownloadAssetData = {
+    id: string;
+};
+
+export type DownloadAssetResponse = (Blob | File);
+
+export type DeleteAssetData = {
+    id: string;
+};
+
+export type DeleteAssetResponse = unknown;
+
 export type GetAllArtworksResponse = Array<ArtworkResponse>;
 
 export type CreateArtworkData = {
@@ -435,7 +493,7 @@ export type GetArtworkByIdData = {
     id: number;
 };
 
-export type GetArtworkByIdResponse = ArtworkResponse;
+export type GetArtworkByIdResponse = ArtworkListingResponse;
 
 export type GetAllArtistsData = {
     q?: string;
@@ -456,6 +514,21 @@ export type GetArtistData = {
 export type GetArtistResponse = Artist;
 
 export type $OpenApiTs = {
+    '/api/public/mailing-list/signup': {
+        post: {
+            req: SignupForMailingListData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: string;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
     '/api/profile': {
         get: {
             res: {
@@ -476,21 +549,6 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ProfileResponse;
-                /**
-                 * Unprocessable Entity
-                 */
-                422: ValidationErrorResponse;
-            };
-        };
-    };
-    '/api/mailing-list/signup': {
-        post: {
-            req: SignupForMailingListData;
-            res: {
-                /**
-                 * OK
-                 */
-                200: string;
                 /**
                  * Unprocessable Entity
                  */
@@ -556,6 +614,51 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/assets': {
+        post: {
+            req: UploadAssetData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: AssetResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/public/assets/{id}': {
+        get: {
+            req: DownloadAssetData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: (Blob | File);
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/assets/{id}': {
+        delete: {
+            req: DeleteAssetData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: unknown;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
     '/api/artworks': {
         get: {
             res: {
@@ -590,7 +693,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: ArtworkResponse;
+                200: ArtworkListingResponse;
                 /**
                  * Unprocessable Entity
                  */

@@ -18,6 +18,48 @@
     }
   ],
   "paths": {
+    "/api/public/mailing-list/signup": {
+      "post": {
+        "tags": [
+          "Mailing List"
+        ],
+        "summary": "Sign up for mailing list",
+        "description": "Add a new potential customer to the mailing list",
+        "operationId": "signupForMailingList",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailingListSignupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/profile": {
       "get": {
         "tags": [
@@ -84,53 +126,6 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ProfileResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/mailing-list/signup": {
-      "post": {
-        "tags": [
-          "Mailing List"
-        ],
-        "summary": "Sign up for mailing list",
-        "description": "Add a new potential customer to the mailing list",
-        "operationId": "signupForMailingList",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MailingListSignupRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "422": {
-            "description": "Unprocessable Entity",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
                 }
               }
             }
@@ -272,6 +267,59 @@
             }
           }
         }
+      }
+    },
+    "/api/assets": {
+      "post": {
+        "tags": [
+          "asset-controller"
+        ],
+        "operationId": "uploadAsset",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/artworks": {
@@ -446,6 +494,48 @@
         ]
       }
     },
+    "/api/public/assets/{id}": {
+      "get": {
+        "tags": [
+          "asset-controller"
+        ],
+        "operationId": "downloadAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/collectors/{id}": {
       "get": {
         "tags": [
@@ -524,7 +614,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ArtworkResponse"
+                  "$ref": "#/components/schemas/ArtworkListingResponse"
                 }
               }
             }
@@ -582,6 +672,45 @@
           }
         ]
       }
+    },
+    "/api/assets/{id}": {
+      "delete": {
+        "tags": [
+          "asset-controller"
+        ],
+        "operationId": "deleteAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -618,65 +747,6 @@
         "required": [
           "errors",
           "message"
-        ]
-      },
-      "ProfileUpdateRequest": {
-        "type": "object",
-        "description": "User profile information update",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "description": "First name of the user.",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "description": "Last name of the user.",
-            "example": "Smith"
-          },
-          "email": {
-            "type": "string",
-            "description": "Email of the user.",
-            "example": "john.smith@gmail.com"
-          },
-          "avatarUrl": {
-            "type": "string",
-            "description": "URL to an avatar image for the user.",
-            "example": "https://example.com"
-          },
-          "currentPassword": {
-            "type": "string",
-            "description": "User\u0027s current password",
-            "example": "password123"
-          },
-          "newPassword": {
-            "type": "string",
-            "description": "New password for the user",
-            "example": "password123"
-          }
-        }
-      },
-      "ProfileResponse": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "avatarUrl": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "avatarUrl",
-          "email",
-          "firstName",
-          "lastName"
         ]
       },
       "MailingListSignupRequest": {
@@ -766,6 +836,65 @@
           }
         },
         "required": [
+          "firstName",
+          "lastName"
+        ]
+      },
+      "ProfileUpdateRequest": {
+        "type": "object",
+        "description": "User profile information update",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user.",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user.",
+            "example": "Smith"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the user.",
+            "example": "john.smith@gmail.com"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "URL to an avatar image for the user.",
+            "example": "https://example.com"
+          },
+          "currentPassword": {
+            "type": "string",
+            "description": "User\u0027s current password",
+            "example": "password123"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password for the user",
+            "example": "password123"
+          }
+        }
+      },
+      "ProfileResponse": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "avatarUrl",
+          "email",
           "firstName",
           "lastName"
         ]
@@ -1059,6 +1188,40 @@
           "username"
         ]
       },
+      "AssetResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "downloadUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "contentType",
+          "createdAt",
+          "downloadUrl",
+          "filename",
+          "id",
+          "size"
+        ]
+      },
       "ArtworkCreateRequest": {
         "type": "object",
         "description": "Artwork Creation Request",
@@ -1068,6 +1231,12 @@
             "format": "int32",
             "description": "Artist ID",
             "example": 1
+          },
+          "workImage": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Asset ID for the image associated with the work",
+            "example": "a81bc81b-dead-4e5d-abff-90865d1e13b1"
           },
           "workTitle": {
             "type": "string",
@@ -1158,6 +1327,9 @@
             "type": "string"
           },
           "status": {
+            "type": "string"
+          },
+          "workImage": {
             "type": "string"
           },
           "workTitle": {
@@ -1278,6 +1450,84 @@
         "required": [
           "firstName",
           "lastName"
+        ]
+      },
+      "ArtworkListingResponse": {
+        "type": "object",
+        "properties": {
+          "work": {
+            "$ref": "#/components/schemas/ArtworkResponse"
+          },
+          "sale": {
+            "$ref": "#/components/schemas/SaleResponse"
+          },
+          "shownIn": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShowResponse"
+            }
+          }
+        },
+        "required": [
+          "shownIn",
+          "work"
+        ]
+      },
+      "SaleResponse": {
+        "type": "object",
+        "properties": {
+          "invoiceNumber": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amountRemittedToOwner": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "tax": {
+            "type": "number"
+          },
+          "salespersonName": {
+            "type": "string"
+          },
+          "buyerName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "buyerName",
+          "invoiceNumber",
+          "salespersonName"
+        ]
+      },
+      "ShowResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "featuredArtistName": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "string"
+          },
+          "openingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "closingDate": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "title"
         ]
       }
     },

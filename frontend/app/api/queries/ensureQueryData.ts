@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, CollectorControllerService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, CollectorControllerService, ProfileControllerService } from "../requests/services.gen";
 import * as Common from "./common";
 export const ensureUseProfileControllerServiceGetProfileData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(), queryFn: () => ProfileControllerService.getProfile() });
 export const ensureUseCollectorControllerServiceGetAllCollectorsData = (queryClient: QueryClient, { q }: {
@@ -10,6 +10,9 @@ export const ensureUseCollectorControllerServiceGetAllCollectorsData = (queryCli
 export const ensureUseCollectorControllerServiceGetCollectorByIdData = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseCollectorControllerServiceGetCollectorByIdKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorById({ id }) });
+export const ensureUseAssetControllerServiceDownloadAssetData = (queryClient: QueryClient, { id }: {
+  id: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });
 export const ensureUseArtworkControllerServiceGetAllArtworksData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(), queryFn: () => ArtworkControllerService.getAllArtworks() });
 export const ensureUseArtworkControllerServiceGetArtworkByIdData = (queryClient: QueryClient, { id }: {
   id: number;

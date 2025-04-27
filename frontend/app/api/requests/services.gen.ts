@@ -3,7 +3,30 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetProfileResponse, UpdateProfileData, UpdateProfileResponse, SignupForMailingListData, SignupForMailingListResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
+import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse } from './types.gen';
+
+export class MailingListService {
+    /**
+     * Sign up for mailing list
+     * Add a new potential customer to the mailing list
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static signupForMailingList(data: SignupForMailingListData): CancelablePromise<SignupForMailingListResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/public/mailing-list/signup',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
 
 export class ProfileControllerService {
     /**
@@ -30,29 +53,6 @@ export class ProfileControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/profile',
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Unprocessable Entity'
-            }
-        });
-    }
-    
-}
-
-export class MailingListService {
-    /**
-     * Sign up for mailing list
-     * Add a new potential customer to the mailing list
-     * @param data The data for the request.
-     * @param data.requestBody
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static signupForMailingList(data: SignupForMailingListData): CancelablePromise<SignupForMailingListResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/mailing-list/signup',
             body: data.requestBody,
             mediaType: 'application/json',
             errors: {
@@ -143,6 +143,65 @@ export class AuthControllerService {
     
 }
 
+export class AssetControllerService {
+    /**
+     * @param data The data for the request.
+     * @param data.formData
+     * @returns AssetResponse OK
+     * @throws ApiError
+     */
+    public static uploadAsset(data: UploadAssetData = {}): CancelablePromise<UploadAssetResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/assets',
+            formData: data.formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns binary OK
+     * @throws ApiError
+     */
+    public static downloadAsset(data: DownloadAssetData): CancelablePromise<DownloadAssetResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/public/assets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static deleteAsset(data: DeleteAssetData): CancelablePromise<DeleteAssetResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/assets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
+
 export class ArtworkControllerService {
     /**
      * @returns ArtworkResponse OK
@@ -179,7 +238,7 @@ export class ArtworkControllerService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns ArtworkResponse OK
+     * @returns ArtworkListingResponse OK
      * @throws ApiError
      */
     public static getArtworkById(data: GetArtworkByIdData): CancelablePromise<GetArtworkByIdResponse> {

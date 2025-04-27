@@ -2,6 +2,7 @@ HELP.md
 .gradle
 .frontend-gradle-plugin/
 /node/
+/uploads/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

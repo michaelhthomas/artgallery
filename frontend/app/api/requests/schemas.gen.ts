@@ -27,62 +27,6 @@ export const $ValidationErrorResponse = {
     required: ['errors', 'message']
 } as const;
 
-export const $ProfileUpdateRequest = {
-    type: 'object',
-    description: 'User profile information update',
-    properties: {
-        firstName: {
-            type: 'string',
-            description: 'First name of the user.',
-            example: 'John'
-        },
-        lastName: {
-            type: 'string',
-            description: 'Last name of the user.',
-            example: 'Smith'
-        },
-        email: {
-            type: 'string',
-            description: 'Email of the user.',
-            example: 'john.smith@gmail.com'
-        },
-        avatarUrl: {
-            type: 'string',
-            description: 'URL to an avatar image for the user.',
-            example: 'https://example.com'
-        },
-        currentPassword: {
-            type: 'string',
-            description: "User's current password",
-            example: 'password123'
-        },
-        newPassword: {
-            type: 'string',
-            description: 'New password for the user',
-            example: 'password123'
-        }
-    }
-} as const;
-
-export const $ProfileResponse = {
-    type: 'object',
-    properties: {
-        firstName: {
-            type: 'string'
-        },
-        lastName: {
-            type: 'string'
-        },
-        email: {
-            type: 'string'
-        },
-        avatarUrl: {
-            type: 'string'
-        }
-    },
-    required: ['avatarUrl', 'email', 'firstName', 'lastName']
-} as const;
-
 export const $MailingListSignupRequest = {
     type: 'object',
     description: 'Mailing List Signup Request',
@@ -170,6 +114,62 @@ export const $MailingListSignupRequest = {
         }
     },
     required: ['firstName', 'lastName']
+} as const;
+
+export const $ProfileUpdateRequest = {
+    type: 'object',
+    description: 'User profile information update',
+    properties: {
+        firstName: {
+            type: 'string',
+            description: 'First name of the user.',
+            example: 'John'
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name of the user.',
+            example: 'Smith'
+        },
+        email: {
+            type: 'string',
+            description: 'Email of the user.',
+            example: 'john.smith@gmail.com'
+        },
+        avatarUrl: {
+            type: 'string',
+            description: 'URL to an avatar image for the user.',
+            example: 'https://example.com'
+        },
+        currentPassword: {
+            type: 'string',
+            description: "User's current password",
+            example: 'password123'
+        },
+        newPassword: {
+            type: 'string',
+            description: 'New password for the user',
+            example: 'password123'
+        }
+    }
+} as const;
+
+export const $ProfileResponse = {
+    type: 'object',
+    properties: {
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        email: {
+            type: 'string'
+        },
+        avatarUrl: {
+            type: 'string'
+        }
+    },
+    required: ['avatarUrl', 'email', 'firstName', 'lastName']
 } as const;
 
 export const $CollectorCreateRequest = {
@@ -439,6 +439,34 @@ export const $AuthResponse = {
     required: ['email', 'firstName', 'lastName', 'token', 'username']
 } as const;
 
+export const $AssetResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        filename: {
+            type: 'string'
+        },
+        contentType: {
+            type: 'string'
+        },
+        size: {
+            type: 'integer',
+            format: 'int64'
+        },
+        downloadUrl: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    required: ['contentType', 'createdAt', 'downloadUrl', 'filename', 'id', 'size']
+} as const;
+
 export const $ArtworkCreateRequest = {
     type: 'object',
     description: 'Artwork Creation Request',
@@ -448,6 +476,12 @@ export const $ArtworkCreateRequest = {
             format: 'int32',
             description: 'Artist ID',
             example: 1
+        },
+        workImage: {
+            type: 'string',
+            format: 'uuid',
+            description: 'Asset ID for the image associated with the work',
+            example: 'a81bc81b-dead-4e5d-abff-90865d1e13b1'
         },
         workTitle: {
             type: 'string',
@@ -531,6 +565,9 @@ export const $ArtworkResponse = {
             type: 'string'
         },
         status: {
+            type: 'string'
+        },
+        workImage: {
             type: 'string'
         },
         workTitle: {
@@ -645,4 +682,76 @@ export const $ArtistCreateRequest = {
         }
     },
     required: ['firstName', 'lastName']
+} as const;
+
+export const $ArtworkListingResponse = {
+    type: 'object',
+    properties: {
+        work: {
+            '$ref': '#/components/schemas/ArtworkResponse'
+        },
+        sale: {
+            '$ref': '#/components/schemas/SaleResponse'
+        },
+        shownIn: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ShowResponse'
+            }
+        }
+    },
+    required: ['shownIn', 'work']
+} as const;
+
+export const $SaleResponse = {
+    type: 'object',
+    properties: {
+        invoiceNumber: {
+            type: 'number'
+        },
+        date: {
+            type: 'string',
+            format: 'date'
+        },
+        amountRemittedToOwner: {
+            type: 'number'
+        },
+        price: {
+            type: 'number'
+        },
+        tax: {
+            type: 'number'
+        },
+        salespersonName: {
+            type: 'string'
+        },
+        buyerName: {
+            type: 'string'
+        }
+    },
+    required: ['buyerName', 'invoiceNumber', 'salespersonName']
+} as const;
+
+export const $ShowResponse = {
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string'
+        },
+        featuredArtistName: {
+            type: 'string'
+        },
+        theme: {
+            type: 'string'
+        },
+        openingDate: {
+            type: 'string',
+            format: 'date'
+        },
+        closingDate: {
+            type: 'string',
+            format: 'date'
+        }
+    },
+    required: ['title']
 } as const;
