@@ -1,8 +1,12 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, CollectorControllerService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
 import * as Common from "./common";
+export const useSaleControllerServiceGetAllSalesSuspense = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
+export const useSaleControllerServiceGetSaleByIdSuspense = <TData = Common.SaleControllerServiceGetSaleByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetSaleByIdKeyFn({ id }, queryKey), queryFn: () => SaleControllerService.getSaleById({ id }) as TData, ...options });
 export const useProfileControllerServiceGetProfileSuspense = <TData = Common.ProfileControllerServiceGetProfileDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(queryKey), queryFn: () => ProfileControllerService.getProfile() as TData, ...options });
 export const useCollectorControllerServiceGetAllCollectorsSuspense = <TData = Common.CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
@@ -13,6 +17,10 @@ export const useCollectorControllerServiceGetCollectorSuspense = <TData = Common
 export const useCollectorControllerServiceGetCollectorWorksSuspense = <TData = Common.CollectorControllerServiceGetCollectorWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) as TData, ...options });
+export const useBuyerControllerServiceGetAllBuyersSuspense = <TData = Common.BuyerControllerServiceGetAllBuyersDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseBuyerControllerServiceGetAllBuyersKeyFn(queryKey), queryFn: () => BuyerControllerService.getAllBuyers() as TData, ...options });
+export const useBuyerControllerServiceGetBuyerByIdSuspense = <TData = Common.BuyerControllerServiceGetBuyerByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseBuyerControllerServiceGetBuyerByIdKeyFn({ id }, queryKey), queryFn: () => BuyerControllerService.getBuyerById({ id }) as TData, ...options });
 export const useAssetControllerServiceDownloadAssetSuspense = <TData = Common.AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.downloadAsset({ id }) as TData, ...options });

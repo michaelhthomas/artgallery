@@ -27,6 +27,83 @@ export const $ValidationErrorResponse = {
     required: ['errors', 'message']
 } as const;
 
+export const $SaleCreateRequest = {
+    type: 'object',
+    description: 'Sale Creation Request',
+    properties: {
+        artworkId: {
+            type: 'integer',
+            format: 'int32',
+            description: 'Artwork ID being sold',
+            example: 42
+        },
+        buyerId: {
+            type: 'integer',
+            format: 'int32',
+            description: 'Buyer ID',
+            example: 7
+        },
+        saleDate: {
+            type: 'string',
+            format: 'date',
+            description: "Sale date (YYYY-MM-DD). Defaults to today's date if omitted",
+            example: '2025-04-26'
+        },
+        salePrice: {
+            type: 'string',
+            description: 'Sale price in USD',
+            example: 12500
+        },
+        saleTax: {
+            type: 'string',
+            description: 'Sales tax in USD',
+            example: 750
+        },
+        amountRemittedToOwner: {
+            type: 'string',
+            description: 'Amount remitted to owner in USD',
+            example: 10000
+        },
+        salespersonSsn: {
+            type: 'string',
+            description: 'Social-security number of the salesperson who handled the sale (exactly 9 digits)',
+            example: 123456789,
+            minLength: 1,
+            pattern: '\\d{9}'
+        }
+    },
+    required: ['artworkId', 'buyerId', 'salespersonSsn']
+} as const;
+
+export const $SaleResponse = {
+    type: 'object',
+    properties: {
+        invoiceNumber: {
+            type: 'number'
+        },
+        date: {
+            type: 'string',
+            format: 'date'
+        },
+        amountRemittedToOwner: {
+            type: 'number'
+        },
+        price: {
+            type: 'number'
+        },
+        tax: {
+            type: 'number'
+        },
+        salespersonName: {
+            type: 'string'
+        },
+        buyerName: {
+            type: 'string'
+        }
+    },
+    required: ['buyerName', 'invoiceNumber', 'salespersonName']
+} as const;
+
 export const $MailingListSignupRequest = {
     type: 'object',
     description: 'Mailing List Signup Request',
@@ -508,7 +585,7 @@ export const $Buyer = {
             type: 'number'
         }
     },
-    required: ['firstName', 'lastName']
+    required: ['firstName', 'lastName', 'purchasesLastYear', 'purchasesYearToDate']
 } as const;
 
 export const $Collector = {
@@ -647,6 +724,116 @@ export const $Zip = {
         }
     },
     required: ['city', 'state', 'zip']
+} as const;
+
+export const $BuyerCreateRequest = {
+    type: 'object',
+    description: 'Buyer Creation Request',
+    properties: {
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Alice',
+            maxLength: 15,
+            minLength: 0
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Campbell',
+            maxLength: 20,
+            minLength: 0
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 123,
+            maxLength: 50,
+            minLength: 0
+        },
+        zipCode: {
+            type: 'string',
+            description: 'ZIP code (must exist in Zip table)',
+            example: 29613
+        },
+        city: {
+            type: 'string',
+            description: 'City',
+            example: 'Anytown'
+        },
+        state: {
+            type: 'string',
+            description: 'State',
+            example: 'CA'
+        },
+        areaCode: {
+            type: 'string',
+            description: 'Area code (3 digits)',
+            example: 864,
+            pattern: '\\d{3}'
+        },
+        telephoneNumber: {
+            type: 'string',
+            description: 'Telephone number (7 digits)',
+            example: 5551234,
+            pattern: '\\d{7}'
+        }
+    },
+    required: ['firstName', 'lastName']
+} as const;
+
+export const $BuyerResponse = {
+    type: 'object',
+    description: 'Buyer Response DTO',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32',
+            description: 'Buyer ID',
+            example: 12
+        },
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Alice'
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Campbell'
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 123
+        },
+        zipCode: {
+            type: 'string',
+            description: 'ZIP code',
+            example: 29613
+        },
+        areaCode: {
+            type: 'string',
+            description: 'Area code (3 digits)',
+            example: 864
+        },
+        telephoneNumber: {
+            type: 'string',
+            description: 'Telephone number (7 digits)',
+            example: 5551234
+        },
+        purchasesLastYear: {
+            type: 'number',
+            description: 'Purchases last year (USD)',
+            example: 1500
+        },
+        purchasesYearToDate: {
+            type: 'number',
+            description: 'Purchases year-to-date (USD)',
+            example: 300
+        }
+    },
+    required: ['firstName', 'id', 'lastName']
 } as const;
 
 export const $AuthRequest = {
@@ -1056,35 +1243,6 @@ export const $ArtworkListingResponse = {
         }
     },
     required: ['shownIn', 'work']
-} as const;
-
-export const $SaleResponse = {
-    type: 'object',
-    properties: {
-        invoiceNumber: {
-            type: 'number'
-        },
-        date: {
-            type: 'string',
-            format: 'date'
-        },
-        amountRemittedToOwner: {
-            type: 'number'
-        },
-        price: {
-            type: 'number'
-        },
-        tax: {
-            type: 'number'
-        },
-        salespersonName: {
-            type: 'string'
-        },
-        buyerName: {
-            type: 'string'
-        }
-    },
-    required: ['buyerName', 'invoiceNumber', 'salespersonName']
 } as const;
 
 export const $ShowResponse = {

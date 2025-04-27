@@ -1,7 +1,17 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
+export type SaleControllerServiceGetAllSalesDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getAllSales>>;
+export type SaleControllerServiceGetAllSalesQueryResult<TData = SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useSaleControllerServiceGetAllSalesKey = "SaleControllerServiceGetAllSales";
+export const UseSaleControllerServiceGetAllSalesKeyFn = (queryKey?: Array<unknown>) => [useSaleControllerServiceGetAllSalesKey, ...(queryKey ?? [])];
+export type SaleControllerServiceGetSaleByIdDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getSaleById>>;
+export type SaleControllerServiceGetSaleByIdQueryResult<TData = SaleControllerServiceGetSaleByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useSaleControllerServiceGetSaleByIdKey = "SaleControllerServiceGetSaleById";
+export const UseSaleControllerServiceGetSaleByIdKeyFn = ({ id }: {
+  id: number;
+}, queryKey?: Array<unknown>) => [useSaleControllerServiceGetSaleByIdKey, ...(queryKey ?? [{ id }])];
 export type ProfileControllerServiceGetProfileDefaultResponse = Awaited<ReturnType<typeof ProfileControllerService.getProfile>>;
 export type ProfileControllerServiceGetProfileQueryResult<TData = ProfileControllerServiceGetProfileDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useProfileControllerServiceGetProfileKey = "ProfileControllerServiceGetProfile";
@@ -24,6 +34,16 @@ export const useCollectorControllerServiceGetCollectorWorksKey = "CollectorContr
 export const UseCollectorControllerServiceGetCollectorWorksKeyFn = ({ id }: {
   id: string;
 }, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorWorksKey, ...(queryKey ?? [{ id }])];
+export type BuyerControllerServiceGetAllBuyersDefaultResponse = Awaited<ReturnType<typeof BuyerControllerService.getAllBuyers>>;
+export type BuyerControllerServiceGetAllBuyersQueryResult<TData = BuyerControllerServiceGetAllBuyersDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useBuyerControllerServiceGetAllBuyersKey = "BuyerControllerServiceGetAllBuyers";
+export const UseBuyerControllerServiceGetAllBuyersKeyFn = (queryKey?: Array<unknown>) => [useBuyerControllerServiceGetAllBuyersKey, ...(queryKey ?? [])];
+export type BuyerControllerServiceGetBuyerByIdDefaultResponse = Awaited<ReturnType<typeof BuyerControllerService.getBuyerById>>;
+export type BuyerControllerServiceGetBuyerByIdQueryResult<TData = BuyerControllerServiceGetBuyerByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useBuyerControllerServiceGetBuyerByIdKey = "BuyerControllerServiceGetBuyerById";
+export const UseBuyerControllerServiceGetBuyerByIdKeyFn = ({ id }: {
+  id: number;
+}, queryKey?: Array<unknown>) => [useBuyerControllerServiceGetBuyerByIdKey, ...(queryKey ?? [{ id }])];
 export type AssetControllerServiceDownloadAssetDefaultResponse = Awaited<ReturnType<typeof AssetControllerService.downloadAsset>>;
 export type AssetControllerServiceDownloadAssetQueryResult<TData = AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useAssetControllerServiceDownloadAssetKey = "AssetControllerServiceDownloadAsset";
@@ -58,9 +78,11 @@ export const useArtistControllerServiceGetArtistWorksKey = "ArtistControllerServ
 export const UseArtistControllerServiceGetArtistWorksKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistWorksKey, ...(queryKey ?? [{ id }])];
+export type SaleControllerServiceCreateSaleMutationResult = Awaited<ReturnType<typeof SaleControllerService.createSale>>;
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;
 export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;
+export type BuyerControllerServiceCreateBuyerMutationResult = Awaited<ReturnType<typeof BuyerControllerService.createBuyer>>;
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
 export type AssetControllerServiceUploadAssetMutationResult = Awaited<ReturnType<typeof AssetControllerService.uploadAsset>>;
 export type ArtworkControllerServiceCreateArtworkMutationResult = Awaited<ReturnType<typeof ArtworkControllerService.createArtwork>>;

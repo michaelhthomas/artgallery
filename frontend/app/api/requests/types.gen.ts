@@ -17,6 +17,50 @@ export type ValidationErrorResponse = {
 };
 
 /**
+ * Sale Creation Request
+ */
+export type SaleCreateRequest = {
+    /**
+     * Artwork ID being sold
+     */
+    artworkId: number;
+    /**
+     * Buyer ID
+     */
+    buyerId: number;
+    /**
+     * Sale date (YYYY-MM-DD). Defaults to today's date if omitted
+     */
+    saleDate?: string;
+    /**
+     * Sale price in USD
+     */
+    salePrice?: string;
+    /**
+     * Sales tax in USD
+     */
+    saleTax?: string;
+    /**
+     * Amount remitted to owner in USD
+     */
+    amountRemittedToOwner?: string;
+    /**
+     * Social-security number of the salesperson who handled the sale (exactly 9 digits)
+     */
+    salespersonSsn: string;
+};
+
+export type SaleResponse = {
+    invoiceNumber: number;
+    date?: string;
+    amountRemittedToOwner?: number;
+    price?: number;
+    tax?: number;
+    salespersonName: string;
+    buyerName: string;
+};
+
+/**
  * Mailing List Signup Request
  */
 export type MailingListSignupRequest = {
@@ -246,8 +290,8 @@ export type Buyer = {
     zip?: Zip;
     areaCode?: string;
     telephoneNumber?: string;
-    purchasesLastYear?: number;
-    purchasesYearToDate?: number;
+    purchasesLastYear: number;
+    purchasesYearToDate: number;
 };
 
 export type Collector = {
@@ -292,6 +336,86 @@ export type Zip = {
     zip: string;
     city: string;
     state: string;
+};
+
+/**
+ * Buyer Creation Request
+ */
+export type BuyerCreateRequest = {
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * ZIP code (must exist in Zip table)
+     */
+    zipCode?: string;
+    /**
+     * City
+     */
+    city?: string;
+    /**
+     * State
+     */
+    state?: string;
+    /**
+     * Area code (3 digits)
+     */
+    areaCode?: string;
+    /**
+     * Telephone number (7 digits)
+     */
+    telephoneNumber?: string;
+};
+
+/**
+ * Buyer Response DTO
+ */
+export type BuyerResponse = {
+    /**
+     * Buyer ID
+     */
+    id: number;
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * ZIP code
+     */
+    zipCode?: string;
+    /**
+     * Area code (3 digits)
+     */
+    areaCode?: string;
+    /**
+     * Telephone number (7 digits)
+     */
+    telephoneNumber?: string;
+    /**
+     * Purchases last year (USD)
+     */
+    purchasesLastYear?: number;
+    /**
+     * Purchases year-to-date (USD)
+     */
+    purchasesYearToDate?: number;
 };
 
 /**
@@ -507,16 +631,6 @@ export type ArtworkListingResponse = {
     shownIn: Array<ShowResponse>;
 };
 
-export type SaleResponse = {
-    invoiceNumber: number;
-    date?: string;
-    amountRemittedToOwner?: number;
-    price?: number;
-    tax?: number;
-    salespersonName: string;
-    buyerName: string;
-};
-
 export type ShowResponse = {
     title: string;
     featuredArtistName?: string;
@@ -524,6 +638,20 @@ export type ShowResponse = {
     openingDate?: string;
     closingDate?: string;
 };
+
+export type GetAllSalesResponse = Array<SaleResponse>;
+
+export type CreateSaleData = {
+    requestBody: SaleCreateRequest;
+};
+
+export type CreateSaleResponse = SaleResponse;
+
+export type GetSaleByIdData = {
+    id: number;
+};
+
+export type GetSaleByIdResponse = SaleResponse;
 
 export type SignupForMailingListData = {
     requestBody: MailingListSignupRequest;
@@ -562,6 +690,20 @@ export type GetCollectorWorksData = {
 };
 
 export type GetCollectorWorksResponse = Array<ArtworkResponse>;
+
+export type GetAllBuyersResponse = Array<BuyerResponse>;
+
+export type CreateBuyerData = {
+    requestBody: BuyerCreateRequest;
+};
+
+export type CreateBuyerResponse = BuyerResponse;
+
+export type GetBuyerByIdData = {
+    id: number;
+};
+
+export type GetBuyerByIdResponse = BuyerResponse;
 
 export type LoginData = {
     requestBody: AuthRequest;
@@ -628,6 +770,48 @@ export type GetArtistWorksData = {
 export type GetArtistWorksResponse = Array<ArtworkResponse>;
 
 export type $OpenApiTs = {
+    '/api/sales': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<SaleResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+        post: {
+            req: CreateSaleData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: SaleResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/sales/{id}': {
+        get: {
+            req: GetSaleByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: SaleResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
     '/api/public/mailing-list/signup': {
         post: {
             req: SignupForMailingListData;
@@ -721,6 +905,48 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: Array<ArtworkResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/buyers': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<BuyerResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+        post: {
+            req: CreateBuyerData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: BuyerResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/buyers/{id}': {
+        get: {
+            req: GetBuyerByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: BuyerResponse;
                 /**
                  * Unprocessable Entity
                  */

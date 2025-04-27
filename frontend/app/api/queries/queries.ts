@@ -1,9 +1,13 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, CollectorControllerService, MailingListService, ProfileControllerService } from "../requests/services.gen";
-import { ArtistCreateRequest, ArtworkCreateRequest, AuthRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest } from "../requests/types.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
+import { ArtistCreateRequest, ArtworkCreateRequest, AuthRequest, BuyerCreateRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest, SaleCreateRequest } from "../requests/types.gen";
 import * as Common from "./common";
+export const useSaleControllerServiceGetAllSales = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
+export const useSaleControllerServiceGetSaleById = <TData = Common.SaleControllerServiceGetSaleByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetSaleByIdKeyFn({ id }, queryKey), queryFn: () => SaleControllerService.getSaleById({ id }) as TData, ...options });
 export const useProfileControllerServiceGetProfile = <TData = Common.ProfileControllerServiceGetProfileDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(queryKey), queryFn: () => ProfileControllerService.getProfile() as TData, ...options });
 export const useCollectorControllerServiceGetAllCollectors = <TData = Common.CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
@@ -14,6 +18,10 @@ export const useCollectorControllerServiceGetCollector = <TData = Common.Collect
 export const useCollectorControllerServiceGetCollectorWorks = <TData = Common.CollectorControllerServiceGetCollectorWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) as TData, ...options });
+export const useBuyerControllerServiceGetAllBuyers = <TData = Common.BuyerControllerServiceGetAllBuyersDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseBuyerControllerServiceGetAllBuyersKeyFn(queryKey), queryFn: () => BuyerControllerService.getAllBuyers() as TData, ...options });
+export const useBuyerControllerServiceGetBuyerById = <TData = Common.BuyerControllerServiceGetBuyerByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseBuyerControllerServiceGetBuyerByIdKeyFn({ id }, queryKey), queryFn: () => BuyerControllerService.getBuyerById({ id }) as TData, ...options });
 export const useAssetControllerServiceDownloadAsset = <TData = Common.AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.downloadAsset({ id }) as TData, ...options });
@@ -30,6 +38,11 @@ export const useArtistControllerServiceGetArtist = <TData = Common.ArtistControl
 export const useArtistControllerServiceGetArtistWorks = <TData = Common.ArtistControllerServiceGetArtistWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtistWorks({ id }) as TData, ...options });
+export const useSaleControllerServiceCreateSale = <TData = Common.SaleControllerServiceCreateSaleMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: SaleCreateRequest;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: SaleCreateRequest;
+}, TContext>({ mutationFn: ({ requestBody }) => SaleControllerService.createSale({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useMailingListServiceSignupForMailingList = <TData = Common.MailingListServiceSignupForMailingListMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: MailingListSignupRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
@@ -45,6 +58,11 @@ export const useCollectorControllerServiceCreateCollector = <TData = Common.Coll
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: CollectorCreateRequest;
 }, TContext>({ mutationFn: ({ requestBody }) => CollectorControllerService.createCollector({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useBuyerControllerServiceCreateBuyer = <TData = Common.BuyerControllerServiceCreateBuyerMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: BuyerCreateRequest;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: BuyerCreateRequest;
+}, TContext>({ mutationFn: ({ requestBody }) => BuyerControllerService.createBuyer({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useAuthControllerServiceLogin = <TData = Common.AuthControllerServiceLoginMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: AuthRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

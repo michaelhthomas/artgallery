@@ -1,8 +1,12 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, CollectorControllerService, ProfileControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
 import * as Common from "./common";
+export const prefetchUseSaleControllerServiceGetAllSales = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
+export const prefetchUseSaleControllerServiceGetSaleById = (queryClient: QueryClient, { id }: {
+  id: number;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetSaleByIdKeyFn({ id }), queryFn: () => SaleControllerService.getSaleById({ id }) });
 export const prefetchUseProfileControllerServiceGetProfile = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(), queryFn: () => ProfileControllerService.getProfile() });
 export const prefetchUseCollectorControllerServiceGetAllCollectors = (queryClient: QueryClient, { q }: {
   q?: string;
@@ -13,6 +17,10 @@ export const prefetchUseCollectorControllerServiceGetCollector = (queryClient: Q
 export const prefetchUseCollectorControllerServiceGetCollectorWorks = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) });
+export const prefetchUseBuyerControllerServiceGetAllBuyers = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBuyerControllerServiceGetAllBuyersKeyFn(), queryFn: () => BuyerControllerService.getAllBuyers() });
+export const prefetchUseBuyerControllerServiceGetBuyerById = (queryClient: QueryClient, { id }: {
+  id: number;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseBuyerControllerServiceGetBuyerByIdKeyFn({ id }), queryFn: () => BuyerControllerService.getBuyerById({ id }) });
 export const prefetchUseAssetControllerServiceDownloadAsset = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });

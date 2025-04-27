@@ -1,8 +1,10 @@
 package edu.furman.artgalleryspring.entity
 
+import edu.furman.artgalleryspring.entity.Collector.Companion.SUM_COLLECTOR_SALES
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+import org.hibernate.annotations.Formula
 import java.math.BigDecimal
 
 @Entity
@@ -26,7 +28,7 @@ data class Buyer (
     @Column(name = "street", length = 50)
 	var street: String? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "zip")
 	var zip: Zip? = null,
 
@@ -38,9 +40,17 @@ data class Buyer (
     @Column(name = "telephoneNumber", length = 7)
 	var telephoneNumber: String? = null,
 
-    @Column(name = "purchasesLastYear", precision = 8, scale = 2)
-	var purchasesLastYear: BigDecimal? = null,
 
-    @Column(name = "purchasesYearToDate", precision = 8, scale = 2)
-	var purchasesYearToDate: BigDecimal? = null
-)
+    @Formula("($SUM_BUYER_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()) - 1)")
+    val purchasesLastYear: BigDecimal = BigDecimal.ZERO,
+
+    @Formula("($SUM_BUYER_SALES AND YEAR(s.saleDate) = YEAR(CURDATE()))")
+    val purchasesYearToDate: BigDecimal = BigDecimal.ZERO,
+) {
+    companion object {
+        const val SUM_BUYER_SALES =
+            "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +
+                    "WHERE s.artworkId = w.artworkId " +
+                    "AND s.buyerId = buyerId"
+    }
+}

@@ -3,7 +3,61 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse } from './types.gen';
+import type { GetAllSalesResponse, CreateSaleData, CreateSaleResponse, GetSaleByIdData, GetSaleByIdResponse, SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, GetAllBuyersResponse, CreateBuyerData, CreateBuyerResponse, GetBuyerByIdData, GetBuyerByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse } from './types.gen';
+
+export class SaleControllerService {
+    /**
+     * @returns SaleResponse OK
+     * @throws ApiError
+     */
+    public static getAllSales(): CancelablePromise<GetAllSalesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/sales',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns SaleResponse OK
+     * @throws ApiError
+     */
+    public static createSale(data: CreateSaleData): CancelablePromise<CreateSaleResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/sales',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns SaleResponse OK
+     * @throws ApiError
+     */
+    public static getSaleById(data: GetSaleByIdData): CancelablePromise<GetSaleByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/sales/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
 
 export class MailingListService {
     /**
@@ -130,6 +184,60 @@ export class CollectorControllerService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/collectors/{id}/works',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+}
+
+export class BuyerControllerService {
+    /**
+     * @returns BuyerResponse OK
+     * @throws ApiError
+     */
+    public static getAllBuyers(): CancelablePromise<GetAllBuyersResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/buyers',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns BuyerResponse OK
+     * @throws ApiError
+     */
+    public static createBuyer(data: CreateBuyerData): CancelablePromise<CreateBuyerResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/buyers',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns BuyerResponse OK
+     * @throws ApiError
+     */
+    public static getBuyerById(data: GetBuyerByIdData): CancelablePromise<GetBuyerByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/buyers/{id}',
             path: {
                 id: data.id
             },

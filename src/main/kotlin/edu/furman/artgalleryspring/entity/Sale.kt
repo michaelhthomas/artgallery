@@ -10,7 +10,6 @@ import java.time.LocalDate
 data class Sale (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("0")
     @Column(name = "invoiceNumber", nullable = false)
 	val id: Int? = null,
 
