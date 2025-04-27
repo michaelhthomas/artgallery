@@ -17,7 +17,7 @@ import java.time.LocalDate
 
 
 @RestController
-@RequestMapping("/api/mailing-list")
+@RequestMapping("/api/public/mailing-list")
 @Tag(name = "Mailing List", description = "Mailing list signup API")
 class MailingListController(
     private val potentialCustomerRepository: PotentialCustomerRepository,
