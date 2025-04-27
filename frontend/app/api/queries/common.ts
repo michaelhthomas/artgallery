@@ -12,12 +12,18 @@ export const useCollectorControllerServiceGetAllCollectorsKey = "CollectorContro
 export const UseCollectorControllerServiceGetAllCollectorsKeyFn = ({ q }: {
   q?: string;
 } = {}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetAllCollectorsKey, ...(queryKey ?? [{ q }])];
-export type CollectorControllerServiceGetCollectorByIdDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getCollectorById>>;
-export type CollectorControllerServiceGetCollectorByIdQueryResult<TData = CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useCollectorControllerServiceGetCollectorByIdKey = "CollectorControllerServiceGetCollectorById";
-export const UseCollectorControllerServiceGetCollectorByIdKeyFn = ({ id }: {
+export type CollectorControllerServiceGetCollectorDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getCollector>>;
+export type CollectorControllerServiceGetCollectorQueryResult<TData = CollectorControllerServiceGetCollectorDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCollectorControllerServiceGetCollectorKey = "CollectorControllerServiceGetCollector";
+export const UseCollectorControllerServiceGetCollectorKeyFn = ({ id }: {
   id: string;
-}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorByIdKey, ...(queryKey ?? [{ id }])];
+}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorKey, ...(queryKey ?? [{ id }])];
+export type CollectorControllerServiceGetCollectorWorksDefaultResponse = Awaited<ReturnType<typeof CollectorControllerService.getCollectorWorks>>;
+export type CollectorControllerServiceGetCollectorWorksQueryResult<TData = CollectorControllerServiceGetCollectorWorksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCollectorControllerServiceGetCollectorWorksKey = "CollectorControllerServiceGetCollectorWorks";
+export const UseCollectorControllerServiceGetCollectorWorksKeyFn = ({ id }: {
+  id: string;
+}, queryKey?: Array<unknown>) => [useCollectorControllerServiceGetCollectorWorksKey, ...(queryKey ?? [{ id }])];
 export type AssetControllerServiceDownloadAssetDefaultResponse = Awaited<ReturnType<typeof AssetControllerService.downloadAsset>>;
 export type AssetControllerServiceDownloadAssetQueryResult<TData = AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useAssetControllerServiceDownloadAssetKey = "AssetControllerServiceDownloadAsset";
@@ -46,12 +52,12 @@ export const useArtistControllerServiceGetArtistKey = "ArtistControllerServiceGe
 export const UseArtistControllerServiceGetArtistKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistKey, ...(queryKey ?? [{ id }])];
-export type ArtistControllerServiceGetWorksDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getWorks>>;
-export type ArtistControllerServiceGetWorksQueryResult<TData = ArtistControllerServiceGetWorksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
-export const useArtistControllerServiceGetWorksKey = "ArtistControllerServiceGetWorks";
-export const UseArtistControllerServiceGetWorksKeyFn = ({ id }: {
+export type ArtistControllerServiceGetArtistWorksDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getArtistWorks>>;
+export type ArtistControllerServiceGetArtistWorksQueryResult<TData = ArtistControllerServiceGetArtistWorksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtistControllerServiceGetArtistWorksKey = "ArtistControllerServiceGetArtistWorks";
+export const UseArtistControllerServiceGetArtistWorksKeyFn = ({ id }: {
   id: number;
-}, queryKey?: Array<unknown>) => [useArtistControllerServiceGetWorksKey, ...(queryKey ?? [{ id }])];
+}, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistWorksKey, ...(queryKey ?? [{ id }])];
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;
 export type CollectorControllerServiceCreateCollectorMutationResult = Awaited<ReturnType<typeof CollectorControllerService.createCollector>>;

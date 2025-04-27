@@ -7,9 +7,12 @@ export const prefetchUseProfileControllerServiceGetProfile = (queryClient: Query
 export const prefetchUseCollectorControllerServiceGetAllCollectors = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCollectorControllerServiceGetAllCollectorsKeyFn({ q }), queryFn: () => CollectorControllerService.getAllCollectors({ q }) });
-export const prefetchUseCollectorControllerServiceGetCollectorById = (queryClient: QueryClient, { id }: {
+export const prefetchUseCollectorControllerServiceGetCollector = (queryClient: QueryClient, { id }: {
   id: string;
-}) => queryClient.prefetchQuery({ queryKey: Common.UseCollectorControllerServiceGetCollectorByIdKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorById({ id }) });
+}) => queryClient.prefetchQuery({ queryKey: Common.UseCollectorControllerServiceGetCollectorKeyFn({ id }), queryFn: () => CollectorControllerService.getCollector({ id }) });
+export const prefetchUseCollectorControllerServiceGetCollectorWorks = (queryClient: QueryClient, { id }: {
+  id: string;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) });
 export const prefetchUseAssetControllerServiceDownloadAsset = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });
@@ -23,6 +26,6 @@ export const prefetchUseArtistControllerServiceGetAllArtists = (queryClient: Que
 export const prefetchUseArtistControllerServiceGetArtist = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }), queryFn: () => ArtistControllerService.getArtist({ id }) });
-export const prefetchUseArtistControllerServiceGetWorks = (queryClient: QueryClient, { id }: {
+export const prefetchUseArtistControllerServiceGetArtistWorks = (queryClient: QueryClient, { id }: {
   id: number;
-}) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getWorks({ id }) });
+}) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getArtistWorks({ id }) });

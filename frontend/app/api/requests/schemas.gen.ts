@@ -559,9 +559,15 @@ export const $Collector = {
         },
         collectionType: {
             type: 'string'
+        },
+        artworks: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Artwork'
+            }
         }
     },
-    required: ['firstName', 'lastName', 'salesLastYear', 'salesYearToDate', 'socialSecurityNumber']
+    required: ['artworks', 'firstName', 'lastName', 'salesLastYear', 'salesYearToDate', 'socialSecurityNumber']
 } as const;
 
 export const $Sale = {
@@ -857,6 +863,10 @@ export const $ArtworkResponse = {
             type: 'string',
             format: 'date'
         },
+        dateReturned: {
+            type: 'string',
+            format: 'date'
+        },
         askingPrice: {
             type: 'number'
         },
@@ -983,6 +993,46 @@ export const $ArtistResponse = {
             type: 'string'
         },
         usualType: {
+            type: 'string'
+        }
+    },
+    required: ['firstName', 'id', 'lastName', 'salesLastYear', 'salesYearToDate']
+} as const;
+
+export const $CollectorResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        areaCode: {
+            type: 'string'
+        },
+        telephoneNumber: {
+            type: 'string'
+        },
+        address: {
+            type: 'string'
+        },
+        salesLastYear: {
+            type: 'number'
+        },
+        salesYearToDate: {
+            type: 'number'
+        },
+        collectionMedium: {
+            type: 'string'
+        },
+        collectionStyle: {
+            type: 'string'
+        },
+        collectionType: {
             type: 'string'
         }
     },

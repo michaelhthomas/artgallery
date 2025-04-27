@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Download, Printer } from "lucide-react";
 import {
-  useArtistControllerServiceGetArtist,
-  useArtistControllerServiceGetArtistWorks,
+  useCollectorControllerServiceGetCollector,
+  useCollectorControllerServiceGetCollectorWorks,
 } from "~/api/queries";
 import { ArtworkSalesReport } from "~/components/artwork/ArtworkSalesReport";
 
@@ -17,17 +17,15 @@ import {
 import { Skeleton } from "~/components/ui/skeleton";
 import { formatPhoneNumber } from "~/lib/format";
 
-export const Route = createFileRoute("/_app/artists/$id")({
-  component: IndividualArtistSalesReport,
+export const Route = createFileRoute("/_app/collectors/$id")({
+  component: IndividualCollectorSalesReport,
 });
 
-function IndividualArtistSalesReport() {
+function IndividualCollectorSalesReport() {
   const { id } = Route.useParams();
-  const { data: artist } = useArtistControllerServiceGetArtist({
-    id: parseInt(id),
-  });
-  const { data: works } = useArtistControllerServiceGetArtistWorks({
-    id: parseInt(id),
+  const { data: collector } = useCollectorControllerServiceGetCollector({ id });
+  const { data: works } = useCollectorControllerServiceGetCollectorWorks({
+    id,
   });
 
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -39,9 +37,12 @@ function IndividualArtistSalesReport() {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 print:hidden">
-        <Link to="/artists" className="flex items-center gap-2 font-semibold">
+        <Link
+          to="/collectors"
+          className="flex items-center gap-2 font-semibold"
+        >
           <ArrowLeft className="h-5 w-5" />
-          <span>Back to Artists</span>
+          <span>Back to Collectors</span>
         </Link>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={window.print}>
@@ -60,10 +61,10 @@ function IndividualArtistSalesReport() {
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
               <div>
                 <CardTitle className="text-2xl">
-                  Individual Artist Sales Report
+                  Individual Collector Sales Report
                 </CardTitle>
                 <CardDescription>
-                  Sales data for a specific artist
+                  Sales data for a specific collector
                 </CardDescription>
               </div>
               <div className="text-sm text-muted-foreground">
@@ -73,41 +74,41 @@ function IndividualArtistSalesReport() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="rounded-md border p-4">
-              {artist ? (
+              {collector ? (
                 <div className="space-y-2">
-                  <h3 className="text-lg font-medium">Artist Information</h3>
+                  <h3 className="text-lg font-medium">Collector Information</h3>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                       <p>
                         <span className="font-medium">Name:</span>{" "}
-                        {artist.firstName} {artist.lastName}
+                        {collector.firstName} {collector.lastName}
                       </p>
                       <p>
                         <span className="font-medium">Address:</span>{" "}
-                        {artist.address ?? "N/A"}
+                        {collector.address ?? "N/A"}
                       </p>
-                      {artist.areaCode && artist.telephoneNumber && (
+                      {collector.areaCode && collector.telephoneNumber && (
                         <p>
                           <span className="font-medium">Phone:</span>{" "}
                           {formatPhoneNumber(
-                            artist.areaCode,
-                            artist.telephoneNumber,
+                            collector.areaCode,
+                            collector.telephoneNumber,
                           )}
                         </p>
                       )}
                     </div>
                     <div>
                       <p>
-                        <span className="font-medium">Usual Type:</span>{" "}
-                        {artist.usualType}
+                        <span className="font-medium">Collection Type:</span>{" "}
+                        {collector.collectionType}
                       </p>
                       <p>
-                        <span className="font-medium">Usual Medium:</span>{" "}
-                        {artist.usualMedium}
+                        <span className="font-medium">Collection Medium:</span>{" "}
+                        {collector.collectionMedium}
                       </p>
                       <p>
-                        <span className="font-medium">Usual Style:</span>{" "}
-                        {artist.usualStyle}
+                        <span className="font-medium">Collection Style:</span>{" "}
+                        {collector.collectionStyle}
                       </p>
                     </div>
                   </div>

@@ -56,6 +56,9 @@ data class Collector(
     @Column(name = "collectionType", length = 20)
     val collectionType: String? = null
 ) {
+    @OneToMany(mappedBy = "collector", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val artworks: MutableList<Artwork> = mutableListOf()
+
     companion object {
         const val SUM_COLLECTOR_SALES =
             "SELECT COALESCE(SUM(s.salePrice), 0) FROM Sale AS s, Artwork as w " +

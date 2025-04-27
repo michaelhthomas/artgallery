@@ -1,13 +1,16 @@
 package edu.furman.artgalleryspring.controller
 
+import edu.furman.artgalleryspring.dto.artwork.ArtworkResponse
 import edu.furman.artgalleryspring.dto.collector.CollectorCreateRequest
+import edu.furman.artgalleryspring.dto.collector.CollectorResponse
 import edu.furman.artgalleryspring.entity.Collector
 import edu.furman.artgalleryspring.entity.Zip
 import edu.furman.artgalleryspring.repository.ArtistRepository
 import edu.furman.artgalleryspring.repository.CollectorRepository
 import edu.furman.artgalleryspring.repository.ZipRepository
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import kotlin.jvm.optionals.getOrNull
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/api/collectors")
@@ -17,15 +20,24 @@ class CollectorController(
     private val artistRepository: ArtistRepository
 ) {
     @GetMapping
-    fun getAllCollectors(@RequestParam q: String?): List<Collector> =
+    fun getAllCollectors(@RequestParam q: String?): List<CollectorResponse> =
         when (q) {
             is String -> collectorRepository.findByNameLike(q)
             else -> collectorRepository.findAll()
-        }
+        }.map { CollectorResponse.from(it) }
 
     @GetMapping("/{id}")
-    fun getCollectorById(@PathVariable id: String): Collector? {
-        return collectorRepository.findById(id).getOrNull()
+    fun getCollector(@PathVariable id: String): CollectorResponse? {
+        val collector = collectorRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+        return CollectorResponse.from(collector)
+    }
+
+    @GetMapping("/{id}/works")
+    fun getCollectorWorks(@PathVariable id: String): List<ArtworkResponse> {
+        val collector = collectorRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+        return collector.artworks.map { ArtworkResponse.from(it) }
     }
 
     @PostMapping

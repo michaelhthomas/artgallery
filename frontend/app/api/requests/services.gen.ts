@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorByIdData, GetCollectorByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetWorksData, GetWorksResponse } from './types.gen';
+import type { SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse } from './types.gen';
 
 export class MailingListService {
     /**
@@ -67,7 +67,7 @@ export class CollectorControllerService {
     /**
      * @param data The data for the request.
      * @param data.q
-     * @returns Collector OK
+     * @returns CollectorResponse OK
      * @throws ApiError
      */
     public static getAllCollectors(data: GetAllCollectorsData = {}): CancelablePromise<GetAllCollectorsResponse> {
@@ -104,13 +104,32 @@ export class CollectorControllerService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns Collector OK
+     * @returns CollectorResponse OK
      * @throws ApiError
      */
-    public static getCollectorById(data: GetCollectorByIdData): CancelablePromise<GetCollectorByIdResponse> {
+    public static getCollector(data: GetCollectorData): CancelablePromise<GetCollectorResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/collectors/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static getCollectorWorks(data: GetCollectorWorksData): CancelablePromise<GetCollectorWorksResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/collectors/{id}/works',
             path: {
                 id: data.id
             },
@@ -319,7 +338,7 @@ export class ArtistControllerService {
      * @returns ArtworkResponse OK
      * @throws ApiError
      */
-    public static getWorks(data: GetWorksData): CancelablePromise<GetWorksResponse> {
+    public static getArtistWorks(data: GetArtistWorksData): CancelablePromise<GetArtistWorksResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/artist/{id}/works',

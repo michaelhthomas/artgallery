@@ -9,6 +9,7 @@ import {
 } from "./ui/card";
 import { formatCurrency, formatPhoneNumber } from "~/lib/format";
 import { Badge } from "./ui/badge";
+import { Link } from "@tanstack/react-router";
 
 export default function ArtistCard(artist: ArtistResponse) {
   return (
@@ -64,12 +65,14 @@ export default function ArtistCard(artist: ArtistResponse) {
       </CardContent>
 
       <CardFooter className="flex gap-2 mt-auto">
-        <Button variant="outline" size="sm" className="flex-1">
-          Profile
+        <Button variant="outline" size="sm" className="flex-1" asChild>
+          <Link to="/artists/$id" params={{ id: artist.id.toString() }}>
+            Profile
+          </Link>
         </Button>
-        <Button size="sm" className="flex-1">
+        {/* <Button size="sm" className="flex-1">
           Artworks
-        </Button>
+        </Button> */}
       </CardFooter>
     </Card>
   );

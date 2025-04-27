@@ -19,6 +19,8 @@ import {
 import { useArtistControllerServiceGetAllArtists } from "~/api/queries";
 import { ControllerRenderProps } from "react-hook-form";
 import { useEffect } from "react";
+import NiceModal from "@ebay/nice-modal-react";
+import { CreateArtistModal } from "../artist/CreateArtistModal";
 
 export function ArtistSelectInput({
   value,
@@ -36,7 +38,7 @@ export function ArtistSelectInput({
     }
   }, [open, onBlur]);
 
-  const { data: artists } = useArtistControllerServiceGetAllArtists();
+  const { data: artists, refetch } = useArtistControllerServiceGetAllArtists();
 
   return (
     <>
@@ -68,7 +70,21 @@ export function ArtistSelectInput({
             <CommandInput placeholder="Search artists..." />
             {artists ? (
               <CommandList>
-                <CommandEmpty>No artists found.</CommandEmpty>
+                <CommandEmpty>
+                  No artists found.
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-2"
+                    onClick={() => {
+                      void NiceModal.show(CreateArtistModal).then(() => {
+                        void refetch();
+                      });
+                    }}
+                  >
+                    Create new artist
+                  </Button>
+                </CommandEmpty>
                 <CommandGroup>
                   {artists.map((artist) => (
                     <CommandItem

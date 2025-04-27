@@ -8,9 +8,12 @@ export const useProfileControllerServiceGetProfile = <TData = Common.ProfileCont
 export const useCollectorControllerServiceGetAllCollectors = <TData = Common.CollectorControllerServiceGetAllCollectorsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetAllCollectorsKeyFn({ q }, queryKey), queryFn: () => CollectorControllerService.getAllCollectors({ q }) as TData, ...options });
-export const useCollectorControllerServiceGetCollectorById = <TData = Common.CollectorControllerServiceGetCollectorByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+export const useCollectorControllerServiceGetCollector = <TData = Common.CollectorControllerServiceGetCollectorDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
-}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorByIdKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollectorById({ id }) as TData, ...options });
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollector({ id }) as TData, ...options });
+export const useCollectorControllerServiceGetCollectorWorks = <TData = Common.CollectorControllerServiceGetCollectorWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }, queryKey), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) as TData, ...options });
 export const useAssetControllerServiceDownloadAsset = <TData = Common.AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.downloadAsset({ id }) as TData, ...options });
@@ -24,9 +27,9 @@ export const useArtistControllerServiceGetAllArtists = <TData = Common.ArtistCon
 export const useArtistControllerServiceGetArtist = <TData = Common.ArtistControllerServiceGetArtistDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtist({ id }) as TData, ...options });
-export const useArtistControllerServiceGetWorks = <TData = Common.ArtistControllerServiceGetWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+export const useArtistControllerServiceGetArtistWorks = <TData = Common.ArtistControllerServiceGetArtistWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
-}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getWorks({ id }) as TData, ...options });
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtistWorks({ id }) as TData, ...options });
 export const useMailingListServiceSignupForMailingList = <TData = Common.MailingListServiceSignupForMailingListMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: MailingListSignupRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

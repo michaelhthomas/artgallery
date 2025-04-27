@@ -80,10 +80,7 @@ function CollectorsPage() {
         {collectors ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {collectors.map((collector) => (
-              <CollectorCard
-                key={collector.socialSecurityNumber}
-                {...collector}
-              />
+              <CollectorCard key={collector.id} {...collector} />
             ))}
           </div>
         ) : (

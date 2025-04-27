@@ -1,4 +1,4 @@
-import { Collector } from "~/api/requests";
+import { CollectorResponse } from "~/api/requests";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -9,8 +9,9 @@ import {
 } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { formatCurrency, formatPhoneNumber } from "~/lib/format";
+import { Link } from "@tanstack/react-router";
 
-export function CollectorCard(collector: Collector) {
+export function CollectorCard(collector: CollectorResponse) {
   return (
     <Card>
       <CardHeader>
@@ -19,13 +20,10 @@ export function CollectorCard(collector: Collector) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
-        {collector.street && collector.zip && (
+        {collector.address && (
           <div>
             <div className="font-medium">Address</div>
-            <div className="text-muted-foreground">
-              {collector.street}, {collector.zip.city}, {collector.zip.state}{" "}
-              {collector.zip.zip}
-            </div>
+            <div className="text-muted-foreground">{collector.address}</div>
           </div>
         )}
 
@@ -70,12 +68,14 @@ export function CollectorCard(collector: Collector) {
       </CardContent>
 
       <CardFooter className="flex gap-2 mt-auto">
-        <Button variant="outline" size="sm" className="flex-1">
-          Profile
+        <Button variant="outline" size="sm" className="flex-1" asChild>
+          <Link to="/collectors/$id" params={{ id: collector.id }}>
+            Profile
+          </Link>
         </Button>
-        <Button size="sm" className="flex-1">
+        {/* <Button size="sm" className="flex-1">
           Artworks
-        </Button>
+        </Button> */}
       </CardFooter>
     </Card>
   );

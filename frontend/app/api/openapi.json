@@ -172,7 +172,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Collector"
+                    "$ref": "#/components/schemas/CollectorResponse"
                   }
                 }
               }
@@ -541,7 +541,7 @@
         "tags": [
           "collector-controller"
         ],
-        "operationId": "getCollectorById",
+        "operationId": "getCollector",
         "parameters": [
           {
             "name": "id",
@@ -568,7 +568,55 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Collector"
+                  "$ref": "#/components/schemas/CollectorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/collectors/{id}/works": {
+      "get": {
+        "tags": [
+          "collector-controller"
+        ],
+        "operationId": "getCollectorWorks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArtworkResponse"
+                  }
                 }
               }
             }
@@ -678,7 +726,7 @@
         "tags": [
           "artist-controller"
         ],
-        "operationId": "getWorks",
+        "operationId": "getArtistWorks",
         "parameters": [
           {
             "name": "id",
@@ -1356,9 +1404,16 @@
           },
           "collectionType": {
             "type": "string"
+          },
+          "artworks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artwork"
+            }
           }
         },
         "required": [
+          "artworks",
           "firstName",
           "lastName",
           "salesLastYear",
@@ -1687,6 +1742,10 @@
             "type": "string",
             "format": "date"
           },
+          "dateReturned": {
+            "type": "string",
+            "format": "date"
+          },
           "askingPrice": {
             "type": "number"
           },
@@ -1819,6 +1878,51 @@
             "type": "string"
           },
           "usualType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "firstName",
+          "id",
+          "lastName",
+          "salesLastYear",
+          "salesYearToDate"
+        ]
+      },
+      "CollectorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "areaCode": {
+            "type": "string"
+          },
+          "telephoneNumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "salesLastYear": {
+            "type": "number"
+          },
+          "salesYearToDate": {
+            "type": "number"
+          },
+          "collectionMedium": {
+            "type": "string"
+          },
+          "collectionStyle": {
+            "type": "string"
+          },
+          "collectionType": {
             "type": "string"
           }
         },

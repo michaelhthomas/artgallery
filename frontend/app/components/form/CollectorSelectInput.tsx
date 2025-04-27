@@ -19,6 +19,8 @@ import {
 import { useCollectorControllerServiceGetAllCollectors } from "~/api/queries";
 import { ControllerRenderProps } from "react-hook-form";
 import { useEffect } from "react";
+import NiceModal from "@ebay/nice-modal-react";
+import { CreateCollectorModal } from "../collector/CreateCollectorModal";
 
 export function CollectorSelectInput({
   value,
@@ -36,7 +38,8 @@ export function CollectorSelectInput({
     }
   }, [open, onBlur]);
 
-  const { data: collectors } = useCollectorControllerServiceGetAllCollectors();
+  const { data: collectors, refetch } =
+    useCollectorControllerServiceGetAllCollectors();
 
   return (
     <>
@@ -53,7 +56,7 @@ export function CollectorSelectInput({
             {collectors && value
               ? (() => {
                   const selectedCollector = collectors.find(
-                    (collector) => collector.socialSecurityNumber === value,
+                    (collector) => collector.id === value,
                   );
                   return selectedCollector
                     ? `${selectedCollector.firstName} ${selectedCollector.lastName}`
@@ -68,17 +71,29 @@ export function CollectorSelectInput({
             <CommandInput placeholder="Search collectors..." />
             {collectors ? (
               <CommandList>
-                <CommandEmpty>No collectors found.</CommandEmpty>
+                <CommandEmpty>
+                  No collectors found.
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-2"
+                    onClick={() => {
+                      void NiceModal.show(CreateCollectorModal).then(() => {
+                        void refetch();
+                      });
+                    }}
+                  >
+                    Create new collector
+                  </Button>
+                </CommandEmpty>
                 <CommandGroup>
                   {collectors.map((collector) => (
                     <CommandItem
-                      key={collector.socialSecurityNumber}
+                      key={collector.id}
                       value={`${collector.firstName} ${collector.lastName}`}
                       onSelect={() => {
                         onChange(
-                          collector.socialSecurityNumber === value
-                            ? undefined
-                            : collector.socialSecurityNumber,
+                          collector.id === value ? undefined : collector.id,
                         );
                         setOpen(false);
                       }}
@@ -86,9 +101,7 @@ export function CollectorSelectInput({
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === collector.socialSecurityNumber
-                            ? "opacity-100"
-                            : "opacity-0",
+                          value === collector.id ? "opacity-100" : "opacity-0",
                         )}
                       />
                       {collector.firstName + " " + collector.lastName}

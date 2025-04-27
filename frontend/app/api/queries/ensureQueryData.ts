@@ -7,9 +7,12 @@ export const ensureUseProfileControllerServiceGetProfileData = (queryClient: Que
 export const ensureUseCollectorControllerServiceGetAllCollectorsData = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCollectorControllerServiceGetAllCollectorsKeyFn({ q }), queryFn: () => CollectorControllerService.getAllCollectors({ q }) });
-export const ensureUseCollectorControllerServiceGetCollectorByIdData = (queryClient: QueryClient, { id }: {
+export const ensureUseCollectorControllerServiceGetCollectorData = (queryClient: QueryClient, { id }: {
   id: string;
-}) => queryClient.ensureQueryData({ queryKey: Common.UseCollectorControllerServiceGetCollectorByIdKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorById({ id }) });
+}) => queryClient.ensureQueryData({ queryKey: Common.UseCollectorControllerServiceGetCollectorKeyFn({ id }), queryFn: () => CollectorControllerService.getCollector({ id }) });
+export const ensureUseCollectorControllerServiceGetCollectorWorksData = (queryClient: QueryClient, { id }: {
+  id: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseCollectorControllerServiceGetCollectorWorksKeyFn({ id }), queryFn: () => CollectorControllerService.getCollectorWorks({ id }) });
 export const ensureUseAssetControllerServiceDownloadAssetData = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });
@@ -23,6 +26,6 @@ export const ensureUseArtistControllerServiceGetAllArtistsData = (queryClient: Q
 export const ensureUseArtistControllerServiceGetArtistData = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetArtistKeyFn({ id }), queryFn: () => ArtistControllerService.getArtist({ id }) });
-export const ensureUseArtistControllerServiceGetWorksData = (queryClient: QueryClient, { id }: {
+export const ensureUseArtistControllerServiceGetArtistWorksData = (queryClient: QueryClient, { id }: {
   id: number;
-}) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getWorks({ id }) });
+}) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getArtistWorks({ id }) });

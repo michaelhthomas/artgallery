@@ -22,6 +22,7 @@ data class ArtworkResponse(
     val dateListed: LocalDate?,
     val dateShown: LocalDate?,
     val dateSold: LocalDate?,
+    val dateReturned: LocalDate?,
     val askingPrice: BigDecimal?,
     val salePrice: BigDecimal?,
 ) {
@@ -45,6 +46,7 @@ data class ArtworkResponse(
                 dateListed = artwork.dateListed,
                 dateShown = artwork.dateShown,
                 dateSold = artwork.sale?.saleDate,
+                dateReturned = artwork.dateReturned,
                 askingPrice = artwork.askingPrice,
                 salePrice = artwork.sale?.salePrice,
             )

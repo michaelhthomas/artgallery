@@ -39,9 +39,14 @@ class ArtistController(
         )
 
     @GetMapping("/{id}/works")
-    fun getWorks(@PathVariable id: Int): List<ArtworkResponse> {
-        val artist = repository.findById(id).orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
-        return artist.artworks.map { ArtworkResponse.from(it) }
+    fun getArtistWorks(@PathVariable id: Int): List<ArtworkResponse> {
+        val artist = repository.findById(id).orElseThrow {
+            ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
+        return artist.artworks
+            // exclude works owned by a collector
+            .filter { it.collector == null }
+            .map { ArtworkResponse.from(it) }
     }
 
     @PostMapping

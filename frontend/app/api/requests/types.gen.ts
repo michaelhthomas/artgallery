@@ -266,6 +266,7 @@ export type Collector = {
     collectionMedium?: string;
     collectionStyle?: string;
     collectionType?: string;
+    artworks: Array<Artwork>;
 };
 
 export type Sale = {
@@ -405,6 +406,7 @@ export type ArtworkResponse = {
     dateListed?: string;
     dateShown?: string;
     dateSold?: string;
+    dateReturned?: string;
     askingPrice?: number;
     salePrice?: number;
 };
@@ -485,6 +487,20 @@ export type ArtistResponse = {
     usualType?: string;
 };
 
+export type CollectorResponse = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    areaCode?: string;
+    telephoneNumber?: string;
+    address?: string;
+    salesLastYear: number;
+    salesYearToDate: number;
+    collectionMedium?: string;
+    collectionStyle?: string;
+    collectionType?: string;
+};
+
 export type ArtworkListingResponse = {
     work: ArtworkResponse;
     sale?: SaleResponse;
@@ -527,7 +543,7 @@ export type GetAllCollectorsData = {
     q?: string;
 };
 
-export type GetAllCollectorsResponse = Array<Collector>;
+export type GetAllCollectorsResponse = Array<CollectorResponse>;
 
 export type CreateCollectorData = {
     requestBody: CollectorCreateRequest;
@@ -535,11 +551,17 @@ export type CreateCollectorData = {
 
 export type CreateCollectorResponse = Collector;
 
-export type GetCollectorByIdData = {
+export type GetCollectorData = {
     id: string;
 };
 
-export type GetCollectorByIdResponse = Collector;
+export type GetCollectorResponse = CollectorResponse;
+
+export type GetCollectorWorksData = {
+    id: string;
+};
+
+export type GetCollectorWorksResponse = Array<ArtworkResponse>;
 
 export type LoginData = {
     requestBody: AuthRequest;
@@ -599,11 +621,11 @@ export type GetArtistData = {
 
 export type GetArtistResponse = ArtistResponse;
 
-export type GetWorksData = {
+export type GetArtistWorksData = {
     id: number;
 };
 
-export type GetWorksResponse = Array<ArtworkResponse>;
+export type GetArtistWorksResponse = Array<ArtworkResponse>;
 
 export type $OpenApiTs = {
     '/api/public/mailing-list/signup': {
@@ -655,7 +677,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Array<Collector>;
+                200: Array<CollectorResponse>;
                 /**
                  * Unprocessable Entity
                  */
@@ -678,12 +700,27 @@ export type $OpenApiTs = {
     };
     '/api/collectors/{id}': {
         get: {
-            req: GetCollectorByIdData;
+            req: GetCollectorData;
             res: {
                 /**
                  * OK
                  */
-                200: Collector;
+                200: CollectorResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/collectors/{id}/works': {
+        get: {
+            req: GetCollectorWorksData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ArtworkResponse>;
                 /**
                  * Unprocessable Entity
                  */
@@ -838,7 +875,7 @@ export type $OpenApiTs = {
     };
     '/api/artist/{id}/works': {
         get: {
-            req: GetWorksData;
+            req: GetArtistWorksData;
             res: {
                 /**
                  * OK
