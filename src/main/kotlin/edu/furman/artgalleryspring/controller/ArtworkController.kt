@@ -1,11 +1,10 @@
 package edu.furman.artgalleryspring.controller
 
 import edu.furman.artgalleryspring.dto.artwork.ArtworkCreateRequest
+import edu.furman.artgalleryspring.dto.artwork.ArtworkListingResponse
 import edu.furman.artgalleryspring.dto.artwork.ArtworkResponse
 import edu.furman.artgalleryspring.entity.Artwork
-import edu.furman.artgalleryspring.repository.ArtworkRepository
-import edu.furman.artgalleryspring.repository.ArtistRepository
-import edu.furman.artgalleryspring.repository.CollectorRepository
+import edu.furman.artgalleryspring.repository.*
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 
@@ -14,7 +13,9 @@ import java.math.BigDecimal
 class ArtworkController(
     private val artworkRepository: ArtworkRepository,
     private val artistRepository: ArtistRepository,
-    private val collectorRepository: CollectorRepository
+    private val collectorRepository: CollectorRepository,
+    private val assetRepository: AssetRepository,
+    private val saleRepository: SaleRepository
 ) {
     @GetMapping
     fun getAllArtworks(): List<ArtworkResponse> =
@@ -23,10 +24,11 @@ class ArtworkController(
         }
 
     @GetMapping("/{id}")
-    fun getArtworkById(@PathVariable id: Int): ArtworkResponse? {
+    fun getArtworkById(@PathVariable id: Int): ArtworkListingResponse? {
         val artwork = artworkRepository.findById(id).orElse(null) ?: return null
+        val sale = saleRepository.findByArtwork_Id(id)
 
-        return ArtworkResponse.from(artwork)
+        return ArtworkListingResponse.from(artwork, sale)
     }
 
     @PostMapping
@@ -35,12 +37,17 @@ class ArtworkController(
             IllegalArgumentException("Artist with ID ${artworkRequest.artistId} not found.")
         }
 
+        val workImage = artworkRequest.workImage?.let { imageId ->
+            assetRepository.findById(imageId).orElse(null)
+        }
+
         val collector = artworkRequest.collectorSocialSecurityNumber?.let { ssn ->
             collectorRepository.findById(ssn).orElse(null)
         }
 
         val artwork = Artwork(
             artist = artist,
+            workImage = workImage,
             workTitle = artworkRequest.workTitle,
             workYearCompleted = artworkRequest.workYearCompleted,
             workMedium = artworkRequest.workMedium,

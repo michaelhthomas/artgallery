@@ -14,9 +14,12 @@ data class Artwork (
 	var id: Int? = null,
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "artistId", nullable = false)
 	var artist: Artist,
+
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    var workImage: Asset? = null,
 
     @Size(max = 50)
     @NotNull
@@ -61,5 +64,12 @@ data class Artwork (
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectorSocialSecurityNumber")
-	var collector: Collector? = null
+	var collector: Collector? = null,
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "ShownIn",
+        joinColumns = [JoinColumn(name = "artworkId")],
+        inverseJoinColumns = [JoinColumn(name = "showTitle")])
+    var shownIn: MutableSet<ArtShow> = mutableSetOf(),
 )

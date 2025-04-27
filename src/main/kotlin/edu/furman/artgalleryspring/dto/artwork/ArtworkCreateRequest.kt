@@ -2,14 +2,17 @@ package edu.furman.artgalleryspring.dto.artwork
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.*
-import java.math.BigDecimal
 import java.time.LocalDate
+import java.util.UUID
 
 @Schema(description = "Artwork Creation Request")
 data class ArtworkCreateRequest(
     @field:Schema(description = "Artist ID", example = "1")
     @field:NotNull(message = "Artist ID is required")
     val artistId: Int,
+
+    @field:Schema(description = "Asset ID for the image associated with the work", example = "a81bc81b-dead-4e5d-abff-90865d1e13b1")
+    val workImage: UUID?,
 
     @field:Schema(description = "Title of the artwork", example = "Starry Night")
     @field:NotBlank(message = "Work title is required")

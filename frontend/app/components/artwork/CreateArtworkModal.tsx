@@ -28,10 +28,12 @@ import { toast } from "sonner";
 import { StatusButton } from "../ui/status-button";
 import { Save } from "lucide-react";
 import { ArtworkCreateRequest } from "~/api/requests";
+import { FileUploadField } from "../form/FileUploadField";
 
 const createArtworkSchema = z.object({
   artistId: z.number(),
 
+  workImage: z.string().optional(),
   workTitle: z.string().min(2).max(50),
   workYearCompleted: z.string().length(4),
   workMedium: z.string().min(2).max(15),
@@ -48,7 +50,7 @@ const createArtworkSchema = z.object({
   dateListed: z.string().optional(),
   askingPrice: z
     .string()
-    .regex(/^\$?\d+(\.\d{2})?$/, "Invalid currency format")
+    .regex(/^\$?[\d,]+(\.\d{2})?$/, "Invalid currency format")
     .or(z.literal(""))
     .optional(),
 });
@@ -70,6 +72,7 @@ export const CreateArtworkModal = NiceModal.create(() => {
     resolver: zodResolver(createArtworkSchema),
     defaultValues: {
       artistId: 0,
+      workImage: undefined,
       workTitle: "",
       workYearCompleted: "",
       workMedium: "",
@@ -106,6 +109,20 @@ export const CreateArtworkModal = NiceModal.create(() => {
             })}
             className="space-y-6"
           >
+            <FormField
+              control={form.control}
+              name="workImage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Artwork Image</FormLabel>
+                  <FormControl>
+                    <FileUploadField {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="workTitle"

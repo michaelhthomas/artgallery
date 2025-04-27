@@ -12,7 +12,7 @@ data class Sale (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ColumnDefault("0")
     @Column(name = "invoiceNumber", nullable = false)
-	var id: Int? = null,
+	val id: Int? = null,
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -35,5 +35,10 @@ data class Sale (
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "buyerId", nullable = false)
-	var buyer: Buyer? = null
+	var buyer: Buyer,
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "salespersonSSN", nullable = false)
+    var salesperson: Salesperson,
 )
