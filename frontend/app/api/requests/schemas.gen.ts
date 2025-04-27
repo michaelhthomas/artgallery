@@ -986,15 +986,17 @@ export const $ArtworkCreateRequest = {
             type: 'string',
             format: 'date',
             description: 'Date listed',
-            example: '2023-01-01'
+            example: '2023-01-01',
+            minLength: 1
         },
         askingPrice: {
             type: 'string',
             description: 'Asking price in USD',
-            example: 5000
+            example: 5000,
+            minLength: 1
         }
     },
-    required: ['artistId', 'workMedium', 'workSize', 'workStyle', 'workTitle', 'workType', 'workYearCompleted']
+    required: ['artistId', 'askingPrice', 'dateListed', 'workMedium', 'workSize', 'workStyle', 'workTitle', 'workType', 'workYearCompleted']
 } as const;
 
 export const $ArtworkResponse = {

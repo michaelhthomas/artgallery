@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +32,7 @@ import { ArtworkCreateRequest } from "~/api/requests";
 import { FileUploadField } from "../form/FileUploadField";
 
 const createArtworkSchema = z.object({
-  artistId: z.number(),
+  artistId: z.number().min(1, "Artist is required"),
 
   workImage: z.string().optional(),
   workTitle: z.string().min(2).max(50),
@@ -47,12 +48,10 @@ const createArtworkSchema = z.object({
     .or(z.literal(""))
     .optional(),
 
-  dateListed: z.string().optional(),
+  dateListed: z.string(),
   askingPrice: z
     .string()
-    .regex(/^\$?[\d,]+(\.\d{2})?$/, "Invalid currency format")
-    .or(z.literal(""))
-    .optional(),
+    .regex(/^\$?[\d,]+(\.\d{2})?$/, "Invalid currency format"),
 });
 
 export const CreateArtworkModal = NiceModal.create(() => {
@@ -228,25 +227,19 @@ export const CreateArtworkModal = NiceModal.create(() => {
               />
             </div>
 
-            <Separator />
-
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">Owner Information</h3>
-              <p className="text-sm text-muted-foreground">
-                If owned by someone other than the artist, please complete this
-                section with the owner information
-              </p>
-            </div>
-
             <FormField
               control={form.control}
               name="collectorSocialSecurityNumber"
               render={({ field }) => (
-                <FormItem className="w-64">
+                <FormItem>
                   <FormLabel>Owner</FormLabel>
                   <FormControl>
-                    <CollectorSelectInput {...field} />
+                    <CollectorSelectInput {...field} className="sm:w-[228px]" />
                   </FormControl>
+                  <FormDescription>
+                    If owned by someone other than the artist, please select the
+                    owner.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -254,20 +247,12 @@ export const CreateArtworkModal = NiceModal.create(() => {
 
             <Separator />
 
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">Gallery Information</h3>
-              <p className="text-sm text-muted-foreground">
-                If the piece is chosen to be offered by the gallery, please
-                complete this section
-              </p>
-            </div>
-
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="dateListed"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem required>
                     <FormLabel>Date Listed</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
@@ -281,7 +266,7 @@ export const CreateArtworkModal = NiceModal.create(() => {
                 control={form.control}
                 name="askingPrice"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem required>
                     <FormLabel>Asking Price</FormLabel>
                     <FormControl>
                       {/* TODO: currency mask */}

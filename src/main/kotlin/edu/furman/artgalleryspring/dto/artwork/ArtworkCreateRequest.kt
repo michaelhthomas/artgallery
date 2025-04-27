@@ -49,9 +49,10 @@ data class ArtworkCreateRequest(
     val collectorSocialSecurityNumber: String? = null,
 
     @field:Schema(description = "Date listed", example = "2023-01-01")
-    val dateListed: LocalDate? = null,
+    @field:NotBlank(message = "Date listed is required")
+    val dateListed: LocalDate,
 
     @field:Schema(description = "Asking price in USD", example = "5000")
-    @field:Min(value = 0, message = "Asking price must be positive")
-    val askingPrice: String? = null
+    @field:NotBlank(message = "Asking price in USD is required")
+    val askingPrice: String
 )

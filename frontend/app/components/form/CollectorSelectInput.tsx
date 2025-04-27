@@ -26,9 +26,11 @@ export function CollectorSelectInput({
   value,
   onChange,
   onBlur,
+  className,
 }: Omit<ControllerRenderProps, "value" | "onChange"> & {
   value: string | undefined;
   onChange: (value: string | undefined) => void;
+  className?: string;
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -49,9 +51,13 @@ export function CollectorSelectInput({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className={cn("justify-between", {
-              "text-muted-foreground": !value,
-            })}
+            className={cn(
+              "justify-between",
+              {
+                "text-muted-foreground": !value,
+              },
+              className,
+            )}
           >
             {collectors && value
               ? (() => {

@@ -507,11 +507,11 @@ export type ArtworkCreateRequest = {
     /**
      * Date listed
      */
-    dateListed?: string;
+    dateListed: string;
     /**
      * Asking price in USD
      */
-    askingPrice?: string;
+    askingPrice: string;
 };
 
 export type ArtworkResponse = {
