@@ -8,14 +8,14 @@ import {
   CardFooter,
 } from "./ui/card";
 import { formatCurrency } from "~/lib/format";
+import { Link } from "@tanstack/react-router";
 
 export function ArtworkCard(artwork: ArtworkResponse) {
   return (
-    <Card className="overflow-hidden">
-      <div className="aspect-[3/4] w-full">
+    <Card className="overflow-hidden pt-0">
+      <div className="aspect-[4/3] w-full">
         <img
-          // src={artwork.image ?? "/placeholder.svg"}
-          src="/placeholder.svg"
+          src={artwork.workImage ?? "/placeholder.svg"}
           alt={artwork.workTitle}
           className="h-full w-full object-cover"
         />
@@ -72,8 +72,10 @@ export function ArtworkCard(artwork: ArtworkResponse) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          View Details
+        <Button variant="outline" size="sm" className="w-full" asChild>
+          <Link to="/artworks/$id" params={{ id: artwork.id.toString() }}>
+            View Details
+          </Link>
         </Button>
       </CardFooter>
     </Card>
