@@ -197,7 +197,10 @@ function Dashboard() {
                   >
                     <div className="relative size-24 flex-shrink-0 overflow-hidden rounded-md">
                       <img
-                        src={sale.artwork.workImage ?? "/placeholder.svg"}
+                        src={
+                          sale.artwork.workImage?.downloadUrl ??
+                          "/placeholder.svg"
+                        }
                         alt={sale.artwork.workTitle}
                         className="h-full w-full object-cover"
                       />

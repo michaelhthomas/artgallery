@@ -26,6 +26,9 @@ export const prefetchUseBuyerControllerServiceGetBuyerById = (queryClient: Query
 export const prefetchUseAssetControllerServiceDownloadAsset = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });
+export const prefetchUseAssetControllerServiceGetAssetInfo = (queryClient: QueryClient, { id }: {
+  id: string;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseAssetControllerServiceGetAssetInfoKeyFn({ id }), queryFn: () => AssetControllerService.getAssetInfo({ id }) });
 export const prefetchUseArtworkControllerServiceGetAllArtworks = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(), queryFn: () => ArtworkControllerService.getAllArtworks() });
 export const prefetchUseArtworkControllerServiceGetArtworkById = (queryClient: QueryClient, { id }: {
   id: number;

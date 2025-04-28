@@ -26,6 +26,9 @@ export const useBuyerControllerServiceGetBuyerByIdSuspense = <TData = Common.Buy
 export const useAssetControllerServiceDownloadAssetSuspense = <TData = Common.AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.downloadAsset({ id }) as TData, ...options });
+export const useAssetControllerServiceGetAssetInfoSuspense = <TData = Common.AssetControllerServiceGetAssetInfoDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceGetAssetInfoKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.getAssetInfo({ id }) as TData, ...options });
 export const useArtworkControllerServiceGetAllArtworksSuspense = <TData = Common.ArtworkControllerServiceGetAllArtworksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(queryKey), queryFn: () => ArtworkControllerService.getAllArtworks() as TData, ...options });
 export const useArtworkControllerServiceGetArtworkByIdSuspense = <TData = Common.ArtworkControllerServiceGetArtworkByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;

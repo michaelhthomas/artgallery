@@ -4,13 +4,13 @@ import {
   ArrowLeft,
   Calendar,
   DollarSign,
-  Download,
   Edit,
   Loader2,
   Share2,
   User,
 } from "lucide-react";
 import { useArtworkControllerServiceGetArtworkById } from "~/api/queries";
+import { CreateArtworkModal } from "~/components/artwork/CreateArtworkModal";
 import { SaleInvoiceModal } from "~/components/sale/SaleInvoiceModal";
 
 import { Badge } from "~/components/ui/badge";
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/_app/artworks/$id")({
 
 function ArtworkDetailPage() {
   const { id } = Route.useParams();
-  const { data } = useArtworkControllerServiceGetArtworkById({
+  const { data, refetch } = useArtworkControllerServiceGetArtworkById({
     id: parseInt(id),
   });
 
@@ -61,7 +61,14 @@ function ArtworkDetailPage() {
             <Share2 className="mr-2 h-4 w-4" />
             Share
           </Button>
-          <Button size="sm">
+          <Button
+            size="sm"
+            onClick={() =>
+              NiceModal.show(CreateArtworkModal, { artwork }).then(() =>
+                refetch(),
+              )
+            }
+          >
             <Edit className="mr-2 h-4 w-4" />
             Edit
           </Button>
@@ -74,7 +81,7 @@ function ArtworkDetailPage() {
               <div className="space-y-4">
                 <div className="overflow-hidden rounded-lg border">
                   <img
-                    src={artwork.workImage ?? "/placeholder.svg"}
+                    src={artwork.workImage?.downloadUrl ?? "/placeholder.svg"}
                     alt={artwork.workTitle}
                     className="aspect-[4/3] w-full object-cover"
                   />

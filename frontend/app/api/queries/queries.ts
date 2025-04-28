@@ -26,6 +26,9 @@ export const useBuyerControllerServiceGetBuyerById = <TData = Common.BuyerContro
 export const useAssetControllerServiceDownloadAsset = <TData = Common.AssetControllerServiceDownloadAssetDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.downloadAsset({ id }) as TData, ...options });
+export const useAssetControllerServiceGetAssetInfo = <TData = Common.AssetControllerServiceGetAssetInfoDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
+  id: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseAssetControllerServiceGetAssetInfoKeyFn({ id }, queryKey), queryFn: () => AssetControllerService.getAssetInfo({ id }) as TData, ...options });
 export const useArtworkControllerServiceGetAllArtworks = <TData = Common.ArtworkControllerServiceGetAllArtworksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(queryKey), queryFn: () => ArtworkControllerService.getAllArtworks() as TData, ...options });
 export const useArtworkControllerServiceGetArtworkById = <TData = Common.ArtworkControllerServiceGetArtworkByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
@@ -88,6 +91,13 @@ export const useArtworkControllerServiceCreateArtwork = <TData = Common.ArtworkC
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: ArtworkCreateRequest;
 }, TContext>({ mutationFn: ({ requestBody }) => ArtworkControllerService.createArtwork({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useArtworkControllerServiceUpdateArtwork = <TData = Common.ArtworkControllerServiceUpdateArtworkMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  id: number;
+  requestBody: ArtworkCreateRequest;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  id: number;
+  requestBody: ArtworkCreateRequest;
+}, TContext>({ mutationFn: ({ id, requestBody }) => ArtworkControllerService.updateArtwork({ id, requestBody }) as unknown as Promise<TData>, ...options });
 export const useArtistControllerServiceCreateArtist = <TData = Common.ArtistControllerServiceCreateArtistMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: ArtistCreateRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

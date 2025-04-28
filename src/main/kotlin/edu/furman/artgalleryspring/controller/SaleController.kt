@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 import java.time.LocalDate
 
+/* helper to strip non-digits before BigDecimal */
+fun String.toCleanBigDecimal(): BigDecimal =
+    BigDecimal(this.replace(Regex("[^0-9.]"), ""))
+
 @RestController
 @RequestMapping("/api/sales")
 class SaleController(
@@ -48,10 +52,6 @@ class SaleController(
         val salesperson = salespersonRepository.findById(request.salespersonSsn).orElseThrow {
             IllegalArgumentException("Salesperson SSN ${request.salespersonSsn} not found.")
         }
-
-        /* helper to strip non-digits before BigDecimal */
-        fun String.toCleanBigDecimal(): BigDecimal =
-            BigDecimal(this.replace(Regex("[^0-9.]"), ""))
 
         /* build and save entity */
         val sale = Sale(

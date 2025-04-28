@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ShowControllerService } from "~/api/requests";
 import ExhibitionCard from "~/components/ExhibitionCard";
 

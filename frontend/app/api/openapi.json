@@ -565,6 +565,106 @@
         ]
       }
     },
+    "/api/artworks/{id}": {
+      "get": {
+        "tags": [
+          "artwork-controller"
+        ],
+        "operationId": "getArtworkById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkListingResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "artwork-controller"
+        ],
+        "operationId": "updateArtwork",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArtworkCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtworkResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/artist": {
       "get": {
         "tags": [
@@ -1077,20 +1177,20 @@
         ]
       }
     },
-    "/api/artworks/{id}": {
+    "/api/assets/{id}": {
       "get": {
         "tags": [
-          "artwork-controller"
+          "asset-controller"
         ],
-        "operationId": "getArtworkById",
+        "operationId": "getAssetInfo",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -1110,10 +1210,47 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ArtworkListingResponse"
+                  "$ref": "#/components/schemas/AssetResponse"
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "asset-controller"
+        ],
+        "operationId": "deleteAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -1265,45 +1402,6 @@
           }
         ]
       }
-    },
-    "/api/assets/{id}": {
-      "delete": {
-        "tags": [
-          "asset-controller"
-        ],
-        "operationId": "deleteAsset",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "422": {
-            "description": "Unprocessable Entity",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
     }
   },
   "components": {
@@ -1414,7 +1512,7 @@
             "type": "string"
           },
           "workImage": {
-            "type": "string"
+            "$ref": "#/components/schemas/AssetResponse"
           },
           "workTitle": {
             "type": "string"
@@ -1455,6 +1553,9 @@
           },
           "salePrice": {
             "type": "number"
+          },
+          "collectorSocialSecurityNumber": {
+            "type": "string"
           }
         },
         "required": [
@@ -1463,6 +1564,40 @@
           "id",
           "ownerName",
           "workTitle"
+        ]
+      },
+      "AssetResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "downloadUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "contentType",
+          "createdAt",
+          "downloadUrl",
+          "filename",
+          "id",
+          "size"
         ]
       },
       "SaleResponse": {
@@ -2339,40 +2474,6 @@
           "lastName",
           "token",
           "username"
-        ]
-      },
-      "AssetResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "filename": {
-            "type": "string"
-          },
-          "contentType": {
-            "type": "string"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "downloadUrl": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "contentType",
-          "createdAt",
-          "downloadUrl",
-          "filename",
-          "id",
-          "size"
         ]
       },
       "ArtworkCreateRequest": {

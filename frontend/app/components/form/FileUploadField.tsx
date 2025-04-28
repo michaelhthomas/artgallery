@@ -24,6 +24,8 @@ import {
 } from "../ui/file-list";
 import { Check, Image, Loader2, X } from "lucide-react";
 import { ApiError, AssetControllerService } from "~/api/requests";
+import { useAssetControllerServiceGetAssetInfo } from "~/api/queries";
+import { Skeleton } from "../ui/skeleton";
 
 export type FileUploadFieldProps = Omit<
   ControllerRenderProps,
@@ -39,12 +41,24 @@ export function FileUploadField(field: FileUploadFieldProps) {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState("");
 
+  const { data: existingFile } = useAssetControllerServiceGetAssetInfo(
+    {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      id: field.value!,
+    },
+    undefined,
+    {
+      enabled: !!field.value,
+      retry: !!field.value,
+    },
+  );
+
   const handleFileChange = (file: File | null) => {
     if (file) {
       setSelectedFile(file);
       setUploadSuccess(false);
       setUploadError("");
-      field.onChange(undefined);
+      field.onChange("");
       void uploadFile(file);
     }
   };
@@ -53,7 +67,7 @@ export function FileUploadField(field: FileUploadFieldProps) {
     setSelectedFile(null);
     setUploadSuccess(false);
     setUploadError("");
-    field.onChange(undefined);
+    field.onChange("");
   };
 
   const uploadFile = async (file: File) => {
@@ -80,38 +94,63 @@ export function FileUploadField(field: FileUploadFieldProps) {
     }
   };
 
-  return selectedFile ? (
+  return selectedFile || field.value ? (
     <FileList>
       <FileListItem>
         <FileListHeader>
-          <FileListIcon>
-            <Image />
+          <FileListIcon className="overflow-clip">
+            {existingFile?.downloadUrl ? (
+              <img
+                src={existingFile.downloadUrl}
+                alt="File Preview"
+                className="aspect-square object-cover"
+              />
+            ) : (
+              <Image />
+            )}
           </FileListIcon>
-          <FileListInfo>
-            <FileListName>{selectedFile.name}</FileListName>
-            <FileListDescription>
-              <FileListSize>{selectedFile.size}</FileListSize>
-              <FileListDescriptionSeparator />
-              <FileListDescriptionText>
-                {isUploading ? (
-                  <>
-                    <Loader2 className="size-3 animate-spin" />
-                    Uploading...
-                  </>
-                ) : uploadSuccess ? (
-                  <span className="text-green-400 flex items-center gap-1">
-                    <Check className="size-3 text-success" />
-                    Uploaded
-                  </span>
+          {selectedFile ? (
+            <FileListInfo>
+              <FileListName>{selectedFile.name}</FileListName>
+              <FileListDescription>
+                <FileListSize>{selectedFile.size}</FileListSize>
+                <FileListDescriptionSeparator />
+                <FileListDescriptionText>
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="size-3 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : uploadSuccess ? (
+                    <span className="text-green-400 flex items-center gap-1">
+                      <Check className="size-3 text-success" />
+                      Uploaded
+                    </span>
+                  ) : (
+                    <span className="text-destructive flex items-center gap-1">
+                      <X className="size-3 text-error" />
+                      {uploadError}
+                    </span>
+                  )}
+                </FileListDescriptionText>
+              </FileListDescription>
+            </FileListInfo>
+          ) : (
+            <FileListInfo>
+              <FileListName>
+                {existingFile ? (
+                  existingFile.filename
                 ) : (
-                  <span className="text-destructive flex items-center gap-1">
-                    <X className="size-3 text-error" />
-                    {uploadError}
-                  </span>
+                  <Skeleton className="h-4" />
                 )}
-              </FileListDescriptionText>
-            </FileListDescription>
-          </FileListInfo>
+              </FileListName>
+              <FileListDescription>
+                {existingFile && (
+                  <FileListSize>{existingFile.size}</FileListSize>
+                )}
+              </FileListDescription>
+            </FileListInfo>
+          )}
           <FileListAction onClick={handleClear}>
             <X className="size-4" />
             <span className="sr-only">Close</span>

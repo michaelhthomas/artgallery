@@ -217,7 +217,9 @@ function ExhibitionDetailPage() {
                   <div className="overflow-hidden rounded-lg border transition-colors group-hover:border-primary">
                     <div className="aspect-[4/3] w-full overflow-hidden">
                       <img
-                        src={artwork.workImage ?? "/placeholder.svg"}
+                        src={
+                          artwork.workImage?.downloadUrl ?? "/placeholder.svg"
+                        }
                         alt={artwork.workTitle}
                         className="h-full w-full object-cover transition-transform group-hover:scale-105"
                       />

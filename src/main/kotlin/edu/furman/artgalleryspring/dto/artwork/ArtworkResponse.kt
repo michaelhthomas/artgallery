@@ -1,7 +1,6 @@
 package edu.furman.artgalleryspring.dto.artwork
 
-import edu.furman.artgalleryspring.dto.sale.SaleResponse
-import edu.furman.artgalleryspring.dto.show.ShowResponse
+import edu.furman.artgalleryspring.dto.AssetResponse
 import edu.furman.artgalleryspring.entity.Artwork
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -12,7 +11,7 @@ data class ArtworkResponse(
     val artistName: String,
     val ownerName: String,
     val status: String?,
-    val workImage: String?,
+    val workImage: AssetResponse?,
     val workTitle: String,
     val workYearCompleted: String?,
     val workMedium: String?,
@@ -25,6 +24,7 @@ data class ArtworkResponse(
     val dateReturned: LocalDate?,
     val askingPrice: BigDecimal?,
     val salePrice: BigDecimal?,
+    val collectorSocialSecurityNumber: String?,
 ) {
     companion object {
         fun from(artwork: Artwork) =
@@ -36,7 +36,9 @@ data class ArtworkResponse(
                     "${artwork.collector!!.firstName} ${artwork.collector!!.lastName}"
                     else "${artwork.artist.firstName} ${artwork.artist.lastName}",
                 status = artwork.status,
-                workImage = artwork.workImage?.getDownloadUri(),
+                workImage = artwork.workImage?.let {
+                    AssetResponse.from(it)
+                },
                 workTitle = artwork.workTitle,
                 workYearCompleted = artwork.workYearCompleted,
                 workMedium = artwork.workMedium,
@@ -49,6 +51,7 @@ data class ArtworkResponse(
                 dateReturned = artwork.dateReturned,
                 askingPrice = artwork.askingPrice,
                 salePrice = artwork.sale?.salePrice,
+                collectorSocialSecurityNumber = artwork.collector?.socialSecurityNumber
             )
     }
 }

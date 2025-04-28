@@ -96,7 +96,7 @@ export const $ArtworkResponse = {
             type: 'string'
         },
         workImage: {
-            type: 'string'
+            '$ref': '#/components/schemas/AssetResponse'
         },
         workTitle: {
             type: 'string'
@@ -137,9 +137,40 @@ export const $ArtworkResponse = {
         },
         salePrice: {
             type: 'number'
+        },
+        collectorSocialSecurityNumber: {
+            type: 'string'
         }
     },
     required: ['artistId', 'artistName', 'id', 'ownerName', 'workTitle']
+} as const;
+
+export const $AssetResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        filename: {
+            type: 'string'
+        },
+        contentType: {
+            type: 'string'
+        },
+        size: {
+            type: 'integer',
+            format: 'int64'
+        },
+        downloadUrl: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        }
+    },
+    required: ['contentType', 'createdAt', 'downloadUrl', 'filename', 'id', 'size']
 } as const;
 
 export const $SaleResponse = {
@@ -956,34 +987,6 @@ export const $AuthResponse = {
         }
     },
     required: ['email', 'firstName', 'lastName', 'token', 'username']
-} as const;
-
-export const $AssetResponse = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            format: 'uuid'
-        },
-        filename: {
-            type: 'string'
-        },
-        contentType: {
-            type: 'string'
-        },
-        size: {
-            type: 'integer',
-            format: 'int64'
-        },
-        downloadUrl: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
-        }
-    },
-    required: ['contentType', 'createdAt', 'downloadUrl', 'filename', 'id', 'size']
 } as const;
 
 export const $ArtworkCreateRequest = {

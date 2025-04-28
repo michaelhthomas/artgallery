@@ -56,7 +56,7 @@ export type ArtworkResponse = {
     artistName: string;
     ownerName: string;
     status?: string;
-    workImage?: string;
+    workImage?: AssetResponse;
     workTitle: string;
     workYearCompleted?: string;
     workMedium?: string;
@@ -69,6 +69,16 @@ export type ArtworkResponse = {
     dateReturned?: string;
     askingPrice?: number;
     salePrice?: number;
+    collectorSocialSecurityNumber?: string;
+};
+
+export type AssetResponse = {
+    id: string;
+    filename: string;
+    contentType: string;
+    size: number;
+    downloadUrl: string;
+    createdAt: string;
 };
 
 export type SaleResponse = {
@@ -477,15 +487,6 @@ export type AuthResponse = {
     lastName: string;
 };
 
-export type AssetResponse = {
-    id: string;
-    filename: string;
-    contentType: string;
-    size: number;
-    downloadUrl: string;
-    createdAt: string;
-};
-
 /**
  * Artwork Creation Request
  */
@@ -778,6 +779,12 @@ export type DownloadAssetData = {
 
 export type DownloadAssetResponse = (Blob | File);
 
+export type GetAssetInfoData = {
+    id: string;
+};
+
+export type GetAssetInfoResponse = AssetResponse;
+
 export type DeleteAssetData = {
     id: string;
 };
@@ -797,6 +804,13 @@ export type GetArtworkByIdData = {
 };
 
 export type GetArtworkByIdResponse = ArtworkListingResponse;
+
+export type UpdateArtworkData = {
+    id: number;
+    requestBody: ArtworkCreateRequest;
+};
+
+export type UpdateArtworkResponse = ArtworkResponse;
 
 export type SearchData = {
     req: ArtworkSearchRequest;
@@ -1085,6 +1099,19 @@ export type $OpenApiTs = {
         };
     };
     '/api/assets/{id}': {
+        get: {
+            req: GetAssetInfoData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: AssetResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
         delete: {
             req: DeleteAssetData;
             res: {
@@ -1134,6 +1161,19 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ArtworkListingResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+        post: {
+            req: UpdateArtworkData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: ArtworkResponse;
                 /**
                  * Unprocessable Entity
                  */

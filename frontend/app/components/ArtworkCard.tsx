@@ -15,7 +15,7 @@ export function ArtworkCard(artwork: ArtworkResponse) {
     <Card className="overflow-hidden pt-0">
       <div className="aspect-[4/3] w-full">
         <img
-          src={artwork.workImage ?? "/placeholder.svg"}
+          src={artwork.workImage?.downloadUrl ?? "/placeholder.svg"}
           alt={artwork.workTitle}
           className="h-full w-full object-cover"
         />

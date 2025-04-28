@@ -55,6 +55,12 @@ export const useAssetControllerServiceDownloadAssetKey = "AssetControllerService
 export const UseAssetControllerServiceDownloadAssetKeyFn = ({ id }: {
   id: string;
 }, queryKey?: Array<unknown>) => [useAssetControllerServiceDownloadAssetKey, ...(queryKey ?? [{ id }])];
+export type AssetControllerServiceGetAssetInfoDefaultResponse = Awaited<ReturnType<typeof AssetControllerService.getAssetInfo>>;
+export type AssetControllerServiceGetAssetInfoQueryResult<TData = AssetControllerServiceGetAssetInfoDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useAssetControllerServiceGetAssetInfoKey = "AssetControllerServiceGetAssetInfo";
+export const UseAssetControllerServiceGetAssetInfoKeyFn = ({ id }: {
+  id: string;
+}, queryKey?: Array<unknown>) => [useAssetControllerServiceGetAssetInfoKey, ...(queryKey ?? [{ id }])];
 export type ArtworkControllerServiceGetAllArtworksDefaultResponse = Awaited<ReturnType<typeof ArtworkControllerService.getAllArtworks>>;
 export type ArtworkControllerServiceGetAllArtworksQueryResult<TData = ArtworkControllerServiceGetAllArtworksDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtworkControllerServiceGetAllArtworksKey = "ArtworkControllerServiceGetAllArtworks";
@@ -115,5 +121,6 @@ export type BuyerControllerServiceCreateBuyerMutationResult = Awaited<ReturnType
 export type AuthControllerServiceLoginMutationResult = Awaited<ReturnType<typeof AuthControllerService.login>>;
 export type AssetControllerServiceUploadAssetMutationResult = Awaited<ReturnType<typeof AssetControllerService.uploadAsset>>;
 export type ArtworkControllerServiceCreateArtworkMutationResult = Awaited<ReturnType<typeof ArtworkControllerService.createArtwork>>;
+export type ArtworkControllerServiceUpdateArtworkMutationResult = Awaited<ReturnType<typeof ArtworkControllerService.updateArtwork>>;
 export type ArtistControllerServiceCreateArtistMutationResult = Awaited<ReturnType<typeof ArtistControllerService.createArtist>>;
 export type AssetControllerServiceDeleteAssetMutationResult = Awaited<ReturnType<typeof AssetControllerService.deleteAsset>>;

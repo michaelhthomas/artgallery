@@ -26,6 +26,9 @@ export const ensureUseBuyerControllerServiceGetBuyerByIdData = (queryClient: Que
 export const ensureUseAssetControllerServiceDownloadAssetData = (queryClient: QueryClient, { id }: {
   id: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseAssetControllerServiceDownloadAssetKeyFn({ id }), queryFn: () => AssetControllerService.downloadAsset({ id }) });
+export const ensureUseAssetControllerServiceGetAssetInfoData = (queryClient: QueryClient, { id }: {
+  id: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseAssetControllerServiceGetAssetInfoKeyFn({ id }), queryFn: () => AssetControllerService.getAssetInfo({ id }) });
 export const ensureUseArtworkControllerServiceGetAllArtworksData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceGetAllArtworksKeyFn(), queryFn: () => ArtworkControllerService.getAllArtworks() });
 export const ensureUseArtworkControllerServiceGetArtworkByIdData = (queryClient: QueryClient, { id }: {
   id: number;

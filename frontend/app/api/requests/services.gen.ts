@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetAllSalesResponse, CreateSaleData, CreateSaleResponse, GetSaleByIdData, GetSaleByIdResponse, GetSalesLastWeekResponse, SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, GetAllBuyersResponse, CreateBuyerData, CreateBuyerResponse, GetBuyerByIdData, GetBuyerByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, SearchData, SearchResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse, GetStatsResponse, GetAllShowsResponse, GetShowDetailsData, GetShowDetailsResponse, ListSalespeopleResponse } from './types.gen';
+import type { GetAllSalesResponse, CreateSaleData, CreateSaleResponse, GetSaleByIdData, GetSaleByIdResponse, GetSalesLastWeekResponse, SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, GetAllBuyersResponse, CreateBuyerData, CreateBuyerResponse, GetBuyerByIdData, GetBuyerByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, GetAssetInfoData, GetAssetInfoResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, UpdateArtworkData, UpdateArtworkResponse, SearchData, SearchResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse, GetStatsResponse, GetAllShowsResponse, GetShowDetailsData, GetShowDetailsResponse, ListSalespeopleResponse } from './types.gen';
 
 export class SaleControllerService {
     /**
@@ -325,6 +325,25 @@ export class AssetControllerService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @returns AssetResponse OK
+     * @throws ApiError
+     */
+    public static getAssetInfo(data: GetAssetInfoData): CancelablePromise<GetAssetInfoResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/assets/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
      * @returns unknown OK
      * @throws ApiError
      */
@@ -389,6 +408,28 @@ export class ArtworkControllerService {
             path: {
                 id: data.id
             },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static updateArtwork(data: UpdateArtworkData): CancelablePromise<UpdateArtworkResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/artworks/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: 'Unprocessable Entity'
             }

@@ -87,6 +87,11 @@ class StorageService(
         }
     }
 
+    fun getAssetInfo(id: UUID): Asset {
+        return assetRepository.findById(id)
+            .orElseThrow { StorageFileNotFoundException("File not found with id: $id") }
+    }
+
     fun loadAsResource(id: UUID): Pair<Asset, Resource> {
         try {
             val asset = assetRepository.findById(id)

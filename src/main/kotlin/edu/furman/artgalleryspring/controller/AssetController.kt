@@ -14,21 +14,17 @@ import java.util.UUID
 
 @RestController
 class AssetController(private val storageService: StorageService) {
+    @GetMapping("/api/assets/{id}")
+    fun getAssetInfo(@PathVariable id: UUID): AssetResponse {
+        val asset = storageService.getAssetInfo(id)
+        return AssetResponse.from(asset)
+    }
 
     @PostMapping("/api/assets", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun uploadAsset(@RequestPart("file") file: MultipartFile): ResponseEntity<AssetResponse> {
+    fun uploadAsset(@RequestPart("file") file: MultipartFile): AssetResponse {
         val asset = storageService.store(file)
 
-        val response = AssetResponse(
-            id = asset.id,
-            filename = asset.filename,
-            contentType = asset.contentType,
-            size = asset.size,
-            downloadUrl = asset.getDownloadUri(),
-            createdAt = asset.createdAt
-        )
-
-        return ResponseEntity.ok(response)
+        return AssetResponse.from(asset)
     }
 
     @GetMapping("/api/public/assets/{id}")
