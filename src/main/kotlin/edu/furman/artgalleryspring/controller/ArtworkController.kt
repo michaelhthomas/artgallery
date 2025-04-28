@@ -32,10 +32,19 @@ class ArtworkController(
         return ArtworkListingResponse.from(artwork, sale)
     }
 
-    @PermitAll
     @GetMapping("/search")
-    fun search(req: ArtworkSearchRequest): List<ArtworkResponse> =
-        artworkRepository.search(req).map(ArtworkResponse::from)
+    fun search(
+        @RequestParam artistName: String?,
+        @RequestParam type: String?,
+        @RequestParam medium: String?,
+        @RequestParam style: String?,
+    ): List<ArtworkResponse> =
+        artworkRepository.search(ArtworkSearchRequest(
+            artistName = artistName,
+            type = type,
+            medium = medium,
+            style = style,
+        )).map(ArtworkResponse::from)
 
 
     @PostMapping

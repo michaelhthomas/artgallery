@@ -996,6 +996,39 @@
         ]
       }
     },
+    "/api/public/exhibitions": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "getCurrentExhibitions",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShowResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/public/assets/{id}": {
       "get": {
         "tags": [
@@ -1031,6 +1064,39 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/artists": {
+      "get": {
+        "tags": [
+          "public-controller"
+        ],
+        "operationId": "getFeaturedArtists",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArtistResponse"
+                  }
                 }
               }
             }
@@ -1268,11 +1334,35 @@
         "operationId": "search",
         "parameters": [
           {
-            "name": "req",
+            "name": "artistName",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
-              "$ref": "#/components/schemas/ArtworkSearchRequest"
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "medium",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "style",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -2896,23 +2986,6 @@
           "shownIn",
           "work"
         ]
-      },
-      "ArtworkSearchRequest": {
-        "type": "object",
-        "properties": {
-          "artistName": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "medium": {
-            "type": "string"
-          },
-          "style": {
-            "type": "string"
-          }
-        }
       }
     },
     "securitySchemes": {

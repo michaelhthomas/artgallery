@@ -4,6 +4,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import "../app.css";
 import PageNotFound from "~/components/error/PageNotFound";
 import { Toaster } from "~/components/ui/sonner";
+import NiceModal from "@ebay/nice-modal-react";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -12,11 +13,11 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <>
+    <NiceModal.Provider>
       <Outlet />
       <Toaster position="top-right" />
       <TanStackRouterDevtools />
-    </>
+    </NiceModal.Provider>
   );
 }
 

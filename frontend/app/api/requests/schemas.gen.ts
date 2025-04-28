@@ -1369,21 +1369,3 @@ export const $ArtworkListingResponse = {
     },
     required: ['shownIn', 'work']
 } as const;
-
-export const $ArtworkSearchRequest = {
-    type: 'object',
-    properties: {
-        artistName: {
-            type: 'string'
-        },
-        type: {
-            type: 'string'
-        },
-        medium: {
-            type: 'string'
-        },
-        style: {
-            type: 'string'
-        }
-    }
-} as const;

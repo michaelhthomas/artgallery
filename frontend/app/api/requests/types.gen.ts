@@ -684,13 +684,6 @@ export type ArtworkListingResponse = {
     shownIn: Array<ShowResponse>;
 };
 
-export type ArtworkSearchRequest = {
-    artistName?: string;
-    type?: string;
-    medium?: string;
-    style?: string;
-};
-
 export type GetAllSalesResponse = Array<SaleResponse>;
 
 export type CreateSaleData = {
@@ -813,7 +806,10 @@ export type UpdateArtworkData = {
 export type UpdateArtworkResponse = ArtworkResponse;
 
 export type SearchData = {
-    req: ArtworkSearchRequest;
+    artistName?: string;
+    medium?: string;
+    style?: string;
+    type?: string;
 };
 
 export type SearchResponse = Array<ArtworkResponse>;
@@ -853,6 +849,10 @@ export type GetShowDetailsData = {
 export type GetShowDetailsResponse = ShowDetail;
 
 export type ListSalespeopleResponse = Array<SalespersonResponse>;
+
+export type GetCurrentExhibitionsResponse = Array<ShowResponse>;
+
+export type GetFeaturedArtistsResponse = Array<ArtistResponse>;
 
 export type $OpenApiTs = {
     '/api/sales': {
@@ -1304,6 +1304,34 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: Array<SalespersonResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/public/exhibitions': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ShowResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/public/artists': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ArtistResponse>;
                 /**
                  * Unprocessable Entity
                  */

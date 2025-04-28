@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calendar, Frame, Mail, MapPin, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  Calendar,
+  Frame,
+  Mail,
+  MapPin,
+  Palette,
+  Phone,
+  User,
+} from "lucide-react";
 
 import { MailingListSignup } from "~/components/website/MailingListSignup";
 import { Button } from "~/components/ui/button";
@@ -7,13 +16,24 @@ import { Card, CardContent } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 import { cn } from "~/lib/utils";
 import { useState, useEffect } from "react";
+import { PublicControllerService } from "~/api/requests";
+import NiceModal from "@ebay/nice-modal-react";
+import { FindArtworkModal } from "~/components/artwork/FindArtworkModal";
 
 export const Route = createFileRoute("/_website/")({
   component: WebsiteHome,
+  loader: async () => {
+    const [exhibitions, artists] = await Promise.all([
+      PublicControllerService.getCurrentExhibitions(),
+      PublicControllerService.getFeaturedArtists(),
+    ]);
+    return { exhibitions, artists };
+  },
 });
 
 export default function WebsiteHome() {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const { exhibitions, artists } = Route.useLoaderData();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,11 +107,16 @@ export default function WebsiteHome() {
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="gap-2" asChild>
-              <a href="#plan-your-visit">
-                Plan Your Visit
-                <Calendar className="h-4 w-4" />
-              </a>
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2"
+              onClick={() => {
+                void NiceModal.show(FindArtworkModal);
+              }}
+            >
+              Find Your Artworks
+              <Palette className="size-4" />
             </Button>
           </div>
         </div>
@@ -115,17 +140,17 @@ export default function WebsiteHome() {
               >
                 <div className="aspect-[4/3] w-full">
                   <img
-                    src={exhibition.image || "/placeholder.svg"}
+                    src={exhibition.images[0] || "/placeholder.svg"}
                     alt={exhibition.title}
                     className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
                 <CardContent className="p-6">
                   <div className="mb-2 text-sm font-medium text-purple-400">
-                    {exhibition.dates}
+                    {exhibition.openingDate} — {exhibition.closingDate}
                   </div>
                   <h3 className="mb-2 text-xl font-bold">{exhibition.title}</h3>
-                  <p className="mb-4 text-zinc-400">{exhibition.description}</p>
+                  {/* <p className="mb-4 text-zinc-400">{exhibition.description}</p> */}
                   <Button variant="outline" className="w-full">
                     Learn More
                   </Button>
@@ -158,17 +183,25 @@ export default function WebsiteHome() {
                 className="group flex flex-col items-center text-center"
               >
                 <div className="mb-4 overflow-hidden rounded-full">
-                  <img
-                    src={artist.image || "/placeholder.svg"}
-                    alt={artist.name}
+                  {/* <img
+                    src={"/placeholder.svg"}
+                    alt={artist.firstName + " " + artist.lastName}
                     className="h-40 w-40 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
+                  /> */}
+                  <div className="size-40 rounded-full bg-muted flex items-center justify-center">
+                    <User className="size-24" />
+                  </div>
                 </div>
-                <h3 className="mb-1 text-lg font-bold">{artist.name}</h3>
-                <p className="mb-3 text-sm text-zinc-400">{artist.specialty}</p>
-                <Button variant="link" className="text-purple-400">
+                <h3 className="mb-1 text-lg font-bold">
+                  {artist.firstName} {artist.lastName}
+                </h3>
+                <p className="mb-3 text-sm text-zinc-400">
+                  {artist.usualType} &bull; {artist.usualMedium} &bull;{" "}
+                  {artist.usualStyle}
+                </p>
+                {/* <Button variant="link" className="text-purple-400">
                   View Profile
-                </Button>
+                </Button> */}
               </div>
             ))}
           </div>
@@ -434,51 +467,3 @@ export default function WebsiteHome() {
     </div>
   );
 }
-
-// TODO: use real data
-const exhibitions = [
-  {
-    title: "Chromatic Visions",
-    dates: "March 15 - May 10, 2024",
-    description:
-      "An exploration of color theory and perception through contemporary painting and digital media.",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-  {
-    title: "New Perspectives",
-    dates: "April 1 - June 15, 2024",
-    description:
-      "Showcasing works from emerging artists who challenge traditional artistic boundaries.",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-  {
-    title: "Retrospective: Claire Fontaine",
-    dates: "February 10 - April 30, 2024",
-    description:
-      "A comprehensive look at the career of renowned installation artist Claire Fontaine.",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-];
-
-const artists = [
-  {
-    name: "Maria Chen",
-    specialty: "Contemporary Painting",
-    image: "/placeholder.svg?height=300&width=300",
-  },
-  {
-    name: "James Wilson",
-    specialty: "Mixed Media, Installation",
-    image: "/placeholder.svg?height=300&width=300",
-  },
-  {
-    name: "Sofia Patel",
-    specialty: "Abstract Painting",
-    image: "/placeholder.svg?height=300&width=300",
-  },
-  {
-    name: "David Lee",
-    specialty: "Sculpture",
-    image: "/placeholder.svg?height=300&width=300",
-  },
-];

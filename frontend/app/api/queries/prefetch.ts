@@ -1,8 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
-import { ArtworkSearchRequest } from "../requests/types.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, PublicControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import * as Common from "./common";
 export const prefetchUseSaleControllerServiceGetAllSales = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
 export const prefetchUseSaleControllerServiceGetSaleById = (queryClient: QueryClient, { id }: {
@@ -33,9 +32,12 @@ export const prefetchUseArtworkControllerServiceGetAllArtworks = (queryClient: Q
 export const prefetchUseArtworkControllerServiceGetArtworkById = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }), queryFn: () => ArtworkControllerService.getArtworkById({ id }) });
-export const prefetchUseArtworkControllerServiceSearch = (queryClient: QueryClient, { req }: {
-  req: ArtworkSearchRequest;
-}) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ req }), queryFn: () => ArtworkControllerService.search({ req }) });
+export const prefetchUseArtworkControllerServiceSearch = (queryClient: QueryClient, { artistName, medium, style, type }: {
+  artistName?: string;
+  medium?: string;
+  style?: string;
+  type?: string;
+} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ artistName, medium, style, type }), queryFn: () => ArtworkControllerService.search({ artistName, medium, style, type }) });
 export const prefetchUseArtistControllerServiceGetAllArtists = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }), queryFn: () => ArtistControllerService.getAllArtists({ q }) });
@@ -51,3 +53,5 @@ export const prefetchUseShowControllerServiceGetShowDetails = (queryClient: Quer
   title: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }), queryFn: () => ShowControllerService.getShowDetails({ title }) });
 export const prefetchUseSalespersonControllerServiceListSalespeople = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSalespersonControllerServiceListSalespeopleKeyFn(), queryFn: () => SalespersonControllerService.listSalespeople() });
+export const prefetchUsePublicControllerServiceGetCurrentExhibitions = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UsePublicControllerServiceGetCurrentExhibitionsKeyFn(), queryFn: () => PublicControllerService.getCurrentExhibitions() });
+export const prefetchUsePublicControllerServiceGetFeaturedArtists = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UsePublicControllerServiceGetFeaturedArtistsKeyFn(), queryFn: () => PublicControllerService.getFeaturedArtists() });

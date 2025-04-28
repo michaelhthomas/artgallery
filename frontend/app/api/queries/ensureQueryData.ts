@@ -1,8 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
-import { ArtworkSearchRequest } from "../requests/types.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, PublicControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import * as Common from "./common";
 export const ensureUseSaleControllerServiceGetAllSalesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
 export const ensureUseSaleControllerServiceGetSaleByIdData = (queryClient: QueryClient, { id }: {
@@ -33,9 +32,12 @@ export const ensureUseArtworkControllerServiceGetAllArtworksData = (queryClient:
 export const ensureUseArtworkControllerServiceGetArtworkByIdData = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }), queryFn: () => ArtworkControllerService.getArtworkById({ id }) });
-export const ensureUseArtworkControllerServiceSearchData = (queryClient: QueryClient, { req }: {
-  req: ArtworkSearchRequest;
-}) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ req }), queryFn: () => ArtworkControllerService.search({ req }) });
+export const ensureUseArtworkControllerServiceSearchData = (queryClient: QueryClient, { artistName, medium, style, type }: {
+  artistName?: string;
+  medium?: string;
+  style?: string;
+  type?: string;
+} = {}) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ artistName, medium, style, type }), queryFn: () => ArtworkControllerService.search({ artistName, medium, style, type }) });
 export const ensureUseArtistControllerServiceGetAllArtistsData = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }), queryFn: () => ArtistControllerService.getAllArtists({ q }) });
@@ -51,3 +53,5 @@ export const ensureUseShowControllerServiceGetShowDetailsData = (queryClient: Qu
   title: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }), queryFn: () => ShowControllerService.getShowDetails({ title }) });
 export const ensureUseSalespersonControllerServiceListSalespeopleData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseSalespersonControllerServiceListSalespeopleKeyFn(), queryFn: () => SalespersonControllerService.listSalespeople() });
+export const ensureUsePublicControllerServiceGetCurrentExhibitionsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UsePublicControllerServiceGetCurrentExhibitionsKeyFn(), queryFn: () => PublicControllerService.getCurrentExhibitions() });
+export const ensureUsePublicControllerServiceGetFeaturedArtistsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UsePublicControllerServiceGetFeaturedArtistsKeyFn(), queryFn: () => PublicControllerService.getFeaturedArtists() });

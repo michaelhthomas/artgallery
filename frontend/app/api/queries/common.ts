@@ -1,8 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
-import { ArtworkSearchRequest } from "../requests/types.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, PublicControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 export type SaleControllerServiceGetAllSalesDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getAllSales>>;
 export type SaleControllerServiceGetAllSalesQueryResult<TData = SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useSaleControllerServiceGetAllSalesKey = "SaleControllerServiceGetAllSales";
@@ -74,9 +73,12 @@ export const UseArtworkControllerServiceGetArtworkByIdKeyFn = ({ id }: {
 export type ArtworkControllerServiceSearchDefaultResponse = Awaited<ReturnType<typeof ArtworkControllerService.search>>;
 export type ArtworkControllerServiceSearchQueryResult<TData = ArtworkControllerServiceSearchDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtworkControllerServiceSearchKey = "ArtworkControllerServiceSearch";
-export const UseArtworkControllerServiceSearchKeyFn = ({ req }: {
-  req: ArtworkSearchRequest;
-}, queryKey?: Array<unknown>) => [useArtworkControllerServiceSearchKey, ...(queryKey ?? [{ req }])];
+export const UseArtworkControllerServiceSearchKeyFn = ({ artistName, medium, style, type }: {
+  artistName?: string;
+  medium?: string;
+  style?: string;
+  type?: string;
+} = {}, queryKey?: Array<unknown>) => [useArtworkControllerServiceSearchKey, ...(queryKey ?? [{ artistName, medium, style, type }])];
 export type ArtistControllerServiceGetAllArtistsDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getAllArtists>>;
 export type ArtistControllerServiceGetAllArtistsQueryResult<TData = ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtistControllerServiceGetAllArtistsKey = "ArtistControllerServiceGetAllArtists";
@@ -113,6 +115,14 @@ export type SalespersonControllerServiceListSalespeopleDefaultResponse = Awaited
 export type SalespersonControllerServiceListSalespeopleQueryResult<TData = SalespersonControllerServiceListSalespeopleDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useSalespersonControllerServiceListSalespeopleKey = "SalespersonControllerServiceListSalespeople";
 export const UseSalespersonControllerServiceListSalespeopleKeyFn = (queryKey?: Array<unknown>) => [useSalespersonControllerServiceListSalespeopleKey, ...(queryKey ?? [])];
+export type PublicControllerServiceGetCurrentExhibitionsDefaultResponse = Awaited<ReturnType<typeof PublicControllerService.getCurrentExhibitions>>;
+export type PublicControllerServiceGetCurrentExhibitionsQueryResult<TData = PublicControllerServiceGetCurrentExhibitionsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const usePublicControllerServiceGetCurrentExhibitionsKey = "PublicControllerServiceGetCurrentExhibitions";
+export const UsePublicControllerServiceGetCurrentExhibitionsKeyFn = (queryKey?: Array<unknown>) => [usePublicControllerServiceGetCurrentExhibitionsKey, ...(queryKey ?? [])];
+export type PublicControllerServiceGetFeaturedArtistsDefaultResponse = Awaited<ReturnType<typeof PublicControllerService.getFeaturedArtists>>;
+export type PublicControllerServiceGetFeaturedArtistsQueryResult<TData = PublicControllerServiceGetFeaturedArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const usePublicControllerServiceGetFeaturedArtistsKey = "PublicControllerServiceGetFeaturedArtists";
+export const UsePublicControllerServiceGetFeaturedArtistsKeyFn = (queryKey?: Array<unknown>) => [usePublicControllerServiceGetFeaturedArtistsKey, ...(queryKey ?? [])];
 export type SaleControllerServiceCreateSaleMutationResult = Awaited<ReturnType<typeof SaleControllerService.createSale>>;
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;

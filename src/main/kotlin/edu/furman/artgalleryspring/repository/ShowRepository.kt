@@ -14,4 +14,9 @@ interface ShowRepository : JpaRepository<ArtShow, String> {
         showOpeningDateAfter: LocalDate,
         showOpeningDateBefore: LocalDate
     ): Long
+
+    fun findAllByShowOpeningDateBeforeAndShowClosingDateAfter(
+        showOpeningDateBefore: LocalDate,
+        showClosingDateAfter: LocalDate
+    ): MutableList<ArtShow>
 }
