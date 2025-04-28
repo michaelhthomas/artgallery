@@ -22,6 +22,11 @@ class SaleController(
     fun getAllSales(): List<SaleResponse> =
         saleRepository.findAll().map(SaleResponse::from)
 
+    @GetMapping("/week")
+    fun getSalesLastWeek(): List<SaleResponse> = saleRepository
+        .findAllBySaleDateBetween(LocalDate.now().minusWeeks(1), LocalDate.now())
+        .map { SaleResponse.from(it) }
+
     /* ───────────────────────────────────────── GET one */
     @GetMapping("/{id}")
     fun getSaleById(@PathVariable id: Int): SaleResponse? =

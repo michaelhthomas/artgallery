@@ -75,6 +75,73 @@ export const $SaleCreateRequest = {
     required: ['artworkId', 'buyerId', 'salespersonSsn']
 } as const;
 
+export const $ArtworkResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artistId: {
+            type: 'integer',
+            format: 'int32'
+        },
+        artistName: {
+            type: 'string'
+        },
+        ownerName: {
+            type: 'string'
+        },
+        status: {
+            type: 'string'
+        },
+        workImage: {
+            type: 'string'
+        },
+        workTitle: {
+            type: 'string'
+        },
+        workYearCompleted: {
+            type: 'string'
+        },
+        workMedium: {
+            type: 'string'
+        },
+        workStyle: {
+            type: 'string'
+        },
+        workType: {
+            type: 'string'
+        },
+        workSize: {
+            type: 'string'
+        },
+        dateListed: {
+            type: 'string',
+            format: 'date'
+        },
+        dateShown: {
+            type: 'string',
+            format: 'date'
+        },
+        dateSold: {
+            type: 'string',
+            format: 'date'
+        },
+        dateReturned: {
+            type: 'string',
+            format: 'date'
+        },
+        askingPrice: {
+            type: 'number'
+        },
+        salePrice: {
+            type: 'number'
+        }
+    },
+    required: ['artistId', 'artistName', 'id', 'ownerName', 'workTitle']
+} as const;
+
 export const $SaleResponse = {
     type: 'object',
     properties: {
@@ -99,9 +166,12 @@ export const $SaleResponse = {
         },
         buyerName: {
             type: 'string'
+        },
+        artwork: {
+            '$ref': '#/components/schemas/ArtworkResponse'
         }
     },
-    required: ['buyerName', 'invoiceNumber', 'salespersonName']
+    required: ['artwork', 'buyerName', 'invoiceNumber', 'salespersonName']
 } as const;
 
 export const $MailingListSignupRequest = {
@@ -998,73 +1068,6 @@ export const $ArtworkCreateRequest = {
     required: ['artistId', 'askingPrice', 'dateListed', 'workMedium', 'workSize', 'workStyle', 'workTitle', 'workType', 'workYearCompleted']
 } as const;
 
-export const $ArtworkResponse = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'integer',
-            format: 'int32'
-        },
-        artistId: {
-            type: 'integer',
-            format: 'int32'
-        },
-        artistName: {
-            type: 'string'
-        },
-        ownerName: {
-            type: 'string'
-        },
-        status: {
-            type: 'string'
-        },
-        workImage: {
-            type: 'string'
-        },
-        workTitle: {
-            type: 'string'
-        },
-        workYearCompleted: {
-            type: 'string'
-        },
-        workMedium: {
-            type: 'string'
-        },
-        workStyle: {
-            type: 'string'
-        },
-        workType: {
-            type: 'string'
-        },
-        workSize: {
-            type: 'string'
-        },
-        dateListed: {
-            type: 'string',
-            format: 'date'
-        },
-        dateShown: {
-            type: 'string',
-            format: 'date'
-        },
-        dateSold: {
-            type: 'string',
-            format: 'date'
-        },
-        dateReturned: {
-            type: 'string',
-            format: 'date'
-        },
-        askingPrice: {
-            type: 'number'
-        },
-        salePrice: {
-            type: 'number'
-        }
-    },
-    required: ['artistId', 'artistName', 'id', 'ownerName']
-} as const;
-
 export const $ArtistCreateRequest = {
     type: 'object',
     description: 'Artist Creation Request',
@@ -1185,6 +1188,45 @@ export const $ArtistResponse = {
         }
     },
     required: ['firstName', 'id', 'lastName', 'salesLastYear', 'salesYearToDate']
+} as const;
+
+export const $StatsResponse = {
+    type: 'object',
+    properties: {
+        totalArtworks: {
+            type: 'integer',
+            format: 'int64'
+        },
+        newArtworksMonth: {
+            type: 'integer',
+            format: 'int64'
+        },
+        activeExhibitions: {
+            type: 'integer',
+            format: 'int64'
+        },
+        exhibitionsInNextWeek: {
+            type: 'integer',
+            format: 'int64'
+        },
+        totalArtists: {
+            type: 'integer',
+            format: 'int64'
+        },
+        newArtistsMonth: {
+            type: 'integer',
+            format: 'int64'
+        },
+        totalCollectors: {
+            type: 'integer',
+            format: 'int64'
+        },
+        newCollectorsMonth: {
+            type: 'integer',
+            format: 'int64'
+        }
+    },
+    required: ['activeExhibitions', 'exhibitionsInNextWeek', 'newArtistsMonth', 'newArtworksMonth', 'newCollectorsMonth', 'totalArtists', 'totalArtworks', 'totalCollectors']
 } as const;
 
 export const $ShowResponse = {

@@ -13,7 +13,7 @@ data class ArtworkResponse(
     val ownerName: String,
     val status: String?,
     val workImage: String?,
-    val workTitle: String?,
+    val workTitle: String,
     val workYearCompleted: String?,
     val workMedium: String?,
     val workStyle: String?,

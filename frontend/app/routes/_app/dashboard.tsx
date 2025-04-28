@@ -1,20 +1,91 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Calendar, Grid, ImageIcon, Users } from "lucide-react";
-import ArtistCard from "~/components/ArtistCard";
-import { ArtworkCard } from "~/components/ArtworkCard";
-import ExhibitionCard from "~/components/ExhibitionCard";
-
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Calendar, Frame, Grid, ImageIcon, Users } from "lucide-react";
+import {
+  useSaleControllerServiceGetSalesLastWeek,
+  useStatsControllerServiceGetStats,
+} from "~/api/queries";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton";
+import { formatCurrency } from "~/lib/format";
 
 export const Route = createFileRoute("/_app/dashboard")({
   component: Dashboard,
 });
 
 function Dashboard() {
+  const { data: stats } = useStatsControllerServiceGetStats();
+  const { data: recentSales } = useSaleControllerServiceGetSalesLastWeek();
+
+  function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning!";
+    if (hour < 18) return "Good afternoon!";
+    return "Good evening!";
+  }
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+      <section className="relative mb-8 overflow-hidden rounded-xl border bg-black p-4 sm:p-6 lg:p-8">
+        {/* Background gradient effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-black"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-purple-700/20 blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-purple-800/20 blur-3xl"></div>
+
+        <div className="relative flex flex-col items-center gap-4 text-center sm:gap-6">
+          <div className="inline-block rounded-full bg-purple-900/30 p-3 text-white backdrop-blur-sm">
+            <Frame className="h-8 w-8 text-purple-300 sm:h-10 sm:w-10" />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+              Welcome to{" "}
+              <span className="font-pacifico text-purple-300">
+                Furman Art Gallery
+              </span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-zinc-300">
+              {getGreeting()} It&apos;s{" "}
+              {new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })}
+              . Discover new artworks, track sales, and manage your gallery all
+              in one place.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <Button className="gap-2" asChild>
+              <Link to="/artworks">
+                <ImageIcon className="h-4 w-4" />
+                Browse Artworks
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-purple-800/50 bg-black/50 text-white backdrop-blur-sm hover:bg-purple-900/20 hover:text-purple-300"
+              asChild
+            >
+              <Link to="/exhibitions">
+                <Calendar className="mr-2 h-4 w-4" />
+                Upcoming Exhibitions
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -24,8 +95,18 @@ function Dashboard() {
             <ImageIcon className="h-4 w-4 text-purple-800" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">248</div>
-            <p className="text-xs text-muted-foreground">+12 this month</p>
+            {stats ? (
+              <>
+                <div className="text-2xl font-bold">{stats.totalArtworks}</div>
+                {stats.newArtworksMonth > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    +{stats.newArtworksMonth} this month
+                  </p>
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-10" />
+            )}
           </CardContent>
         </Card>
         <Card>
@@ -36,8 +117,20 @@ function Dashboard() {
             <Grid className="h-4 w-4 text-purple-800" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">1 opening next week</p>
+            {stats ? (
+              <>
+                <div className="text-2xl font-bold">
+                  {stats.activeExhibitions}
+                </div>
+                {stats.exhibitionsInNextWeek > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    {stats.exhibitionsInNextWeek} opening next week
+                  </p>
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-10" />
+            )}
           </CardContent>
         </Card>
         <Card>
@@ -48,137 +141,104 @@ function Dashboard() {
             <Users className="h-4 w-4 text-purple-800" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">42</div>
-            <p className="text-xs text-muted-foreground">+3 this quarter</p>
+            {stats ? (
+              <>
+                <div className="text-2xl font-bold">{stats.totalArtists}</div>
+                {stats.newArtistsMonth > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    +{stats.newArtistsMonth} this month
+                  </p>
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-10" />
+            )}
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Upcoming Events
+              Represented Collectors
             </CardTitle>
-            <Calendar className="h-4 w-4 text-purple-800" />
+            <Users className="h-4 w-4 text-purple-800" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">7</div>
-            <p className="text-xs text-muted-foreground">
-              Next: Opening Reception (Apr 15)
-            </p>
+            {stats ? (
+              <>
+                <div className="text-2xl font-bold">
+                  {stats.totalCollectors}
+                </div>
+                {stats.newCollectorsMonth > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    +{stats.newCollectorsMonth} this month
+                  </p>
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-10" />
+            )}
           </CardContent>
         </Card>
       </div>
-      <Tabs defaultValue="artworks" className="space-y-4">
-        <TabsList className="bg-muted">
-          <TabsTrigger value="artworks">Recent Artworks</TabsTrigger>
-          <TabsTrigger value="exhibitions">Current Exhibitions</TabsTrigger>
-          <TabsTrigger value="artists">Featured Artists</TabsTrigger>
-        </TabsList>
-        <TabsContent value="artworks" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <ArtworkCard
-              title="Ephemeral Light #7"
-              artist="Maria Chen"
-              medium="Oil on canvas"
-              dimensions="36 × 48 in"
-              year="2023"
-              image="/placeholder.svg?height=400&width=300"
-            />
-            <ArtworkCard
-              title="Urban Fragments"
-              artist="James Wilson"
-              medium="Mixed media"
-              dimensions="24 × 36 in"
-              year="2023"
-              image="/placeholder.svg?height=400&width=300"
-            />
-            <ArtworkCard
-              title="Resonance in Blue"
-              artist="Sofia Patel"
-              medium="Acrylic on panel"
-              dimensions="30 × 40 in"
-              year="2024"
-              image="/placeholder.svg?height=400&width=300"
-            />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Sales</CardTitle>
+          <CardDescription>Sales completed in the past 7 days</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentSales ? (
+              recentSales.length > 0 ? (
+                recentSales.map((sale) => (
+                  <div
+                    key={sale.invoiceNumber}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                      <img
+                        src={sale.artwork.workImage ?? "/placeholder.svg"}
+                        alt={sale.artwork.workTitle}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-medium">
+                          {sale.artwork.workTitle}
+                        </h3>
+                        <p className="font-medium">
+                          {sale.price ? formatCurrency(sale.price) : "—"}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                          {sale.artwork.artistName} • Sold to {sale.buyerName}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {sale.date}
+                        </p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Owned by {sale.artwork.ownerName} • Compensation:{" "}
+                        {formatCurrency(sale.amountRemittedToOwner ?? 0)}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h1>No sales this week</h1>
+              )
+            ) : (
+              <>
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </>
+            )}
           </div>
-          <Button
-            variant="outline"
-            className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-          >
-            View All Artworks
-          </Button>
-        </TabsContent>
-        <TabsContent value="exhibitions" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <ExhibitionCard
-              title="Chromatic Visions"
-              dates="Mar 15 - May 10, 2024"
-              artists="Group Exhibition"
-              location="Main Gallery"
-              curator="John Doe"
-              status="Current"
-              image="/placeholder.svg?height=200&width=300"
-            />
-            <ExhibitionCard
-              title="New Perspectives"
-              dates="Apr 1 - Jun 15, 2024"
-              artists="Emerging Artists Showcase"
-              location="East Wing"
-              curator="John Doe"
-              status="Current"
-              image="/placeholder.svg?height=200&width=300"
-            />
-            <ExhibitionCard
-              title="Retrospective: Claire Fontaine"
-              dates="Feb 10 - Apr 30, 2024"
-              artists="Claire Fontaine"
-              location="West Gallery"
-              curator="John Doe"
-              status="Current"
-              image="/placeholder.svg?height=200&width=300"
-            />
-          </div>
-          <Button
-            variant="outline"
-            className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-          >
-            View All Exhibitions
-          </Button>
-        </TabsContent>
-        <TabsContent value="artists" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <ArtistCard
-              name="Maria Chen"
-              specialty="Contemporary Painting"
-              represented="Since 2018"
-              works="32 artworks in collection"
-              nationality="Chinese"
-              image="/placeholder.svg?height=300&width=300"
-            />
-            <ArtistCard
-              name="James Wilson"
-              specialty="Mixed Media, Installation"
-              represented="Since 2020"
-              works="18 artworks in collection"
-              nationality="American"
-              image="/placeholder.svg?height=300&width=300"
-            />
-            <ArtistCard
-              name="Sofia Patel"
-              specialty="Abstract Painting"
-              represented="Since 2019"
-              works="24 artworks in collection"
-              nationality="Indian"
-              image="/placeholder.svg?height=300&width=300"
-            />
-          </div>
-          <Button
-            variant="outline"
-            className="w-full hover:bg-purple-900/20 hover:text-purple-300"
-          >
-            View All Artists
-          </Button>
-        </TabsContent>
-      </Tabs>
+        </CardContent>
+      </Card>
     </main>
   );
 }

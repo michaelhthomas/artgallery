@@ -1,5 +1,7 @@
 package edu.furman.artgalleryspring.dto.sale
 
+import edu.furman.artgalleryspring.dto.artwork.ArtworkResponse
+import edu.furman.artgalleryspring.entity.Artwork
 import edu.furman.artgalleryspring.entity.Sale
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -12,6 +14,7 @@ data class SaleResponse(
     val tax: BigDecimal?,
     val salespersonName: String,
     val buyerName: String,
+    val artwork: ArtworkResponse,
 ) {
     companion object {
         fun from(s: Sale) =
@@ -22,7 +25,8 @@ data class SaleResponse(
                 price = s.salePrice,
                 tax = s.saleTax,
                 salespersonName = "${s.salesperson.firstName} ${s.salesperson.lastName}",
-                buyerName = "${s.buyer.firstName} ${s.buyer.lastName}"
+                buyerName = "${s.buyer.firstName} ${s.buyer.lastName}",
+                artwork = ArtworkResponse.from(s.artwork!!)
             )
     }
 }

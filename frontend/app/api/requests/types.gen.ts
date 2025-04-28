@@ -50,6 +50,27 @@ export type SaleCreateRequest = {
     salespersonSsn: string;
 };
 
+export type ArtworkResponse = {
+    id: number;
+    artistId: number;
+    artistName: string;
+    ownerName: string;
+    status?: string;
+    workImage?: string;
+    workTitle: string;
+    workYearCompleted?: string;
+    workMedium?: string;
+    workStyle?: string;
+    workType?: string;
+    workSize?: string;
+    dateListed?: string;
+    dateShown?: string;
+    dateSold?: string;
+    dateReturned?: string;
+    askingPrice?: number;
+    salePrice?: number;
+};
+
 export type SaleResponse = {
     invoiceNumber: number;
     date?: string;
@@ -58,6 +79,7 @@ export type SaleResponse = {
     tax?: number;
     salespersonName: string;
     buyerName: string;
+    artwork: ArtworkResponse;
 };
 
 /**
@@ -514,27 +536,6 @@ export type ArtworkCreateRequest = {
     askingPrice: string;
 };
 
-export type ArtworkResponse = {
-    id: number;
-    artistId: number;
-    artistName: string;
-    ownerName: string;
-    status?: string;
-    workImage?: string;
-    workTitle?: string;
-    workYearCompleted?: string;
-    workMedium?: string;
-    workStyle?: string;
-    workType?: string;
-    workSize?: string;
-    dateListed?: string;
-    dateShown?: string;
-    dateSold?: string;
-    dateReturned?: string;
-    askingPrice?: number;
-    salePrice?: number;
-};
-
 /**
  * Artist Creation Request
  */
@@ -611,6 +612,17 @@ export type ArtistResponse = {
     usualType?: string;
 };
 
+export type StatsResponse = {
+    totalArtworks: number;
+    newArtworksMonth: number;
+    activeExhibitions: number;
+    exhibitionsInNextWeek: number;
+    totalArtists: number;
+    newArtistsMonth: number;
+    totalCollectors: number;
+    newCollectorsMonth: number;
+};
+
 export type ShowResponse = {
     title: string;
     featuredArtistName?: string;
@@ -658,6 +670,8 @@ export type GetSaleByIdData = {
 };
 
 export type GetSaleByIdResponse = SaleResponse;
+
+export type GetSalesLastWeekResponse = Array<SaleResponse>;
 
 export type SignupForMailingListData = {
     requestBody: MailingListSignupRequest;
@@ -775,6 +789,8 @@ export type GetArtistWorksData = {
 
 export type GetArtistWorksResponse = Array<ArtworkResponse>;
 
+export type GetStatsResponse = StatsResponse;
+
 export type GetAllShowsResponse = Array<ShowResponse>;
 
 export type GetShowDetailsData = {
@@ -819,6 +835,20 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: SaleResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/sales/week': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<SaleResponse>;
                 /**
                  * Unprocessable Entity
                  */
@@ -1121,6 +1151,20 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: Array<ArtworkResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/stats': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: StatsResponse;
                 /**
                  * Unprocessable Entity
                  */

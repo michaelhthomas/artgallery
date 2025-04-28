@@ -656,6 +656,41 @@
         ]
       }
     },
+    "/api/stats": {
+      "get": {
+        "tags": [
+          "stats-controller"
+        ],
+        "operationId": "getStats",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/shows": {
       "get": {
         "tags": [
@@ -773,6 +808,44 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SaleResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sales/week": {
+      "get": {
+        "tags": [
+          "sale-controller"
+        ],
+        "operationId": "getSalesLastWeek",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SaleResponse"
+                  }
                 }
               }
             }
@@ -1234,6 +1307,78 @@
           "salespersonSsn"
         ]
       },
+      "ArtworkResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "artistId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "artistName": {
+            "type": "string"
+          },
+          "ownerName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "workImage": {
+            "type": "string"
+          },
+          "workTitle": {
+            "type": "string"
+          },
+          "workYearCompleted": {
+            "type": "string"
+          },
+          "workMedium": {
+            "type": "string"
+          },
+          "workStyle": {
+            "type": "string"
+          },
+          "workType": {
+            "type": "string"
+          },
+          "workSize": {
+            "type": "string"
+          },
+          "dateListed": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateShown": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateSold": {
+            "type": "string",
+            "format": "date"
+          },
+          "dateReturned": {
+            "type": "string",
+            "format": "date"
+          },
+          "askingPrice": {
+            "type": "number"
+          },
+          "salePrice": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "artistId",
+          "artistName",
+          "id",
+          "ownerName",
+          "workTitle"
+        ]
+      },
       "SaleResponse": {
         "type": "object",
         "properties": {
@@ -1258,9 +1403,13 @@
           },
           "buyerName": {
             "type": "string"
+          },
+          "artwork": {
+            "$ref": "#/components/schemas/ArtworkResponse"
           }
         },
         "required": [
+          "artwork",
           "buyerName",
           "invoiceNumber",
           "salespersonName"
@@ -2231,77 +2380,6 @@
           "workYearCompleted"
         ]
       },
-      "ArtworkResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "artistId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "artistName": {
-            "type": "string"
-          },
-          "ownerName": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "workImage": {
-            "type": "string"
-          },
-          "workTitle": {
-            "type": "string"
-          },
-          "workYearCompleted": {
-            "type": "string"
-          },
-          "workMedium": {
-            "type": "string"
-          },
-          "workStyle": {
-            "type": "string"
-          },
-          "workType": {
-            "type": "string"
-          },
-          "workSize": {
-            "type": "string"
-          },
-          "dateListed": {
-            "type": "string",
-            "format": "date"
-          },
-          "dateShown": {
-            "type": "string",
-            "format": "date"
-          },
-          "dateSold": {
-            "type": "string",
-            "format": "date"
-          },
-          "dateReturned": {
-            "type": "string",
-            "format": "date"
-          },
-          "askingPrice": {
-            "type": "number"
-          },
-          "salePrice": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "artistId",
-          "artistName",
-          "id",
-          "ownerName"
-        ]
-      },
       "ArtistCreateRequest": {
         "type": "object",
         "description": "Artist Creation Request",
@@ -2429,6 +2507,53 @@
           "lastName",
           "salesLastYear",
           "salesYearToDate"
+        ]
+      },
+      "StatsResponse": {
+        "type": "object",
+        "properties": {
+          "totalArtworks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "newArtworksMonth": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "activeExhibitions": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "exhibitionsInNextWeek": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalArtists": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "newArtistsMonth": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCollectors": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "newCollectorsMonth": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "activeExhibitions",
+          "exhibitionsInNextWeek",
+          "newArtistsMonth",
+          "newArtworksMonth",
+          "newCollectorsMonth",
+          "totalArtists",
+          "totalArtworks",
+          "totalCollectors"
         ]
       },
       "ShowResponse": {

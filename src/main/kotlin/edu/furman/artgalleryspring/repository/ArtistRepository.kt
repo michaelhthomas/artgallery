@@ -4,6 +4,7 @@ import edu.furman.artgalleryspring.entity.Artist
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.util.Optional
 
 @Repository
@@ -12,4 +13,6 @@ interface ArtistRepository : JpaRepository<Artist, Int> {
     fun findByNameLike(name: String): List<Artist>
 
     fun findByFirstNameAndLastName(firstName: String, lastName: String): Optional<Artist>
+
+    fun countByInterviewDateBetween(interviewDateAfter: LocalDate, interviewDateBefore: LocalDate): Long
 }

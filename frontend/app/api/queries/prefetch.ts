@@ -1,12 +1,13 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import * as Common from "./common";
 export const prefetchUseSaleControllerServiceGetAllSales = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
 export const prefetchUseSaleControllerServiceGetSaleById = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetSaleByIdKeyFn({ id }), queryFn: () => SaleControllerService.getSaleById({ id }) });
+export const prefetchUseSaleControllerServiceGetSalesLastWeek = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetSalesLastWeekKeyFn(), queryFn: () => SaleControllerService.getSalesLastWeek() });
 export const prefetchUseProfileControllerServiceGetProfile = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseProfileControllerServiceGetProfileKeyFn(), queryFn: () => ProfileControllerService.getProfile() });
 export const prefetchUseCollectorControllerServiceGetAllCollectors = (queryClient: QueryClient, { q }: {
   q?: string;
@@ -37,6 +38,7 @@ export const prefetchUseArtistControllerServiceGetArtist = (queryClient: QueryCl
 export const prefetchUseArtistControllerServiceGetArtistWorks = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }), queryFn: () => ArtistControllerService.getArtistWorks({ id }) });
+export const prefetchUseStatsControllerServiceGetStats = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseStatsControllerServiceGetStatsKeyFn(), queryFn: () => StatsControllerService.getStats() });
 export const prefetchUseShowControllerServiceGetAllShows = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseShowControllerServiceGetAllShowsKeyFn(), queryFn: () => ShowControllerService.getAllShows() });
 export const prefetchUseShowControllerServiceGetShowDetails = (queryClient: QueryClient, { title }: {
   title: string;

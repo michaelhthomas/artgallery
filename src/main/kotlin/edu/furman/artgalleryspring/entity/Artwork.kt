@@ -63,7 +63,7 @@ data class Artwork (
     @Column(name = "workYearCompleted", length = 4)
 	var workYearCompleted: String? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "collectorSocialSecurityNumber")
 	var collector: Collector? = null,
 
