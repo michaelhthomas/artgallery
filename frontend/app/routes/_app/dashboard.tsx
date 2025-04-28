@@ -195,7 +195,7 @@ function Dashboard() {
                     key={sale.invoiceNumber}
                     className="flex items-center gap-4"
                   >
-                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                    <div className="relative size-24 flex-shrink-0 overflow-hidden rounded-md">
                       <img
                         src={sale.artwork.workImage ?? "/placeholder.svg"}
                         alt={sale.artwork.workTitle}
@@ -219,10 +219,23 @@ function Dashboard() {
                           {sale.date}
                         </p>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        Owned by {sale.artwork.ownerName} • Compensation:{" "}
-                        {formatCurrency(sale.amountRemittedToOwner ?? 0)}
-                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                          Owned by {sale.artwork.ownerName}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Compensation:{" "}
+                          {formatCurrency(sale.amountRemittedToOwner ?? 0)}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                          Sold by {sale.salespersonName}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Commission: {formatCurrency((sale.price ?? 0) * 0.05)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))
