@@ -3,6 +3,7 @@ package edu.furman.artgalleryspring.controller
 import edu.furman.artgalleryspring.dto.artwork.ArtworkCreateRequest
 import edu.furman.artgalleryspring.dto.artwork.ArtworkListingResponse
 import edu.furman.artgalleryspring.dto.artwork.ArtworkResponse
+import edu.furman.artgalleryspring.dto.artwork.ArtworkSearchRequest
 import edu.furman.artgalleryspring.entity.Artwork
 import edu.furman.artgalleryspring.repository.*
 import org.springframework.web.bind.annotation.*
@@ -30,6 +31,11 @@ class ArtworkController(
 
         return ArtworkListingResponse.from(artwork, sale)
     }
+
+    @GetMapping("/search")
+    fun search(req: ArtworkSearchRequest): List<ArtworkResponse> =
+        artworkRepository.search(req).map(ArtworkResponse::from)
+
 
     @PostMapping
     fun createArtwork(@RequestBody artworkRequest: ArtworkCreateRequest): ArtworkResponse {

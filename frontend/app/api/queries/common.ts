@@ -2,6 +2,7 @@
 
 import { UseQueryResult } from "@tanstack/react-query";
 import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtworkSearchRequest } from "../requests/types.gen";
 export type SaleControllerServiceGetAllSalesDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getAllSales>>;
 export type SaleControllerServiceGetAllSalesQueryResult<TData = SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useSaleControllerServiceGetAllSalesKey = "SaleControllerServiceGetAllSales";
@@ -64,6 +65,12 @@ export const useArtworkControllerServiceGetArtworkByIdKey = "ArtworkControllerSe
 export const UseArtworkControllerServiceGetArtworkByIdKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtworkControllerServiceGetArtworkByIdKey, ...(queryKey ?? [{ id }])];
+export type ArtworkControllerServiceSearchDefaultResponse = Awaited<ReturnType<typeof ArtworkControllerService.search>>;
+export type ArtworkControllerServiceSearchQueryResult<TData = ArtworkControllerServiceSearchDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useArtworkControllerServiceSearchKey = "ArtworkControllerServiceSearch";
+export const UseArtworkControllerServiceSearchKeyFn = ({ req }: {
+  req: ArtworkSearchRequest;
+}, queryKey?: Array<unknown>) => [useArtworkControllerServiceSearchKey, ...(queryKey ?? [{ req }])];
 export type ArtistControllerServiceGetAllArtistsDefaultResponse = Awaited<ReturnType<typeof ArtistControllerService.getAllArtists>>;
 export type ArtistControllerServiceGetAllArtistsQueryResult<TData = ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useArtistControllerServiceGetAllArtistsKey = "ArtistControllerServiceGetAllArtists";

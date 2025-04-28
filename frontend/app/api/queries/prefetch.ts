@@ -2,6 +2,7 @@
 
 import { type QueryClient } from "@tanstack/react-query";
 import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtworkSearchRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const prefetchUseSaleControllerServiceGetAllSales = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
 export const prefetchUseSaleControllerServiceGetSaleById = (queryClient: QueryClient, { id }: {
@@ -29,6 +30,9 @@ export const prefetchUseArtworkControllerServiceGetAllArtworks = (queryClient: Q
 export const prefetchUseArtworkControllerServiceGetArtworkById = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }), queryFn: () => ArtworkControllerService.getArtworkById({ id }) });
+export const prefetchUseArtworkControllerServiceSearch = (queryClient: QueryClient, { req }: {
+  req: ArtworkSearchRequest;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ req }), queryFn: () => ArtworkControllerService.search({ req }) });
 export const prefetchUseArtistControllerServiceGetAllArtists = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }), queryFn: () => ArtistControllerService.getAllArtists({ q }) });

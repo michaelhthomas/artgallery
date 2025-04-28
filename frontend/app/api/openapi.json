@@ -1085,6 +1085,54 @@
         ]
       }
     },
+    "/api/artworks/search": {
+      "get": {
+        "tags": [
+          "artwork-controller"
+        ],
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "req",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ArtworkSearchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArtworkResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/artist/{id}": {
       "get": {
         "tags": [
@@ -2673,6 +2721,23 @@
           "shownIn",
           "work"
         ]
+      },
+      "ArtworkSearchRequest": {
+        "type": "object",
+        "properties": {
+          "artistName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "medium": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          }
+        }
       }
     },
     "securitySchemes": {

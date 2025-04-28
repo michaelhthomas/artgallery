@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetAllSalesResponse, CreateSaleData, CreateSaleResponse, GetSaleByIdData, GetSaleByIdResponse, GetSalesLastWeekResponse, SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, GetAllBuyersResponse, CreateBuyerData, CreateBuyerResponse, GetBuyerByIdData, GetBuyerByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse, GetStatsResponse, GetAllShowsResponse, GetShowDetailsData, GetShowDetailsResponse } from './types.gen';
+import type { GetAllSalesResponse, CreateSaleData, CreateSaleResponse, GetSaleByIdData, GetSaleByIdResponse, GetSalesLastWeekResponse, SignupForMailingListData, SignupForMailingListResponse, GetProfileResponse, UpdateProfileData, UpdateProfileResponse, GetAllCollectorsData, GetAllCollectorsResponse, CreateCollectorData, CreateCollectorResponse, GetCollectorData, GetCollectorResponse, GetCollectorWorksData, GetCollectorWorksResponse, GetAllBuyersResponse, CreateBuyerData, CreateBuyerResponse, GetBuyerByIdData, GetBuyerByIdResponse, LoginData, LoginResponse, UploadAssetData, UploadAssetResponse, DownloadAssetData, DownloadAssetResponse, DeleteAssetData, DeleteAssetResponse, GetAllArtworksResponse, CreateArtworkData, CreateArtworkResponse, GetArtworkByIdData, GetArtworkByIdResponse, SearchData, SearchResponse, GetAllArtistsData, GetAllArtistsResponse, CreateArtistData, CreateArtistResponse, GetArtistData, GetArtistResponse, GetArtistWorksData, GetArtistWorksResponse, GetStatsResponse, GetAllShowsResponse, GetShowDetailsData, GetShowDetailsResponse } from './types.gen';
 
 export class SaleControllerService {
     /**
@@ -388,6 +388,25 @@ export class ArtworkControllerService {
             url: '/api/artworks/{id}',
             path: {
                 id: data.id
+            },
+            errors: {
+                422: 'Unprocessable Entity'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.req
+     * @returns ArtworkResponse OK
+     * @throws ApiError
+     */
+    public static search(data: SearchData): CancelablePromise<SearchResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/artworks/search',
+            query: {
+                req: data.req
             },
             errors: {
                 422: 'Unprocessable Entity'

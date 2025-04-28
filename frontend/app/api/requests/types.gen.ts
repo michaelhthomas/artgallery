@@ -657,6 +657,13 @@ export type ArtworkListingResponse = {
     shownIn: Array<ShowResponse>;
 };
 
+export type ArtworkSearchRequest = {
+    artistName?: string;
+    type?: string;
+    medium?: string;
+    style?: string;
+};
+
 export type GetAllSalesResponse = Array<SaleResponse>;
 
 export type CreateSaleData = {
@@ -764,6 +771,12 @@ export type GetArtworkByIdData = {
 };
 
 export type GetArtworkByIdResponse = ArtworkListingResponse;
+
+export type SearchData = {
+    req: ArtworkSearchRequest;
+};
+
+export type SearchResponse = Array<ArtworkResponse>;
 
 export type GetAllArtistsData = {
     q?: string;
@@ -1093,6 +1106,21 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ArtworkListingResponse;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/artworks/search': {
+        get: {
+            req: SearchData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ArtworkResponse>;
                 /**
                  * Unprocessable Entity
                  */

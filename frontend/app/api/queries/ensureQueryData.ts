@@ -2,6 +2,7 @@
 
 import { type QueryClient } from "@tanstack/react-query";
 import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtworkSearchRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const ensureUseSaleControllerServiceGetAllSalesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
 export const ensureUseSaleControllerServiceGetSaleByIdData = (queryClient: QueryClient, { id }: {
@@ -29,6 +30,9 @@ export const ensureUseArtworkControllerServiceGetAllArtworksData = (queryClient:
 export const ensureUseArtworkControllerServiceGetArtworkByIdData = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }), queryFn: () => ArtworkControllerService.getArtworkById({ id }) });
+export const ensureUseArtworkControllerServiceSearchData = (queryClient: QueryClient, { req }: {
+  req: ArtworkSearchRequest;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ req }), queryFn: () => ArtworkControllerService.search({ req }) });
 export const ensureUseArtistControllerServiceGetAllArtistsData = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }), queryFn: () => ArtistControllerService.getAllArtists({ q }) });

@@ -2,7 +2,7 @@
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
-import { ArtistCreateRequest, ArtworkCreateRequest, AuthRequest, BuyerCreateRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest, SaleCreateRequest } from "../requests/types.gen";
+import { ArtistCreateRequest, ArtworkCreateRequest, ArtworkSearchRequest, AuthRequest, BuyerCreateRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest, SaleCreateRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const useSaleControllerServiceGetAllSales = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
 export const useSaleControllerServiceGetSaleById = <TData = Common.SaleControllerServiceGetSaleByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
@@ -30,6 +30,9 @@ export const useArtworkControllerServiceGetAllArtworks = <TData = Common.Artwork
 export const useArtworkControllerServiceGetArtworkById = <TData = Common.ArtworkControllerServiceGetArtworkByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceGetArtworkByIdKeyFn({ id }, queryKey), queryFn: () => ArtworkControllerService.getArtworkById({ id }) as TData, ...options });
+export const useArtworkControllerServiceSearch = <TData = Common.ArtworkControllerServiceSearchDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ req }: {
+  req: ArtworkSearchRequest;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtworkControllerServiceSearchKeyFn({ req }, queryKey), queryFn: () => ArtworkControllerService.search({ req }) as TData, ...options });
 export const useArtistControllerServiceGetAllArtists = <TData = Common.ArtistControllerServiceGetAllArtistsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetAllArtistsKeyFn({ q }, queryKey), queryFn: () => ArtistControllerService.getAllArtists({ q }) as TData, ...options });
