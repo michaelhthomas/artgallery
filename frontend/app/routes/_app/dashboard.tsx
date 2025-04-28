@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Separator } from "~/components/ui/separator";
 import { Skeleton } from "~/components/ui/skeleton";
 import { formatCurrency } from "~/lib/format";
 
@@ -190,58 +191,71 @@ function Dashboard() {
           <div className="space-y-4">
             {recentSales ? (
               recentSales.length > 0 ? (
-                recentSales.map((sale) => (
-                  <div
-                    key={sale.invoiceNumber}
-                    className="flex items-center gap-4"
-                  >
-                    <div className="relative size-24 flex-shrink-0 overflow-hidden rounded-md">
-                      <img
-                        src={
-                          sale.artwork.workImage?.downloadUrl ??
-                          "/placeholder.svg"
-                        }
-                        alt={sale.artwork.workTitle}
-                        className="h-full w-full object-cover"
-                      />
+                <>
+                  {recentSales.map((sale) => (
+                    <div
+                      key={sale.invoiceNumber}
+                      className="flex items-center gap-4"
+                    >
+                      <div className="relative size-24 flex-shrink-0 overflow-hidden rounded-md">
+                        <img
+                          src={
+                            sale.artwork.workImage?.downloadUrl ??
+                            "/placeholder.svg"
+                          }
+                          alt={sale.artwork.workTitle}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-medium">
+                            {sale.artwork.workTitle}
+                          </h3>
+                          <p className="font-medium">
+                            {sale.price ? formatCurrency(sale.price) : "—"}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-muted-foreground">
+                            {sale.artwork.artistName} • Sold to {sale.buyerName}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {sale.date}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-muted-foreground">
+                            Owned by {sale.artwork.ownerName}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Compensation:{" "}
+                            {formatCurrency(sale.amountRemittedToOwner ?? 0)}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-muted-foreground">
+                            Sold by {sale.salespersonName}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Commission:{" "}
+                            {formatCurrency((sale.price ?? 0) * 0.05)}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-medium">
-                          {sale.artwork.workTitle}
-                        </h3>
-                        <p className="font-medium">
-                          {sale.price ? formatCurrency(sale.price) : "—"}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-muted-foreground">
-                          {sale.artwork.artistName} • Sold to {sale.buyerName}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {sale.date}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-muted-foreground">
-                          Owned by {sale.artwork.ownerName}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          Compensation:{" "}
-                          {formatCurrency(sale.amountRemittedToOwner ?? 0)}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-muted-foreground">
-                          Sold by {sale.salespersonName}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          Commission: {formatCurrency((sale.price ?? 0) * 0.05)}
-                        </p>
-                      </div>
-                    </div>
+                  ))}
+                  <Separator />
+                  <div className="text-sm font-bold text-right">
+                    Total of Sales:{" "}
+                    {formatCurrency(
+                      recentSales.reduce(
+                        (sum, sale) => sum + (sale.price ?? 0),
+                        0,
+                      ),
+                    )}
                   </div>
-                ))
+                </>
               ) : (
                 <h1>No sales this week</h1>
               )
