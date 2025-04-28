@@ -5,6 +5,7 @@ import edu.furman.artgalleryspring.entity.Artwork
 import edu.furman.artgalleryspring.repository.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import jakarta.annotation.security.PermitAll
 import org.springframework.web.server.ResponseStatusException
 import java.math.BigDecimal
 
@@ -31,6 +32,7 @@ class ArtworkController(
         return ArtworkListingResponse.from(artwork, sale)
     }
 
+    @PermitAll
     @GetMapping("/search")
     fun search(req: ArtworkSearchRequest): List<ArtworkResponse> =
         artworkRepository.search(req).map(ArtworkResponse::from)
