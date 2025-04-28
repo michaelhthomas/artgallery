@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Calendar } from "lucide-react";
-import { ShowControllerService } from "~/api/requests";
+import { useShowControllerServiceGetShowDetails } from "~/api/queries";
 import { Badge } from "~/components/ui/badge";
 import {
   Card,
@@ -11,21 +11,19 @@ import {
 } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
 import { Separator } from "~/components/ui/separator";
+import { Skeleton } from "~/components/ui/skeleton";
 import { formatCurrency } from "~/lib/format";
 
 export const Route = createFileRoute("/_app/exhibitions/$title")({
   component: ExhibitionDetailPage,
-  loader: async ({ params }) => {
-    const { title } = params;
-    const data = await ShowControllerService.getShowDetails({ title });
-    return { data };
-  },
 });
 
 function ExhibitionDetailPage() {
-  const {
-    data: { show: exhibition, artworks },
-  } = Route.useLoaderData();
+  const { title } = Route.useParams();
+  const { data, isLoading } = useShowControllerServiceGetShowDetails({ title });
+
+  const artworks = data?.artworks ?? [];
+  const exhibition = data?.show;
 
   // Helper function to get status badge color
   // const getStatusBadgeVariant = (status: string) => {
@@ -86,172 +84,195 @@ function ExhibitionDetailPage() {
         {/* Exhibition Header */}
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-lg border">
-              <img
-                src={exhibition.images[0] || "/placeholder.svg"}
-                alt={exhibition.title}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </div>
-            <div className="flex gap-2 overflow-auto pb-2">
-              {exhibition.images.map((img, i) => (
-                <div key={i} className="relative">
+            {exhibition != null ? (
+              <>
+                <div className="overflow-hidden rounded-lg border">
                   <img
-                    src={img || "/placeholder.svg"}
-                    alt={`${exhibition.title} image ${String(i + 1)}`}
-                    className="aspect-square h-24 rounded-md border object-cover"
+                    src={exhibition.images[0] ?? "/placeholder.svg"}
+                    alt={exhibition.title}
+                    className="aspect-[4/3] w-full object-cover"
                   />
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold">{exhibition.title}</h1>
-                {/* <Badge variant={getStatusBadgeVariant(exhibition.status)}>
-                  {exhibition.status}
-                </Badge> */}
-              </div>
-              <div className="flex items-center gap-2 text-lg">
-                <Calendar className="h-4 w-4" />
-                <span>
-                  {exhibition.openingDate} - {exhibition.closingDate}
-                </span>
-              </div>
-              {/* <div className="mt-1 flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{exhibition.location}</span>
-              </div> */}
-            </div>
-            <Separator />
-            <div>
-              <h3 className="font-medium">Theme</h3>
-              <p className="text-muted-foreground">{exhibition.theme}</p>
-            </div>
-            {/* <div>
-              <h3 className="font-medium">Description</h3>
-              <p className="text-muted-foreground">{exhibition.description}</p>
-            </div> */}
-            <Separator />
-            <div className="space-y-4">
-              <h3 className="font-medium">Exhibition Summary</h3>
-              <div className="grid gap-4 sm:grid-cols-3">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-sm font-medium">
-                      Total Works
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {summary.totalWorks}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-sm font-medium">
-                      Works Sold
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {summary.worksSold}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-sm font-medium">
-                      Total Revenue
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {formatCurrency(summary.totalRevenue)}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm font-medium">
-                    Sales Progress
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        {summary.worksSold} of {summary.totalWorks} works sold
-                      </span>
-                      <span className="text-sm font-medium">
-                        {salesPercentage}%
-                      </span>
-                    </div>
-                    <Progress value={salesPercentage} className="h-2" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Exhibited Artworks</CardTitle>
-            <CardDescription>
-              All artworks included in this exhibition
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {artworks.map((artwork) => (
-                <Link
-                  to="/artworks/$id"
-                  params={{ id: artwork.id.toString() }}
-                  key={artwork.id}
-                  className="group"
-                >
-                  <div className="overflow-hidden rounded-lg border transition-colors group-hover:border-primary">
-                    <div className="aspect-[4/3] w-full overflow-hidden">
+                <div className="flex gap-2 overflow-auto pb-2">
+                  {exhibition.images.map((img, i) => (
+                    <div key={i} className="relative">
                       <img
-                        src={
-                          artwork.workImage?.downloadUrl ?? "/placeholder.svg"
-                        }
-                        alt={artwork.workTitle}
-                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        src={img || "/placeholder.svg"}
+                        alt={`${exhibition.title} image ${String(i + 1)}`}
+                        className="aspect-square h-24 rounded-md border object-cover"
                       />
                     </div>
-                    <div className="p-4">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-medium group-hover:text-primary">
-                          {artwork.workTitle}
-                        </h3>
-                        <Badge
-                          variant={
-                            artwork.status === "Sold" ? "default" : "outline"
-                          }
-                        >
-                          {artwork.status}
-                        </Badge>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <Skeleton className="aspect-[4/3] w-full" />
+            )}
+          </div>
+          {exhibition != null ? (
+            <div className="space-y-6">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h1 className="text-3xl font-bold">{exhibition.title}</h1>
+                  {/* <Badge variant={getStatusBadgeVariant(exhibition.status)}>
+                              {exhibition.status}
+                            </Badge> */}
+                </div>
+                <div className="flex items-center gap-2 text-lg">
+                  <Calendar className="h-4 w-4" />
+                  <span>
+                    {exhibition.openingDate} - {exhibition.closingDate}
+                  </span>
+                </div>
+                {/* <div className="mt-1 flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            <span>{exhibition.location}</span>
+                          </div> */}
+              </div>
+              <Separator />
+              <div>
+                <h3 className="font-medium">Theme</h3>
+                <p className="text-muted-foreground">{exhibition.theme}</p>
+              </div>
+              {/* <div>
+                          <h3 className="font-medium">Description</h3>
+                          <p className="text-muted-foreground">{exhibition.description}</p>
+                        </div> */}
+              <Separator />
+              <div className="space-y-4">
+                <h3 className="font-medium">Exhibition Summary</h3>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium">
+                        Total Works
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {summary.totalWorks}
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {artwork.artistName}
-                      </p>
-                      {artwork.askingPrice && (
-                        <p className="mt-1 text-sm">
-                          {formatCurrency(artwork.askingPrice)}
-                        </p>
-                      )}
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium">
+                        Works Sold
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {summary.worksSold}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium">
+                        Total Revenue
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {formatCurrency(summary.totalRevenue)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-sm font-medium">
+                      Sales Progress
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">
+                          {summary.worksSold} of {summary.totalWorks} works sold
+                        </span>
+                        <span className="text-sm font-medium">
+                          {salesPercentage}%
+                        </span>
+                      </div>
+                      <Progress value={salesPercentage} className="h-2" />
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          ) : (
+            <div className="grid sm:grid-cols-3 gap-6">
+              <Skeleton className="h-30 col-span-3" />
+              <Skeleton className="h-16 col-span-3" />
+              <Skeleton className="h-16 col-span-3" />
+
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16 col-span-3" />
+            </div>
+          )}
+        </div>
+
+        {!isLoading ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>Exhibited Artworks</CardTitle>
+              <CardDescription>
+                All artworks included in this exhibition
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {artworks.map((artwork) => (
+                  <Link
+                    to="/artworks/$id"
+                    params={{ id: artwork.id.toString() }}
+                    key={artwork.id}
+                    className="group"
+                  >
+                    <div className="overflow-hidden rounded-lg border transition-colors group-hover:border-primary">
+                      <div className="aspect-[4/3] w-full overflow-hidden">
+                        <img
+                          src={
+                            artwork.workImage?.downloadUrl ?? "/placeholder.svg"
+                          }
+                          alt={artwork.workTitle}
+                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-medium group-hover:text-primary">
+                            {artwork.workTitle}
+                          </h3>
+                          <Badge
+                            variant={
+                              artwork.status === "Sold" ? "default" : "outline"
+                            }
+                          >
+                            {artwork.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {artwork.artistName}
+                        </p>
+                        {artwork.askingPrice && (
+                          <p className="mt-1 text-sm">
+                            {formatCurrency(artwork.askingPrice)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Skeleton className="h-64" />
+        )}
       </main>
     </div>
   );

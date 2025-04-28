@@ -59,7 +59,7 @@ export default function ExhibitionCard(exhibition: ShowResponse) {
         </div>
       </CardContent>
       <CardFooter className="flex gap-2 mt-auto">
-        <Button variant="outline" size="sm" className="flex-1">
+        <Button variant="outline" size="sm" className="flex-1" asChild>
           <Link to="/exhibitions/$title" params={{ title: exhibition.title }}>
             Details
           </Link>
