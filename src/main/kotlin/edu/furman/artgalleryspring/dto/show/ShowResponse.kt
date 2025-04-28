@@ -7,8 +7,9 @@ data class ShowResponse(
     val title: String,
     val featuredArtistName: String?,
     val theme: String?,
-    val openingDate: LocalDate?,
-    val closingDate: LocalDate?,
+    val openingDate: LocalDate,
+    val closingDate: LocalDate,
+    val images: List<String>
 ) {
     companion object {
         fun from(s: ArtShow) = ShowResponse(
@@ -18,7 +19,11 @@ data class ShowResponse(
             },
             theme = s.showTheme,
             openingDate = s.showOpeningDate,
-            closingDate = s.showClosingDate
+            closingDate = s.showClosingDate,
+            images = s.artworks
+                .filter{ it.workImage != null }
+                .take(3)
+                .map { it.workImage!!.getDownloadUri() }
         )
     }
 }

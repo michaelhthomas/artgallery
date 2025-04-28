@@ -11,7 +11,7 @@ data class ArtShow (
     @Column(name = "showTitle", nullable = false, length = 50)
 	var showTitle: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "showFeaturedArtistId")
 	var showFeaturedArtist: Artist? = null,
 
@@ -20,11 +20,11 @@ data class ArtShow (
 	var showTheme: String? = null,
 
     @Column(name = "showOpeningDate")
-	var showOpeningDate: LocalDate? = null,
+	var showOpeningDate: LocalDate,
 
     @Column(name = "showClosingDate")
-    var showClosingDate: LocalDate? = null,
+    var showClosingDate: LocalDate,
 ) {
     @ManyToMany(mappedBy = "shownIn", fetch = FetchType.LAZY)
-    val artworks: MutableSet<Artwork> = mutableSetOf()
+    val artworks: MutableList<Artwork> = mutableListOf()
 }

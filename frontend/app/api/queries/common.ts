@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, ShowControllerService } from "../requests/services.gen";
 export type SaleControllerServiceGetAllSalesDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getAllSales>>;
 export type SaleControllerServiceGetAllSalesQueryResult<TData = SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useSaleControllerServiceGetAllSalesKey = "SaleControllerServiceGetAllSales";
@@ -78,6 +78,16 @@ export const useArtistControllerServiceGetArtistWorksKey = "ArtistControllerServ
 export const UseArtistControllerServiceGetArtistWorksKeyFn = ({ id }: {
   id: number;
 }, queryKey?: Array<unknown>) => [useArtistControllerServiceGetArtistWorksKey, ...(queryKey ?? [{ id }])];
+export type ShowControllerServiceGetAllShowsDefaultResponse = Awaited<ReturnType<typeof ShowControllerService.getAllShows>>;
+export type ShowControllerServiceGetAllShowsQueryResult<TData = ShowControllerServiceGetAllShowsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useShowControllerServiceGetAllShowsKey = "ShowControllerServiceGetAllShows";
+export const UseShowControllerServiceGetAllShowsKeyFn = (queryKey?: Array<unknown>) => [useShowControllerServiceGetAllShowsKey, ...(queryKey ?? [])];
+export type ShowControllerServiceGetShowDetailsDefaultResponse = Awaited<ReturnType<typeof ShowControllerService.getShowDetails>>;
+export type ShowControllerServiceGetShowDetailsQueryResult<TData = ShowControllerServiceGetShowDetailsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useShowControllerServiceGetShowDetailsKey = "ShowControllerServiceGetShowDetails";
+export const UseShowControllerServiceGetShowDetailsKeyFn = ({ title }: {
+  title: string;
+}, queryKey?: Array<unknown>) => [useShowControllerServiceGetShowDetailsKey, ...(queryKey ?? [{ title }])];
 export type SaleControllerServiceCreateSaleMutationResult = Awaited<ReturnType<typeof SaleControllerService.createSale>>;
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;

@@ -656,6 +656,89 @@
         ]
       }
     },
+    "/api/shows": {
+      "get": {
+        "tags": [
+          "show-controller"
+        ],
+        "operationId": "getAllShows",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShowResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/shows/{title}": {
+      "get": {
+        "tags": [
+          "show-controller"
+        ],
+        "operationId": "getShowDetails",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShowDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/sales/{id}": {
       "get": {
         "tags": [
@@ -1455,12 +1538,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Artwork"
-            },
-            "uniqueItems": true
+            }
           }
         },
         "required": [
           "artworks",
+          "showClosingDate",
+          "showOpeningDate",
           "showTitle"
         ]
       },
@@ -1595,15 +1679,15 @@
           "collector": {
             "$ref": "#/components/schemas/Collector"
           },
-          "sale": {
-            "$ref": "#/components/schemas/Sale"
-          },
           "shownIn": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ArtShow"
             },
             "uniqueItems": true
+          },
+          "sale": {
+            "$ref": "#/components/schemas/Sale"
           }
         },
         "required": [
@@ -2347,6 +2431,58 @@
           "salesYearToDate"
         ]
       },
+      "ShowResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "featuredArtistName": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "string"
+          },
+          "openingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "closingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "closingDate",
+          "images",
+          "openingDate",
+          "title"
+        ]
+      },
+      "ShowDetail": {
+        "type": "object",
+        "properties": {
+          "show": {
+            "$ref": "#/components/schemas/ShowResponse"
+          },
+          "artworks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArtworkResponse"
+            }
+          }
+        },
+        "required": [
+          "artworks",
+          "show"
+        ]
+      },
       "CollectorResponse": {
         "type": "object",
         "properties": {
@@ -2411,31 +2547,6 @@
         "required": [
           "shownIn",
           "work"
-        ]
-      },
-      "ShowResponse": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "featuredArtistName": {
-            "type": "string"
-          },
-          "theme": {
-            "type": "string"
-          },
-          "openingDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "closingDate": {
-            "type": "string",
-            "format": "date"
-          }
-        },
-        "required": [
-          "title"
         ]
       }
     },

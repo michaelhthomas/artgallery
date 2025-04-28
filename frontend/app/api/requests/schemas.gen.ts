@@ -368,11 +368,10 @@ export const $ArtShow = {
             type: 'array',
             items: {
                 '$ref': '#/components/schemas/Artwork'
-            },
-            uniqueItems: true
+            }
         }
     },
-    required: ['artworks', 'showTitle']
+    required: ['artworks', 'showClosingDate', 'showOpeningDate', 'showTitle']
 } as const;
 
 export const $Artist = {
@@ -501,15 +500,15 @@ export const $Artwork = {
         collector: {
             '$ref': '#/components/schemas/Collector'
         },
-        sale: {
-            '$ref': '#/components/schemas/Sale'
-        },
         shownIn: {
             type: 'array',
             items: {
                 '$ref': '#/components/schemas/ArtShow'
             },
             uniqueItems: true
+        },
+        sale: {
+            '$ref': '#/components/schemas/Sale'
         }
     },
     required: ['artist', 'shownIn', 'workTitle']
@@ -1188,6 +1187,52 @@ export const $ArtistResponse = {
     required: ['firstName', 'id', 'lastName', 'salesLastYear', 'salesYearToDate']
 } as const;
 
+export const $ShowResponse = {
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string'
+        },
+        featuredArtistName: {
+            type: 'string'
+        },
+        theme: {
+            type: 'string'
+        },
+        openingDate: {
+            type: 'string',
+            format: 'date'
+        },
+        closingDate: {
+            type: 'string',
+            format: 'date'
+        },
+        images: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    },
+    required: ['closingDate', 'images', 'openingDate', 'title']
+} as const;
+
+export const $ShowDetail = {
+    type: 'object',
+    properties: {
+        show: {
+            '$ref': '#/components/schemas/ShowResponse'
+        },
+        artworks: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ArtworkResponse'
+            }
+        }
+    },
+    required: ['artworks', 'show']
+} as const;
+
 export const $CollectorResponse = {
     type: 'object',
     properties: {
@@ -1245,28 +1290,4 @@ export const $ArtworkListingResponse = {
         }
     },
     required: ['shownIn', 'work']
-} as const;
-
-export const $ShowResponse = {
-    type: 'object',
-    properties: {
-        title: {
-            type: 'string'
-        },
-        featuredArtistName: {
-            type: 'string'
-        },
-        theme: {
-            type: 'string'
-        },
-        openingDate: {
-            type: 'string',
-            format: 'date'
-        },
-        closingDate: {
-            type: 'string',
-            format: 'date'
-        }
-    },
-    required: ['title']
 } as const;

@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService } from "../requests/services.gen";
 import * as Common from "./common";
 export const useSaleControllerServiceGetAllSalesSuspense = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
 export const useSaleControllerServiceGetSaleByIdSuspense = <TData = Common.SaleControllerServiceGetSaleByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
@@ -37,3 +37,7 @@ export const useArtistControllerServiceGetArtistSuspense = <TData = Common.Artis
 export const useArtistControllerServiceGetArtistWorksSuspense = <TData = Common.ArtistControllerServiceGetArtistWorksDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseArtistControllerServiceGetArtistWorksKeyFn({ id }, queryKey), queryFn: () => ArtistControllerService.getArtistWorks({ id }) as TData, ...options });
+export const useShowControllerServiceGetAllShowsSuspense = <TData = Common.ShowControllerServiceGetAllShowsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseShowControllerServiceGetAllShowsKeyFn(queryKey), queryFn: () => ShowControllerService.getAllShows() as TData, ...options });
+export const useShowControllerServiceGetShowDetailsSuspense = <TData = Common.ShowControllerServiceGetShowDetailsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ title }: {
+  title: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }, queryKey), queryFn: () => ShowControllerService.getShowDetails({ title }) as TData, ...options });

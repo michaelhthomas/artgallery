@@ -229,8 +229,8 @@ export type ArtShow = {
     showTitle: string;
     showFeaturedArtist?: Artist;
     showTheme?: string;
-    showOpeningDate?: string;
-    showClosingDate?: string;
+    showOpeningDate: string;
+    showClosingDate: string;
     artworks: Array<Artwork>;
 };
 
@@ -269,8 +269,8 @@ export type Artwork = {
     workType?: string;
     workYearCompleted?: string;
     collector?: Collector;
-    sale?: Sale;
     shownIn: Array<ArtShow>;
+    sale?: Sale;
 };
 
 export type Asset = {
@@ -611,6 +611,20 @@ export type ArtistResponse = {
     usualType?: string;
 };
 
+export type ShowResponse = {
+    title: string;
+    featuredArtistName?: string;
+    theme?: string;
+    openingDate: string;
+    closingDate: string;
+    images: Array<(string)>;
+};
+
+export type ShowDetail = {
+    show: ShowResponse;
+    artworks: Array<ArtworkResponse>;
+};
+
 export type CollectorResponse = {
     id: string;
     firstName: string;
@@ -629,14 +643,6 @@ export type ArtworkListingResponse = {
     work: ArtworkResponse;
     sale?: SaleResponse;
     shownIn: Array<ShowResponse>;
-};
-
-export type ShowResponse = {
-    title: string;
-    featuredArtistName?: string;
-    theme?: string;
-    openingDate?: string;
-    closingDate?: string;
 };
 
 export type GetAllSalesResponse = Array<SaleResponse>;
@@ -768,6 +774,14 @@ export type GetArtistWorksData = {
 };
 
 export type GetArtistWorksResponse = Array<ArtworkResponse>;
+
+export type GetAllShowsResponse = Array<ShowResponse>;
+
+export type GetShowDetailsData = {
+    title: string;
+};
+
+export type GetShowDetailsResponse = ShowDetail;
 
 export type $OpenApiTs = {
     '/api/sales': {
@@ -1107,6 +1121,35 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: Array<ArtworkResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/shows': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<ShowResponse>;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/shows/{title}': {
+        get: {
+            req: GetShowDetailsData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: ShowDetail;
                 /**
                  * Unprocessable Entity
                  */

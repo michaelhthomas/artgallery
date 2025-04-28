@@ -3,6 +3,7 @@ package edu.furman.artgalleryspring.entity
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+import org.apache.commons.lang3.builder.HashCodeExclude
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -66,13 +67,13 @@ data class Artwork (
     @JoinColumn(name = "collectorSocialSecurityNumber")
 	var collector: Collector? = null,
 
-    @OneToOne(mappedBy = "artwork", cascade = [CascadeType.ALL])
-    var sale: Sale? = null,
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "ShownIn",
         joinColumns = [JoinColumn(name = "artworkId")],
         inverseJoinColumns = [JoinColumn(name = "showTitle")])
     var shownIn: MutableSet<ArtShow> = mutableSetOf(),
-)
+) {
+    @OneToOne(mappedBy = "artwork", cascade = [CascadeType.ALL])
+    val sale: Sale? = null
+}
