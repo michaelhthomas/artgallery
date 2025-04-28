@@ -637,6 +637,32 @@ export type ShowDetail = {
     artworks: Array<ArtworkResponse>;
 };
 
+/**
+ * Salesperson Response DTO
+ */
+export type SalespersonResponse = {
+    /**
+     * Social-security number (9 digits)
+     */
+    socialSecurityNumber: string;
+    /**
+     * First name
+     */
+    firstName: string;
+    /**
+     * Last name
+     */
+    lastName: string;
+    /**
+     * Street address
+     */
+    street?: string;
+    /**
+     * ZIP code
+     */
+    zipCode?: string;
+};
+
 export type CollectorResponse = {
     id: string;
     firstName: string;
@@ -811,6 +837,8 @@ export type GetShowDetailsData = {
 };
 
 export type GetShowDetailsResponse = ShowDetail;
+
+export type ListSalespeopleResponse = Array<SalespersonResponse>;
 
 export type $OpenApiTs = {
     '/api/sales': {
@@ -1222,6 +1250,20 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: ShowDetail;
+                /**
+                 * Unprocessable Entity
+                 */
+                422: ValidationErrorResponse;
+            };
+        };
+    };
+    '/api/salesperson': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<SalespersonResponse>;
                 /**
                  * Unprocessable Entity
                  */

@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import { ArtworkSearchRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const useSaleControllerServiceGetAllSalesSuspense = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
@@ -47,3 +47,4 @@ export const useShowControllerServiceGetAllShowsSuspense = <TData = Common.ShowC
 export const useShowControllerServiceGetShowDetailsSuspense = <TData = Common.ShowControllerServiceGetShowDetailsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ title }: {
   title: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }, queryKey), queryFn: () => ShowControllerService.getShowDetails({ title }) as TData, ...options });
+export const useSalespersonControllerServiceListSalespeopleSuspense = <TData = Common.SalespersonControllerServiceListSalespeopleDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseSalespersonControllerServiceListSalespeopleKeyFn(queryKey), queryFn: () => SalespersonControllerService.listSalespeople() as TData, ...options });

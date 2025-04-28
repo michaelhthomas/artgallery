@@ -1,3 +1,4 @@
+import NiceModal from "@ebay/nice-modal-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
@@ -10,6 +11,7 @@ import {
   User,
 } from "lucide-react";
 import { useArtworkControllerServiceGetArtworkById } from "~/api/queries";
+import { SaleInvoiceModal } from "~/components/sale/SaleInvoiceModal";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -46,13 +48,18 @@ function ArtworkDetailPage() {
           <span>Back to Artworks</span>
         </Link>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              navigator.share({
+                title: artwork?.workTitle,
+                url: window.location.href,
+              })
+            }
+          >
             <Share2 className="mr-2 h-4 w-4" />
             Share
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="mr-2 h-4 w-4" />
-            Export
           </Button>
           <Button size="sm">
             <Edit className="mr-2 h-4 w-4" />
@@ -133,10 +140,21 @@ function ArtworkDetailPage() {
                   <p className="text-muted-foreground">{artwork.description}</p>
                 </div> */}
                 <div className="flex gap-2">
-                  <Button className="flex-1">Mark as Sold</Button>
-                  <Button variant="outline" className="flex-1">
+                  {artwork.status === "for sale" && (
+                    <Button
+                      className="flex-1"
+                      onClick={() => {
+                        void NiceModal.show(SaleInvoiceModal, {
+                          artworkId: artwork.id,
+                        });
+                      }}
+                    >
+                      Mark as Sold
+                    </Button>
+                  )}
+                  {/* <Button variant="outline" className="flex-1">
                     Add to Exhibition
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>

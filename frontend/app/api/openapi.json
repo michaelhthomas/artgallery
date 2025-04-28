@@ -774,6 +774,44 @@
         ]
       }
     },
+    "/api/salesperson": {
+      "get": {
+        "tags": [
+          "salesperson-controller"
+        ],
+        "operationId": "listSalespeople",
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalespersonResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/sales/{id}": {
       "get": {
         "tags": [
@@ -2654,6 +2692,42 @@
         "required": [
           "artworks",
           "show"
+        ]
+      },
+      "SalespersonResponse": {
+        "type": "object",
+        "description": "Salesperson Response DTO",
+        "properties": {
+          "socialSecurityNumber": {
+            "type": "string",
+            "description": "Social-security number (9 digits)",
+            "example": 123456789
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "example": "Grace"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "example": "Hopper"
+          },
+          "street": {
+            "type": "string",
+            "description": "Street address",
+            "example": 42
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "ZIP code",
+            "example": 29613
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "socialSecurityNumber"
         ]
       },
       "CollectorResponse": {

@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, BuyerControllerService, CollectorControllerService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import { ArtworkSearchRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const ensureUseSaleControllerServiceGetAllSalesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(), queryFn: () => SaleControllerService.getAllSales() });
@@ -47,3 +47,4 @@ export const ensureUseShowControllerServiceGetAllShowsData = (queryClient: Query
 export const ensureUseShowControllerServiceGetShowDetailsData = (queryClient: QueryClient, { title }: {
   title: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }), queryFn: () => ShowControllerService.getShowDetails({ title }) });
+export const ensureUseSalespersonControllerServiceListSalespeopleData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseSalespersonControllerServiceListSalespeopleKeyFn(), queryFn: () => SalespersonControllerService.listSalespeople() });

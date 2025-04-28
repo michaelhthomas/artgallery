@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import { ArtworkSearchRequest } from "../requests/types.gen";
 export type SaleControllerServiceGetAllSalesDefaultResponse = Awaited<ReturnType<typeof SaleControllerService.getAllSales>>;
 export type SaleControllerServiceGetAllSalesQueryResult<TData = SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
@@ -103,6 +103,10 @@ export const useShowControllerServiceGetShowDetailsKey = "ShowControllerServiceG
 export const UseShowControllerServiceGetShowDetailsKeyFn = ({ title }: {
   title: string;
 }, queryKey?: Array<unknown>) => [useShowControllerServiceGetShowDetailsKey, ...(queryKey ?? [{ title }])];
+export type SalespersonControllerServiceListSalespeopleDefaultResponse = Awaited<ReturnType<typeof SalespersonControllerService.listSalespeople>>;
+export type SalespersonControllerServiceListSalespeopleQueryResult<TData = SalespersonControllerServiceListSalespeopleDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useSalespersonControllerServiceListSalespeopleKey = "SalespersonControllerServiceListSalespeople";
+export const UseSalespersonControllerServiceListSalespeopleKeyFn = (queryKey?: Array<unknown>) => [useSalespersonControllerServiceListSalespeopleKey, ...(queryKey ?? [])];
 export type SaleControllerServiceCreateSaleMutationResult = Awaited<ReturnType<typeof SaleControllerService.createSale>>;
 export type MailingListServiceSignupForMailingListMutationResult = Awaited<ReturnType<typeof MailingListService.signupForMailingList>>;
 export type ProfileControllerServiceUpdateProfileMutationResult = Awaited<ReturnType<typeof ProfileControllerService.updateProfile>>;

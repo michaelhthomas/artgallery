@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
+import { ArtistControllerService, ArtworkControllerService, AssetControllerService, AuthControllerService, BuyerControllerService, CollectorControllerService, MailingListService, ProfileControllerService, SaleControllerService, SalespersonControllerService, ShowControllerService, StatsControllerService } from "../requests/services.gen";
 import { ArtistCreateRequest, ArtworkCreateRequest, ArtworkSearchRequest, AuthRequest, BuyerCreateRequest, CollectorCreateRequest, MailingListSignupRequest, ProfileUpdateRequest, SaleCreateRequest } from "../requests/types.gen";
 import * as Common from "./common";
 export const useSaleControllerServiceGetAllSales = <TData = Common.SaleControllerServiceGetAllSalesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseSaleControllerServiceGetAllSalesKeyFn(queryKey), queryFn: () => SaleControllerService.getAllSales() as TData, ...options });
@@ -47,6 +47,7 @@ export const useShowControllerServiceGetAllShows = <TData = Common.ShowControlle
 export const useShowControllerServiceGetShowDetails = <TData = Common.ShowControllerServiceGetShowDetailsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ title }: {
   title: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseShowControllerServiceGetShowDetailsKeyFn({ title }, queryKey), queryFn: () => ShowControllerService.getShowDetails({ title }) as TData, ...options });
+export const useSalespersonControllerServiceListSalespeople = <TData = Common.SalespersonControllerServiceListSalespeopleDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseSalespersonControllerServiceListSalespeopleKeyFn(queryKey), queryFn: () => SalespersonControllerService.listSalespeople() as TData, ...options });
 export const useSaleControllerServiceCreateSale = <TData = Common.SaleControllerServiceCreateSaleMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: SaleCreateRequest;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

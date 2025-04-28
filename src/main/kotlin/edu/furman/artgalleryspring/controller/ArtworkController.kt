@@ -52,6 +52,7 @@ class ArtworkController(
         }
 
         val artwork = Artwork(
+            status = "for sale",
             artist = artist,
             workImage = workImage,
             workTitle = artworkRequest.workTitle,

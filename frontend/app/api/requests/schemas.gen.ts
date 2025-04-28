@@ -1275,6 +1275,39 @@ export const $ShowDetail = {
     required: ['artworks', 'show']
 } as const;
 
+export const $SalespersonResponse = {
+    type: 'object',
+    description: 'Salesperson Response DTO',
+    properties: {
+        socialSecurityNumber: {
+            type: 'string',
+            description: 'Social-security number (9 digits)',
+            example: 123456789
+        },
+        firstName: {
+            type: 'string',
+            description: 'First name',
+            example: 'Grace'
+        },
+        lastName: {
+            type: 'string',
+            description: 'Last name',
+            example: 'Hopper'
+        },
+        street: {
+            type: 'string',
+            description: 'Street address',
+            example: 42
+        },
+        zipCode: {
+            type: 'string',
+            description: 'ZIP code',
+            example: 29613
+        }
+    },
+    required: ['firstName', 'lastName', 'socialSecurityNumber']
+} as const;
+
 export const $CollectorResponse = {
     type: 'object',
     properties: {

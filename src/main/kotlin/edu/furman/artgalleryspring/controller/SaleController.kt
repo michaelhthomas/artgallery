@@ -64,6 +64,7 @@ class SaleController(
             amountRemittedToOwner = request.amountRemittedToOwner?.toCleanBigDecimal()
         )
 
-        return SaleResponse.from(saleRepository.save(sale))
+        val saved = saleRepository.save(sale)
+        return SaleResponse.from(saved)
     }
 }

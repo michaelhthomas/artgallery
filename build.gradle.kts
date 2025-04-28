@@ -9,7 +9,6 @@ plugins {
     kotlin("plugin.jpa") version "1.9.25"
     id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
     id("org.siouan.frontend-jdk21") version "10.0.0"
-    id("org.hibernate.orm") version "6.6.11.Final"
 }
 
 group = "edu.furman"
@@ -18,15 +17,6 @@ version = "0.0.1-SNAPSHOT"
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-hibernate {
-    enhancement {
-        enableLazyInitialization = true
-        enableDirtyTracking = true
-        enableAssociationManagement = true
-        enableExtendedEnhancement = false
     }
 }
 
