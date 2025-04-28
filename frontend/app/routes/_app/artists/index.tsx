@@ -40,7 +40,7 @@ function ArtistsPage() {
               NiceModal.show(CreateArtistModal).then(() => refetch())
             }
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Add Artist
           </Button>
         </div>

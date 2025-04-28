@@ -35,12 +35,8 @@ function ExhibitionsPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Exhibitions</h1>
           <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm">
-              <Calendar className="mr-2 h-4 w-4" />
-              Calendar View
-            </Button>
             <Button size="sm">
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="size-4" />
               New Exhibition
             </Button>
           </div>

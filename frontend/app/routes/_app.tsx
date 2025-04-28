@@ -49,9 +49,6 @@ function AppLayout() {
           <Button variant="ghost" size="sm" asChild>
             <Link to="/collectors">Collectors</Link>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/reports">Reports</Link>
-          </Button>
           <UserDropdown />
         </nav>
       </header>

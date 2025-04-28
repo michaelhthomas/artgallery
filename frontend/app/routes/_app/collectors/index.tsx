@@ -3,13 +3,6 @@ import { Loader2, Plus, Search } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
 import { useCollectorControllerServiceGetAllCollectors } from "~/api/queries";
 import { useState } from "react";
 import { GetAllCollectorsResponse } from "~/api/requests";
@@ -47,7 +40,7 @@ function CollectorsPage() {
               NiceModal.show(CreateCollectorModal).then(() => refetch())
             }
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="size-4" />
             Add Collector
           </Button>
         </div>
@@ -64,18 +57,6 @@ function CollectorsPage() {
               className="w-full bg-background pl-8"
             />
           </div>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Collectors</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="vip">VIP</SelectItem>
-              <SelectItem value="institutional">Institutional</SelectItem>
-              <SelectItem value="new">New (Last 12 Months)</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
         {collectors ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
