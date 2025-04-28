@@ -40,12 +40,11 @@ class ArtworkController(
         @RequestParam style: String?,
     ): List<ArtworkResponse> =
         artworkRepository.search(ArtworkSearchRequest(
-            artistName = artistName,
-            type = type,
-            medium = medium,
-            style = style,
+            artistName = if (artistName.isNullOrEmpty()) null else artistName,
+            type = if (type.isNullOrEmpty()) null else type,
+            medium = if (medium.isNullOrEmpty()) null else medium,
+            style = if (style.isNullOrEmpty()) null else style,
         )).map(ArtworkResponse::from)
-
 
     @PostMapping
     fun createArtwork(@RequestBody artworkRequest: ArtworkCreateRequest): ArtworkResponse {
@@ -73,9 +72,8 @@ class ArtworkController(
             workSize = artworkRequest.workSize,
             collector = collector,
             dateListed = artworkRequest.dateListed,
-            askingPrice = if (artworkRequest.askingPrice != null) {
+            askingPrice =
                 BigDecimal(artworkRequest.askingPrice.replace(Regex("[^0-9.]"), ""))
-            } else null
         )
 
         artworkRepository.save(artwork)

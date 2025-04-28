@@ -10,7 +10,7 @@ import {
 import { formatCurrency } from "~/lib/format";
 import { Link } from "@tanstack/react-router";
 
-export function ArtworkCard(artwork: ArtworkResponse) {
+export function ArtworkCard(artwork: ArtworkResponse & { public?: boolean }) {
   return (
     <Card className="overflow-hidden pt-0">
       <div className="aspect-[4/3] w-full">
@@ -71,13 +71,15 @@ export function ArtworkCard(artwork: ArtworkResponse) {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button variant="outline" size="sm" className="w-full" asChild>
-          <Link to="/artworks/$id" params={{ id: artwork.id.toString() }}>
-            View Details
-          </Link>
-        </Button>
-      </CardFooter>
+      {!artwork.public && (
+        <CardFooter>
+          <Button variant="outline" size="sm" className="w-full" asChild>
+            <Link to="/artworks/$id" params={{ id: artwork.id.toString() }}>
+              View Details
+            </Link>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 }

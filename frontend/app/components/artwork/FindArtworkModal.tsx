@@ -140,7 +140,7 @@ export const FindArtworkModal = NiceModal.create(() => {
               results.length > 0 ? (
                 <div className="grid gap-4 sm:grid-cols-2">
                   {results.map((result) => (
-                    <ArtworkCard key={result.id} {...result} />
+                    <ArtworkCard key={result.id} {...result} public={true} />
                   ))}
                 </div>
               ) : (
